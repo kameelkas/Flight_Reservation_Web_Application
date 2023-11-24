@@ -61,10 +61,10 @@ CREATE TABLE Customer (
 CREATE TABLE Payment (
     credit_card INT PRIMARY KEY,
     cvv INT,
-    Expiry_Date DATETIME,
+    Expiry_date DATE,
     ticket_id INT,
     amount DECIMAL(10, 2),
-    payment_date DATETIME,
+    payment_date DATE,
     FOREIGN KEY (ticket_id) REFERENCES Ticket(ticket_id)
 );
 
@@ -125,7 +125,73 @@ SET DEFAULT ROLE ALL TO Tourism_User@'localhost';
 SET DEFAULT ROLE ALL TO AirlineAgent@'localhost';
 SET DEFAULT ROLE ALL TO SysAdmin@'localhost';
 
+FLUSH PRIVILEGES;
 
-
+USE FLIGHT_DB;
 
 ----Populating the Database-----
+USE FLIGHT_DB;
+
+-- Inserting data into the Flight table
+INSERT INTO Flight (flight_id, departure_date, departure_time, arrival_date, arrival_time, source_city, source_airport, source_country, destination_city, destination_airport, destination_country, aircraft_id)
+VALUES 
+(1, '2023-11-25', '08:00:00', '2023-11-25', '10:30:00', 'City A', 'Airport A', 'Country A', 'City B', 'Airport B', 'Country B', 101),
+(2, '2023-11-26', '09:30:00', '2023-11-26', '12:00:00', 'City C', 'Airport C', 'Country C', 'City D', 'Airport D', 'Country D', 102);
+
+-- Inserting data into the Aircraft table
+INSERT INTO Aircraft (aircraft_id, model, capacity)
+VALUES 
+(101, 'Boeing 737', 150),
+(102, 'Airbus A320', 180);
+
+-- Inserting data into the Customer table
+INSERT INTO Customer (customer_id, name, email, phone_number)
+VALUES 
+(1, 'John Doe', 'john@example.com', '123-456-7890'),
+(2, 'Jane Smith', 'jane@example.com', '987-654-3210');
+
+-- Inserting data into the Seat table
+INSERT INTO Seat (seat_number, aircraft_id, seat_type)
+VALUES 
+('A1', 101, 1),
+('A2', 101, 1),
+('B1', 102, 2),
+('B2', 102, 2),
+('C1', 101, 3),
+('C2', 101, 3),
+('D1', 102, 1),
+('D2', 102, 1);
+
+-- Inserting data into the Ticket table
+INSERT INTO Ticket (ticket_id, customer_id, customer_name, seat_number, aircraft_id, price)
+VALUES 
+(1, 1, 'John Doe', 'A1', 101, 150.00),
+(2, 2, 'Jane Smith', 'B1', 102, 200.00);
+
+USE FLIGHT_DB;
+
+-- Inserting data into the Payment table
+INSERT INTO Payment (credit_card, cvv, Expiry_date, ticket_id, amount, payment_date)
+VALUES 
+(1234567890123456, 123, '2023-12-01', 1, 150.00, '2023-11-25'),
+(9876543210987654, 456, '2023-12-01', 2, 200.00, '2023-11-26'),
+(1111222233334444, 789, '2023-12-01', 3, 120.00, '2023-11-27'),
+(4444333322221111, 987, '2023-12-01', 4, 250.00, '2023-11-28');
+
+-- Inserting data into the Crew table
+INSERT INTO Crew (crew_id, name, role, flight_id)
+VALUES 
+(1, 'Captain Smith', 'Captain', 1),
+(2, 'Co-pilot Johnson', 'Co-pilot', 1),
+(3, 'Stewardess Baker', 'Stewardess', 2),
+(4, 'Flight Attendant Smith', 'Flight Attendant', 2);
+
+-- Inserting data into the Membership table
+INSERT INTO Membership (membership_id, customer_id, start_date, member_name, customer_SA, customer_PC, customer_city, customer_country, end_date)
+VALUES 
+(1, 1, '2023-01-01', 'John Doe', '123 Main St', '12345', 'Anytown', 'Country X', '2023-12-31'),
+(2, 2, '2023-02-01', 'Jane Smith', '456 Park Ave', '54321', 'Otherville', 'Country Y', '2023-12-31'),
+(3, 1, '2023-03-01', 'John Doe', '789 Elm St', '67890', 'Another Town', 'Country Z', '2023-12-31'),
+(4, 2, '2023-04-01', 'Jane Smith', '012 Oak St', '09876', 'Somewhere', 'Country W', '2023-12-31');
+
+

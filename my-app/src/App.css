@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  border-top: 3px solid greenyellow;
+
+  background-color: ghostwhite;
+}
+.header {
+  display: flex;
+  flex-direction: row;
+  background-color: ghostwhite;
+  border-bottom: 1px solid #eee;
+  border-bottom: 3px solid greenyellow;
+}
+
+#title-holder {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

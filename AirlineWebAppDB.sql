@@ -1,10 +1,9 @@
 -- Create the database for the airline web application
 DROP DATABASE IF EXISTS FLIGHT_DB;
 CREATE DATABASE FLIGHT_DB;
-USE FLIGHT_DB;
 
 -- Use the newly created database
-USE AIRLINE_WEB_APPLICATION;
+USE FLIGHT_DB;
 
 -- Drop tables if they exist
 DROP TABLE IF EXISTS Flight;
@@ -17,6 +16,13 @@ DROP TABLE IF EXISTS Crew;
 DROP TABLE IF EXISTS Membership;
 
 -- Create tables within the AIRLINE_WEB_APPLICATION database
+
+CREATE TABLE Aircraft (
+    aircraft_id INT PRIMARY KEY,
+    model VARCHAR(100),
+    capacity INT
+);
+
 CREATE TABLE Flight (
     flight_id INT PRIMARY KEY,
     departure_date DATE,
@@ -25,7 +31,7 @@ CREATE TABLE Flight (
     arrival_time TIME,
     source_city VARCHAR(50),     
     source_airport VARCHAR(50),
-    source_country VARCHAR(%0),
+    source_country VARCHAR(50),
     destination_city VARCHAR(50),
     destination_airport VARCHAR(50),
     destination_country VARCHAR(50),
@@ -34,22 +40,14 @@ CREATE TABLE Flight (
 );
 
 CREATE TABLE Seat (
+	seat_id INT AUTO_INCREMENT,
     seat_number VARCHAR(10),
     aircraft_id INT,
-    seat_type INT,  --using integer for seat type, 1 for economy/regular, 2 for business, 3 for first-class
-    (seat_id, aircraft_id) PRIMARY KEY,  --check syntax for whether or not this is right
-    FOREIGN KEY (aircraft_id) REFERENCES Aircraft(aircraft_id),
+    seat_type INT,  
+    PRIMARY KEY(seat_id, aircraft_id), 
+    FOREIGN KEY (aircraft_id) REFERENCES Aircraft(aircraft_id)
 );
 
-CREATE TABLE Ticket (
-    ticket_id INT PRIMARY KEY,
-    customer_id INT,
-    customer_name VARCHAR(100),
-    seat_id INT,
-    price DECIMAL(10, 2),
-    FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
-    FOREIGN KEY (seat_id) REFERENCES Seat(seat_id)
-);
 
 CREATE TABLE Customer (
     customer_id INT PRIMARY KEY,
@@ -58,20 +56,26 @@ CREATE TABLE Customer (
     phone_number VARCHAR(20)
 );
 
+CREATE TABLE Ticket (
+    ticket_id INT PRIMARY KEY,
+    customer_id INT,
+    customer_name VARCHAR(100),
+    seat_id INT,
+    price DECIMAL(10, 2),
+    flight_id INT,
+    FOREIGN KEY (flight_id) REFERENCES Flight(flight_id),
+    FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
+    FOREIGN KEY (seat_id) REFERENCES Seat(seat_id)
+);
+
 CREATE TABLE Payment (
-    credit_card INT PRIMARY KEY,
+    credit_card VARCHAR(20) PRIMARY KEY,
     cvv INT,
     Expiry_date DATE,
     ticket_id INT,
     amount DECIMAL(10, 2),
     payment_date DATE,
     FOREIGN KEY (ticket_id) REFERENCES Ticket(ticket_id)
-);
-
-CREATE TABLE Aircraft (
-    aircraft_id INT PRIMARY KEY,
-    model VARCHAR(100),
-    capacity INT
 );
 
 CREATE TABLE Crew (
@@ -87,9 +91,8 @@ CREATE TABLE Membership (
     customer_id INT,
     start_date DATE,
     member_name VARCHAR(100),
-    --COMPOSITE ATTRIBUTE FOR ADDRESS HERE. ###############s
-    customer_SA VARCHAR(50),  --street address
-    customer_PC VARCHAR(50), --postal code
+    customer_SA VARCHAR(50),  
+    customer_PC VARCHAR(50), 
     customer_city VARCHAR(20),
     customer_country VARCHAR(25),
     end_date DATE,
@@ -103,22 +106,25 @@ CREATE ROLE airline_agent;
 CREATE ROLE system_admin;
 
 -- Create users and assign roles with respective privileges
+DROP USER IF EXISTS 'Tourism_User'@localhost;
+DROP USER IF EXISTS 'AirlineAgent'@localhost;
+DROP USER IF EXISTS 'SysAdmin'@localhost;
 
 -- Tourism User
-CREATE USER 'Tourism_User'@'localhost' IDENTIFIED BY 'tourism_password'; 
-GRANT SELECT ON AIRLINE_WEB_APPLICATION.* TO 'Tourism_User'@'localhost';
-GRANT INSERT, UPDATE ON AIRLINE_WEB_APPLICATION.* TO 'Tourism_User'@'localhost';
+CREATE USER 'Tourism_User'@'localhost' IDENTIFIED WITH mysql_native_password BY '123'; 
+GRANT SELECT ON FLIGHT_DB.* TO 'Tourism_User'@'localhost';
+GRANT INSERT, UPDATE ON FLIGHT_DB.* TO 'Tourism_User'@'localhost';
 GRANT tourism_agent TO 'Tourism_User'@'localhost';
 
 -- Airline Agent
-CREATE USER 'AirlineAgent'@'localhost' IDENTIFIED BY 'airline_agent_password';
-GRANT SELECT ON AIRLINE_WEB_APPLICATION.* TO 'AirlineAgent'@'localhost';
-GRANT INSERT, UPDATE, DELETE ON AIRLINE_WEB_APPLICATION.* TO 'AirlineAgent'@'localhost';
+CREATE USER 'AirlineAgent'@'localhost' IDENTIFIED WITH mysql_native_password BY '456';
+GRANT SELECT ON FLIGHT_DB.* TO 'AirlineAgent'@'localhost';
+GRANT INSERT, UPDATE, DELETE ON FLIGHT_DB.* TO 'AirlineAgent'@'localhost';
 GRANT airline_agent TO 'AirlineAgent'@'localhost';
 
 -- System Admin
-CREATE USER 'SysAdmin'@'localhost' IDENTIFIED BY 'sysadmin_password';
-GRANT ALL PRIVILEGES ON AIRLINE_WEB_APPLICATION.* TO 'SysAdmin'@'localhost';
+CREATE USER 'SysAdmin'@'localhost' IDENTIFIED WITH mysql_native_password BY '789';
+GRANT ALL PRIVILEGES ON FLIGHT_DB.* TO 'SysAdmin'@'localhost';
 GRANT system_admin TO 'SysAdmin'@'localhost';
 
 SET DEFAULT ROLE ALL TO Tourism_User@'localhost';
@@ -128,21 +134,16 @@ SET DEFAULT ROLE ALL TO SysAdmin@'localhost';
 FLUSH PRIVILEGES;
 
 USE FLIGHT_DB;
-
-----Populating the Database-----
-USE FLIGHT_DB;
-
 -- Inserting data into the Flight table
-INSERT INTO Flight (flight_id, departure_date, departure_time, arrival_date, arrival_time, source_city, source_airport, source_country, destination_city, destination_airport, destination_country, aircraft_id)
-VALUES 
-(1, '2023-11-25', '08:00:00', '2023-11-25', '10:30:00', 'City A', 'Airport A', 'Country A', 'City B', 'Airport B', 'Country B', 101),
-(2, '2023-11-26', '09:30:00', '2023-11-26', '12:00:00', 'City C', 'Airport C', 'Country C', 'City D', 'Airport D', 'Country D', 102);
-
--- Inserting data into the Aircraft table
 INSERT INTO Aircraft (aircraft_id, model, capacity)
 VALUES 
 (101, 'Boeing 737', 150),
 (102, 'Airbus A320', 180);
+
+INSERT INTO Flight (flight_id, departure_date, departure_time, arrival_date, arrival_time, source_city, source_airport, source_country, destination_city, destination_airport, destination_country, aircraft_id)
+VALUES 
+(1, '2023-11-25', '08:00:00', '2023-11-25', '10:30:00', 'City A', 'Airport A', 'Country A', 'City B', 'Airport B', 'Country B', 101),
+(2, '2023-11-26', '09:30:00', '2023-11-26', '12:00:00', 'City C', 'Airport C', 'Country C', 'City D', 'Airport D', 'Country D', 102);
 
 -- Inserting data into the Customer table
 INSERT INTO Customer (customer_id, name, email, phone_number)
@@ -163,20 +164,21 @@ VALUES
 ('D2', 102, 1);
 
 -- Inserting data into the Ticket table
-INSERT INTO Ticket (ticket_id, customer_id, customer_name, seat_number, aircraft_id, price)
+INSERT INTO Ticket (ticket_id, customer_id, customer_name, seat_id, price, flight_id)
 VALUES 
-(1, 1, 'John Doe', 'A1', 101, 150.00),
-(2, 2, 'Jane Smith', 'B1', 102, 200.00);
+(1, 1, 'John Doe', 1, 150.00, 1),
+(2, 2, 'Jane Smith', 2, 200.00, 2),
+(3, 1, 'John Doe', 3, 120.00, 1),
+(4, 2, 'Jane Smith', 4, 250.00, 2);
 
-USE FLIGHT_DB;
 
 -- Inserting data into the Payment table
 INSERT INTO Payment (credit_card, cvv, Expiry_date, ticket_id, amount, payment_date)
 VALUES 
-(1234567890123456, 123, '2023-12-01', 1, 150.00, '2023-11-25'),
-(9876543210987654, 456, '2023-12-01', 2, 200.00, '2023-11-26'),
-(1111222233334444, 789, '2023-12-01', 3, 120.00, '2023-11-27'),
-(4444333322221111, 987, '2023-12-01', 4, 250.00, '2023-11-28');
+('1234567890123456', 123, '2023-12-01', 1, 150.00, '2023-11-25'),
+('9876543210987654', 456, '2023-12-01', 2, 200.00, '2023-11-26'),
+('1111222233334444', 789, '2023-12-01', 3, 120.00, '2023-11-27'),
+('4444333322221111', 987, '2023-12-01', 4, 250.00, '2023-11-28');
 
 -- Inserting data into the Crew table
 INSERT INTO Crew (crew_id, name, role, flight_id)

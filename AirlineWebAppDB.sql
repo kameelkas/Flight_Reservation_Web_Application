@@ -26,10 +26,11 @@ CREATE TABLE Flight (
 );
 
 CREATE TABLE Seat (
-    (seat_id INT, aircraft_id INT) PRIMARY KEY,
     seat_number VARCHAR(10),
     aircraft_id INT,
-    FOREIGN KEY (aircraft_id) REFERENCES Aircraft(aircraft_id)
+    seat_type INT,  --using integer for seat type, 1 for economy/regular, 2 for business, 3 for first-class
+    (seat_id, aircraft_id) PRIMARY KEY,  --check syntax for whether or not this is right
+    FOREIGN KEY (aircraft_id) REFERENCES Aircraft(aircraft_id),
 );
 
 CREATE TABLE Ticket (

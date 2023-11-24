@@ -19,12 +19,14 @@ DROP TABLE IF EXISTS Membership;
 -- Create tables within the AIRLINE_WEB_APPLICATION database
 CREATE TABLE Flight (
     flight_id INT PRIMARY KEY,
-    departure_datetime DATETIME,
-    arrival_datetime DATETIME,
-    source_city VARCHAR(50),     --COMPOSITE ATTRIBUTE INCLUDIONG AIRPORT_NAME, CITY, COUNTRY
+    departure_date DATE,
+    departure_time TIME,
+    arrival_date DATE,
+    arrival_time TIME,
+    source_city VARCHAR(50),     
     source_airport VARCHAR(50),
     source_country VARCHAR(%0),
-    destination_city VARCHAR(50),  --COMPOSITE ATTRIBUTE INCLUDING AIRPORT_NAME, CITY, COUNTRY
+    destination_city VARCHAR(50),
     destination_airport VARCHAR(50),
     destination_country VARCHAR(50),
     aircraft_id INT,
@@ -42,7 +44,7 @@ CREATE TABLE Seat (
 CREATE TABLE Ticket (
     ticket_id INT PRIMARY KEY,
     customer_id INT,
-    customer_namn VARCHAR(100),
+    customer_name VARCHAR(100),
     seat_id INT,
     price DECIMAL(10, 2),
     FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),

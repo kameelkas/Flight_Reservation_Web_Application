@@ -122,3 +122,8 @@ GRANT system_admin TO 'SysAdmin'@'localhost';
 SET DEFAULT ROLE ALL TO Tourism_User@'localhost';
 SET DEFAULT ROLE ALL TO AirlineAgent@'localhost';
 SET DEFAULT ROLE ALL TO SysAdmin@'localhost';
+
+
+
+
+----Populating the Database-----

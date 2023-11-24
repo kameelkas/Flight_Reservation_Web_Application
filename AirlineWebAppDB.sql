@@ -1,5 +1,7 @@
 -- Create the database for the airline web application
-CREATE DATABASE IF NOT EXISTS AIRLINE_WEB_APPLICATION;
+DROP DATABASE IF EXISTS FLIGHT_DB;
+CREATE DATABASE FLIGHT_DB;
+USE FLIGHT_DB;
 
 -- Use the newly created database
 USE AIRLINE_WEB_APPLICATION;
@@ -19,8 +21,12 @@ CREATE TABLE Flight (
     flight_id INT PRIMARY KEY,
     departure_datetime DATETIME,
     arrival_datetime DATETIME,
-    source VARCHAR(50),     --COMPOSITE ATTRIBUTE INCLUDIONG AIRPORT_NAME, CITY, COUNTRY
-    destination VARCHAR(50),  --COMPOSITE ATTRIBUTE INCLUDING AIRPORT_NAME, CITY, COUNTRY
+    source_city VARCHAR(50),     --COMPOSITE ATTRIBUTE INCLUDIONG AIRPORT_NAME, CITY, COUNTRY
+    source_airport VARCHAR(50),
+    source_country VARCHAR(%0),
+    destination_city VARCHAR(50),  --COMPOSITE ATTRIBUTE INCLUDING AIRPORT_NAME, CITY, COUNTRY
+    destination_airport VARCHAR(50),
+    destination_country VARCHAR(50),
     aircraft_id INT,
     FOREIGN KEY (aircraft_id) REFERENCES Aircraft(aircraft_id)
 );
@@ -85,6 +91,7 @@ CREATE TABLE Membership (
 );
 
 -- Create roles for different types of users
+DROP ROLE IF EXISTS tourism_agent, airline_agent, system_admin;
 CREATE ROLE tourism_agent;
 CREATE ROLE airline_agent;
 CREATE ROLE system_admin;
@@ -92,9 +99,9 @@ CREATE ROLE system_admin;
 -- Create users and assign roles with respective privileges
 
 -- Tourism User
-CREATE USER 'Tourism_User'@'localhost' IDENTIFIED BY 'tourism_password';
+CREATE USER 'Tourism_User'@'localhost' IDENTIFIED BY 'tourism_password'; 
 GRANT SELECT ON AIRLINE_WEB_APPLICATION.* TO 'Tourism_User'@'localhost';
-GRANT INSERT, UPDATE, DELETE ON AIRLINE_WEB_APPLICATION.* TO 'Tourism_User'@'localhost';
+GRANT INSERT, UPDATE ON AIRLINE_WEB_APPLICATION.* TO 'Tourism_User'@'localhost';
 GRANT tourism_agent TO 'Tourism_User'@'localhost';
 
 -- Airline Agent
@@ -107,3 +114,7 @@ GRANT airline_agent TO 'AirlineAgent'@'localhost';
 CREATE USER 'SysAdmin'@'localhost' IDENTIFIED BY 'sysadmin_password';
 GRANT ALL PRIVILEGES ON AIRLINE_WEB_APPLICATION.* TO 'SysAdmin'@'localhost';
 GRANT system_admin TO 'SysAdmin'@'localhost';
+
+SET DEFAULT ROLE ALL TO Tourism_User@'localhost';
+SET DEFAULT ROLE ALL TO AirlineAgent@'localhost';
+SET DEFAULT ROLE ALL TO SysAdmin@'localhost';

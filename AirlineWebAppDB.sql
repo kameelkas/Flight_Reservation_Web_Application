@@ -19,22 +19,23 @@ CREATE TABLE Flight (
     flight_id INT PRIMARY KEY,
     departure_datetime DATETIME,
     arrival_datetime DATETIME,
-    source VARCHAR(50),
-    destination VARCHAR(50),
+    source VARCHAR(50),     --COMPOSITE ATTRIBUTE INCLUDIONG AIRPORT_NAME, CITY, COUNTRY
+    destination VARCHAR(50),  --COMPOSITE ATTRIBUTE INCLUDING AIRPORT_NAME, CITY, COUNTRY
     aircraft_id INT,
     FOREIGN KEY (aircraft_id) REFERENCES Aircraft(aircraft_id)
 );
 
 CREATE TABLE Seat (
-    seat_id INT PRIMARY KEY,
+    (seat_id INT, aircraft_id INT) PRIMARY KEY,
     seat_number VARCHAR(10),
-    flight_id INT,
-    FOREIGN KEY (flight_id) REFERENCES Flight(flight_id)
+    aircraft_id INT,
+    FOREIGN KEY (aircraft_id) REFERENCES Aircraft(aircraft_id)
 );
 
 CREATE TABLE Ticket (
     ticket_id INT PRIMARY KEY,
     customer_id INT,
+    customer_namn VARCHAR(100),
     seat_id INT,
     price DECIMAL(10, 2),
     FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
@@ -49,7 +50,9 @@ CREATE TABLE Customer (
 );
 
 CREATE TABLE Payment (
-    payment_id INT PRIMARY KEY,
+    credit_card INT PRIMARY KEY,
+    cvv INT,
+    Expiry_Date DATETIME,
     ticket_id INT,
     amount DECIMAL(10, 2),
     payment_date DATETIME,
@@ -66,14 +69,16 @@ CREATE TABLE Crew (
     crew_id INT PRIMARY KEY,
     name VARCHAR(100),
     role VARCHAR(50),
-    aircraft_id INT,
-    FOREIGN KEY (aircraft_id) REFERENCES Aircraft(aircraft_id)
+    flight_id INT,
+    FOREIGN KEY (flight_id) REFERENCES Flight(flight_id)
 );
 
 CREATE TABLE Membership (
     membership_id INT PRIMARY KEY,
     customer_id INT,
     start_date DATE,
+    member_name VARCHAR(100),
+    --COMPOSITE ATTRIBUTE FOR ADDRESS HERE. ###############s
     end_date DATE,
     FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
 );

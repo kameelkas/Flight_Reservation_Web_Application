@@ -86,6 +86,10 @@ CREATE TABLE Membership (
     start_date DATE,
     member_name VARCHAR(100),
     --COMPOSITE ATTRIBUTE FOR ADDRESS HERE. ###############s
+    customer_SA VARCHAR(50),  --street address
+    customer_PC VARCHAR(50), --postal code
+    customer_city VARCHAR(20),
+    customer_country VARCHAR(25),
     end_date DATE,
     FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
 );

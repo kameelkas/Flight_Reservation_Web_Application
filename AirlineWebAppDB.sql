@@ -38,23 +38,20 @@ CREATE TABLE Flight (
     destination_airport VARCHAR(50),
     destination_country VARCHAR(50),
     aircraft_id INT,
-    seat_id INT,
-    FOREIGN KEY (seat_id) REFERENCES Seat(seat_id),
     FOREIGN KEY (aircraft_id) REFERENCES Aircraft(aircraft_id)
 );
 
---for seat type 1 for economy, 2 for business, 3 for first class
+-- for seat type 1 for economy, 2 for business, 3 for first class
 CREATE TABLE Seat (
 	seat_id INT PRIMARY KEY,
     seat_number INT,
     aircraft_id INT,
     flight_id INT,
-    row_number INT,
+    seat_row INT,
     seat_type INT,
     FOREIGN KEY (flight_id) REFERENCES Flight(flight_id),  
     FOREIGN KEY (aircraft_id) REFERENCES Aircraft(aircraft_id)
 );
-
 
 CREATE TABLE Customer (
     customer_id INT PRIMARY KEY,
@@ -143,15 +140,31 @@ FLUSH PRIVILEGES;
 
 USE FLIGHT_DB;
 -- Inserting data into the Flight table
-INSERT INTO Aircraft (aircraft_id, model, capacity)
+INSERT INTO Aircraft (aircraft_id, model, capacity, num_of_rows, owned)
 VALUES 
-(101, 'Boeing 737', 150),
-(102, 'Airbus A320', 180);
+(101, 'Boeing 737', 30, 15, true),
+(102, 'Airbus A320', 30, 18, false);
 
-INSERT INTO Flight (flight_id, departure_date, departure_time, arrival_date, arrival_time, source_city, source_airport, source_country, destination_city, destination_airport, destination_country, aircraft_id)
+-- INSERT INTO FLIGHT
+INSERT INTO Flight (
+    flight_id, departure_date, departure_time, arrival_date, arrival_time,
+    source_city, source_airport, source_country,
+    destination_city, destination_airport, destination_country,
+    aircraft_id
+)
 VALUES 
-(1, '2023-11-25', '08:00:00', '2023-11-25', '10:30:00', 'City A', 'Airport A', 'Country A', 'City B', 'Airport B', 'Country B', 101),
-(2, '2023-11-26', '09:30:00', '2023-11-26', '12:00:00', 'City C', 'Airport C', 'Country C', 'City D', 'Airport D', 'Country D', 102);
+(
+    1, '2023-11-25', '08:00:00', '2023-11-25', '10:30:00',
+    'City A', 'Airport A', 'Country A',
+    'City B', 'Airport B', 'Country B',
+    101 
+),
+(
+    2, '2023-11-26', '09:30:00', '2023-11-26', '12:00:00',
+    'City C', 'Airport C', 'Country C',
+    'City D', 'Airport D', 'Country D',
+    102
+);
 
 -- Inserting data into the Customer table
 INSERT INTO Customer (customer_id, name, email, phone_number, password)
@@ -160,16 +173,31 @@ VALUES
 (2, 'Jane Smith', 'jane@example.com', '987-654-3210', 'lmao');
 
 -- Inserting data into the Seat table
-INSERT INTO Seat (seat_number, aircraft_id, seat_type)
+-- Example INSERT statements for Seat table
+-- Example INSERT statements for Seat table
+INSERT INTO Seat (seat_id, seat_number, aircraft_id, flight_id, seat_row, seat_type)
 VALUES 
-('A1', 101, 1),
-('A2', 101, 1),
-('B1', 102, 2),
-('B2', 102, 2),
-('C1', 101, 3),
-('C2', 101, 3),
-('D1', 102, 1),
-('D2', 102, 1);
+(1, 1, 101, 1, 1, 1),
+(2, 2, 101, 1, 1, 1),
+(3, 3, 101, 1, 1, 1),
+(4, 4, 101, 1, 1, 1),
+(5, 5, 101, 1, 1, 1),
+(6, 6, 101, 1, 1, 1),
+(7, 7, 101, 1, 1, 1),
+(8, 8, 101, 1, 1, 1),
+(9, 9, 101, 1, 1, 1),
+(10, 10, 101, 1, 1, 1),
+(11, 11, 101, 1, 1, 1),
+(12, 12, 101, 1, 1, 1),
+(13, 13, 101, 1, 1, 1),
+(14, 14, 101, 1, 1, 1),
+(15, 15, 101, 1, 1, 1),
+(16, 16, 101, 1, 1, 1),
+(17, 17, 101, 1, 1, 1),
+(18, 18, 101, 1, 1, 1),
+(19, 19, 101, 1, 1, 1),
+(20, 20, 101, 1, 1, 1);
+
 
 -- Inserting data into the Ticket table
 INSERT INTO Ticket (ticket_id, customer_id, customer_name, seat_id, price, flight_id)

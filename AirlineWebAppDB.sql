@@ -20,7 +20,8 @@ DROP TABLE IF EXISTS Membership;
 CREATE TABLE Aircraft (
     aircraft_id INT PRIMARY KEY,
     model VARCHAR(100),
-    capacity INT
+    capacity INT,
+    owned BOOLEAN
 );
 
 CREATE TABLE Flight (
@@ -53,7 +54,8 @@ CREATE TABLE Customer (
     customer_id INT PRIMARY KEY,
     name VARCHAR(100),
     email VARCHAR(100),
-    phone_number VARCHAR(20)
+    phone_number VARCHAR(20),
+    password VARCHAR(20)
 );
 
 CREATE TABLE Ticket (
@@ -146,10 +148,10 @@ VALUES
 (2, '2023-11-26', '09:30:00', '2023-11-26', '12:00:00', 'City C', 'Airport C', 'Country C', 'City D', 'Airport D', 'Country D', 102);
 
 -- Inserting data into the Customer table
-INSERT INTO Customer (customer_id, name, email, phone_number)
+INSERT INTO Customer (customer_id, name, email, phone_number, password)
 VALUES 
-(1, 'John Doe', 'john@example.com', '123-456-7890'),
-(2, 'Jane Smith', 'jane@example.com', '987-654-3210');
+(1, 'John Doe', 'john@example.com', '123-456-7890', 'lol'),
+(2, 'Jane Smith', 'jane@example.com', '987-654-3210', 'lmao');
 
 -- Inserting data into the Seat table
 INSERT INTO Seat (seat_number, aircraft_id, seat_type)

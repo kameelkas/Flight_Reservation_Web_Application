@@ -11,4 +11,12 @@ class Customer{
         this.phoneNum = phone;
     }
 
+    public int getCustomerID(){
+        return this.customerID;
+    }
+
+    public String getCustomerName(){
+        return this.name;
+    }
+
 }

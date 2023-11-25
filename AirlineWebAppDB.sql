@@ -21,6 +21,7 @@ CREATE TABLE Aircraft (
     aircraft_id INT PRIMARY KEY,
     model VARCHAR(100),
     capacity INT,
+    num_of_rows INT,
     owned BOOLEAN
 );
 
@@ -42,11 +43,15 @@ CREATE TABLE Flight (
     FOREIGN KEY (aircraft_id) REFERENCES Aircraft(aircraft_id)
 );
 
+--for seat type 1 for economy, 2 for business, 3 for first class
 CREATE TABLE Seat (
 	seat_id INT PRIMARY KEY,
-    seat_number VARCHAR(10),
+    seat_number INT,
     aircraft_id INT,
-    seat_type INT,  
+    flight_id INT,
+    row_number INT,
+    seat_type INT,
+    FOREIGN KEY (flight_id) REFERENCES Flight(flight_id),  
     FOREIGN KEY (aircraft_id) REFERENCES Aircraft(aircraft_id)
 );
 

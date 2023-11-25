@@ -37,15 +37,16 @@ CREATE TABLE Flight (
     destination_airport VARCHAR(50),
     destination_country VARCHAR(50),
     aircraft_id INT,
+    seat_id INT,
+    FOREIGN KEY (seat_id) REFERENCES Seat(seat_id),
     FOREIGN KEY (aircraft_id) REFERENCES Aircraft(aircraft_id)
 );
 
 CREATE TABLE Seat (
-	seat_id INT AUTO_INCREMENT,
+	seat_id INT PRIMARY KEY,
     seat_number VARCHAR(10),
     aircraft_id INT,
     seat_type INT,  
-    PRIMARY KEY(seat_id, aircraft_id), 
     FOREIGN KEY (aircraft_id) REFERENCES Aircraft(aircraft_id)
 );
 

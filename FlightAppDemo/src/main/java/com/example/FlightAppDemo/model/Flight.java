@@ -1,5 +1,10 @@
 package com.example.FlightAppDemo;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
 public class Flight {
     private int flightID;
     private String departureDate;

@@ -1,7 +1,5 @@
 package com.example.FlightAppDemo;
 
-import com.example.FlightAppDemo.Aircraft;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,7 +15,7 @@ public class Flight {  //unidirectional to aircraft,
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "flight_id")
-    private int flightID;
+    private int flight_ID;
 
     private String departureDate;
     private String departureTime;
@@ -31,13 +29,14 @@ public class Flight {  //unidirectional to aircraft,
     private String destinationAirport;
     // private Aircraft airplaneUsed;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne //(cascade = CascadeType.ALL)  //many flights to one aircraft
     @JoinColumn(name = "aircraft_id", referencedColumnName = "aircraft_id")
     private Aircraft aircraft;
 
     public Flight() {};
     public Flight(String depDate, String depTime, String arrDate, String ArrTime, String depCity,
             String depCntry, String depAirport, String destCity, String destCntry, String destAirport) {
+        //this.flightID = fID;
         this.departureDate = depDate;
         this.departureTime = depTime;
         this.arrivalDate = arrDate;
@@ -50,9 +49,9 @@ public class Flight {  //unidirectional to aircraft,
         this.destinationAirport = destAirport;
     }
 
-    public int getFlightID() {
-        return this.flightID;
-    }
+    // public int getFlightID() {
+    //     return this.flightID;
+    // }
 
     public void setAircraft(Aircraft planePassedIn) {
         this.aircraft = planePassedIn;

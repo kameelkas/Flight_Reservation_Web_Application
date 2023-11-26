@@ -1,5 +1,6 @@
 package com.example.FlightAppDemo;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +11,7 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "customer_id")
     private int customerID;
 
     private String name;

@@ -30,7 +30,7 @@ public class Flight {  //unidirectional to aircraft,
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "aircraft_id", referencedColumnName = "aircraft_id")
-    private Aircraft aircraft;
+    private Aircraft aircraft = new Aircraft("Boeing 757", 30, 20, true);
 
     public Flight() {};
     public Flight(int fID, String depDate, String depTime, String arrDate, String ArrTime, String depCity,

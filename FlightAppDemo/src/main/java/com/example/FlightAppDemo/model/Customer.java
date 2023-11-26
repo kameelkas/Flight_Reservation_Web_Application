@@ -1,14 +1,23 @@
 package com.example.FlightAppDemo;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
+@Entity
 class Customer {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int customerID;
+
     private String name;
     private String emailAddr;
     private String phoneNum;
 
     public Customer() {};
-    public Customer(int cID, String lol, String email, String phone) {
-        this.customerID = cID;
+    public Customer(String lol, String email, String phone) {
         this.name = lol;
         this.emailAddr = email;
         this.phoneNum = phone;

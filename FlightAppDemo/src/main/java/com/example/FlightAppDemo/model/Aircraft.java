@@ -26,4 +26,15 @@ public class Aircraft {
         this.owned = Owned;
     }
 
+    @Override
+    public String toString() {
+        return "Aircraft{" +
+                "aircraft_id=" + aircraft_id +
+                ", model='" + model + '\'' +
+                ", capacity=" + capacity +
+                ", num_of_rows=" + num_of_rows +
+                ", owned=" + owned +
+                '}';
+    }
+
 }

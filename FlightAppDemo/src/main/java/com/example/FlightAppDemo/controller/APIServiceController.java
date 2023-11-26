@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/FlightApp")
 public class APIServiceController {
 
-    Customer guy = new Customer(1, "Rohil", "rohil1710@gmail.com", "4038913266");
+    Customer guy = new Customer("Rohil", "rohil1710@gmail.com", "4038913266");
     Customer guy2;
 
     @GetMapping("{customerID}")  //GET TO GET STUFF

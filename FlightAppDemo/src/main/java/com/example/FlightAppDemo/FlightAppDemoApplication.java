@@ -5,6 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+
 @SpringBootApplication  //combination of three annotations
 public class FlightAppDemoApplication implements CommandLineRunner{
 
@@ -64,11 +65,22 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		repoInterface.save(aircraft4);
 		repoInterface.save(aircraft5);
 
+
+		flight1.setAircraft(aircraft1);
 		flightInterface.save(flight1);
+
+		flight2.setAircraft(aircraft2);
 		flightInterface.save(flight2);
+
+		flight3.setAircraft(aircraft3);
 		flightInterface.save(flight3);
+
+		flight4.setAircraft(aircraft4);
 		flightInterface.save(flight4);
+
+		flight5.setAircraft(aircraft5);
 		flightInterface.save(flight5);
+
 
 		repoInterface.findByowned(true).forEach(
 			val -> System.out.println(val)

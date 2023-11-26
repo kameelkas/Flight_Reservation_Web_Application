@@ -1,5 +1,7 @@
 package com.example.FlightAppDemo;
 
+import com.example.FlightAppDemo.Aircraft;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,10 +29,11 @@ public class Flight {  //unidirectional to aircraft,
     private String destinationCity;
     private String destinationCountry;
     private String destinationAirport;
+    // private Aircraft airplaneUsed;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "aircraft_id", referencedColumnName = "aircraft_id")
-    private Aircraft aircraft = new Aircraft("Boeing 757", 30, 20, true);
+    private Aircraft aircraft;
 
     public Flight() {};
     public Flight(int fID, String depDate, String depTime, String arrDate, String ArrTime, String depCity,
@@ -50,6 +53,10 @@ public class Flight {  //unidirectional to aircraft,
 
     public int getFlightID() {
         return this.flightID;
+    }
+
+    public void setAircraft(Aircraft planePassedIn) {
+        this.aircraft = planePassedIn;
     }
 
 }

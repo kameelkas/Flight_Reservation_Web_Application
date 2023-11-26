@@ -5,13 +5,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.example.FlightAppDemo.controller.AircraftRepository;
-import com.example.FlightAppDemo.controller.CustomerRepository;
-import com.example.FlightAppDemo.controller.FlightRepository;
-import com.example.FlightAppDemo.model.Aircraft;
-import com.example.FlightAppDemo.model.Customer;
-import com.example.FlightAppDemo.model.Flight;
-
 @SpringBootApplication  //combination of three annotations
 public class FlightAppDemoApplication implements CommandLineRunner{
 
@@ -42,21 +35,21 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		Aircraft aircraft4 = new Aircraft("Embraer E190", 100, 22, false);
 		Aircraft aircraft5 = new Aircraft("Boeing 787", 250, 30, true);
 
-		// Creating Flight objects using the parameterized constructor
+		//Creating Flight objects using the parameterized constructor
 		Flight flight1 = new Flight(1, "2023-12-01", "08:00", "2023-12-01", "10:30", "New York", "USA", "JFK",
-				"London", "UK", "Heathrow", aircraft1);
+				"London", "UK", "Heathrow");
 
 		Flight flight2 = new Flight(2, "2023-12-02", "12:00", "2023-12-02", "18:30", "Paris", "France", "CDG",
-				"Tokyo", "Japan", "Narita", aircraft2);
+				"Tokyo", "Japan", "Narita");
 
 		Flight flight3 = new Flight(3, "2023-12-03", "10:30", "2023-12-03", "13:45", "Sydney", "Australia", "SYD",
-				"Dubai", "UAE", "DXB", aircraft3);
+				"Dubai", "UAE", "DXB");
 
 		Flight flight4 = new Flight(4, "2023-12-04", "09:15", "2023-12-04", "15:00", "Los Angeles", "USA", "LAX",
-				"Beijing", "China", "PEK", aircraft4);
+				"Beijing", "China", "PEK");
 
 		Flight flight5 = new Flight(5, "2023-12-05", "16:45", "2023-12-05", "19:20", "Moscow", "Russia", "SVO",
-				"Singapore", "Singapore", "Changi", aircraft5);
+				"Singapore", "Singapore", "Changi");
 
 
 		custInterface.save(customer1);
@@ -82,6 +75,10 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		);
 
 		custInterface.findByname("Diana").forEach(
+			val -> System.out.println(val)
+		);
+
+		flightInterface.findBydepartureCity("Paris").forEach(
 			val -> System.out.println(val)
 		);
 	}

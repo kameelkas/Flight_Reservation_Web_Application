@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 public class Aircraft {
 
     @Id
-    // @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int aircraft_id;
 
     private String model;

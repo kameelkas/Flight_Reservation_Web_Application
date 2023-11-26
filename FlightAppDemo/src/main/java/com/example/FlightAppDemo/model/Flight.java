@@ -36,9 +36,8 @@ public class Flight {  //unidirectional to aircraft,
     private Aircraft aircraft;
 
     public Flight() {};
-    public Flight(int fID, String depDate, String depTime, String arrDate, String ArrTime, String depCity,
+    public Flight(String depDate, String depTime, String arrDate, String ArrTime, String depCity,
             String depCntry, String depAirport, String destCity, String destCntry, String destAirport) {
-        this.flightID = fID;
         this.departureDate = depDate;
         this.departureTime = depTime;
         this.arrivalDate = arrDate;

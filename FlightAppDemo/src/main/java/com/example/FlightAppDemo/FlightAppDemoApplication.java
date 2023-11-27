@@ -5,6 +5,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+
+
 @SpringBootApplication  //combination of three annotations
 public class FlightAppDemoApplication implements CommandLineRunner{
 
@@ -28,6 +30,9 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 
 	@Autowired
 	TicketRepository ticketInterface;
+
+	@Autowired
+	PaymentRepository paymentInterface;
 
 	public static void main(String[] args) {
 		SpringApplication.run(FlightAppDemoApplication.class, args);
@@ -86,8 +91,12 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		Ticket ticket3 = new Ticket(180.0f);
 		Ticket ticket4 = new Ticket(220.0f);
 		Ticket ticket5 = new Ticket(190.0f);
-
-
+		
+		Payment payment1 = new Payment("1234567890123456", "12/25", 123, 200);
+		Payment payment2 = new Payment("9876543210987654", "10/24", 456, 150);
+		Payment payment3 = new Payment("1111222233334444", "08/23", 789, 180);
+		Payment payment4 = new Payment("5555666677778888", "06/22", 321, 220);
+		Payment payment5 = new Payment("9999888877776666", "04/21", 654, 190);
 
 		//SETTING AND SAVING
 		membership1.setCustomer(customer1);
@@ -161,6 +170,10 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 
 		ticketInterface.save(ticket1);
 		ticketInterface.save(ticket2);
+
+		payment1.setTicket(ticket1);
+		paymentInterface.save(payment1);
+
 
 
 		// aircraftInterface.findByowned(true).forEach(

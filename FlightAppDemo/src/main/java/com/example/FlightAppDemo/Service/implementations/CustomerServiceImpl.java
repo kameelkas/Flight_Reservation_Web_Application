@@ -22,10 +22,9 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public String createCustomer(Customer customer){
+    public void createCustomer(Customer customer){
         customerRepository.save(customer);  //basically what we were doing before in the main function.
         System.out.println(customer);
-        return "Success";
     }
 
     @Override

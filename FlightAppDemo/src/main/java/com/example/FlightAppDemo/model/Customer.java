@@ -34,35 +34,35 @@ public class Customer {
     //     this.customerID = customerID;
     // }
 
-    // // Getter for name
-    // public String getName() {
-    //     return name;
-    // }
+    // Getter for name
+    public String getName() {
+        return name;
+    }
 
-    // // Setter for name
-    // public void setName(String name) {
-    //     this.name = name;
-    // }
+    // Setter for name
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    // // Getter for emailAddr
-    // public String getEmailAddr() {
-    //     return emailAddr;
-    // }
+    // Getter for emailAddr
+    public String getEmailAddr() {
+        return emailAddr;
+    }
 
-    // // Setter for emailAddr
-    // public void setEmailAddr(String emailAddr) {
-    //     this.emailAddr = emailAddr;
-    // }
+    // Setter for emailAddr
+    public void setEmailAddr(String emailAddrs) {
+        this.emailAddr = emailAddrs;
+    }
 
-    // // Getter for phoneNum
-    // public String getPhoneNum() {
-    //     return phoneNum;
-    // }
+    // Getter for phoneNum
+    public String getPhoneNum() {
+        return phoneNum;
+    }
 
-    // // Setter for phoneNum
-    // public void setPhoneNum(String phoneNum) {
-    //     this.phoneNum = phoneNum;
-    // }
+    // Setter for phoneNum
+    public void setPhoneNum(String phoneN) {
+        this.phoneNum = phoneN;
+    }
 
     // @Override
     // public String toString() {

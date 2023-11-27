@@ -24,11 +24,14 @@
 }
 
 .title {
-  margin: 0;
+  margin: 10;
 }
 
 .user-info {
-  margin-right: 20px;
+  margin-right: 20px; /* Adjust margin as needed */
+}
+.user-info button {
+  margin-left: 20px;
 }
 
 #title-holder {
@@ -62,4 +65,27 @@
 .modal-content input[type="password"] {
   margin-left: 20px;
   margin-right: 20px;
+  /* Adjust the value as needed */
+}
+
+/* Add these styles to your CSS file */
+.ticket-purchase-form {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.ticket-purchase-form form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ticket-purchase-form label,
+.ticket-purchase-form input {
+  margin-bottom: 10px;
+}
+.input-group {
+  margin-top: 10px;
+  padding-left: 100px;
+  padding-right: 100px;
 }

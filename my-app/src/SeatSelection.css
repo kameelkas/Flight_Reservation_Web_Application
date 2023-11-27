@@ -1,0 +1,20 @@
+.seat-selection {
+  display: flex;
+  justify-content: center; /* Center the seat selection horizontally */
+  align-items: center; /* Center the seat selection vertically */
+}
+
+.section {
+  margin: 10px;
+  text-align: center;
+}
+
+.seat {
+  font-size: 12px;
+  padding: 5px;
+  margin: 2px;
+}
+
+.selected {
+  background-color: rgb(63, 181, 63);
+}

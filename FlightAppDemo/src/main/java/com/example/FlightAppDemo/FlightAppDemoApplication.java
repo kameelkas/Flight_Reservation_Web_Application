@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class FlightAppDemoApplication implements CommandLineRunner{
 
 	@Autowired
-	AircraftRepository repoInterface;
+	AircraftRepository aircraftInterface;
 
 	@Autowired
 	CustomerRepository custInterface;
@@ -24,8 +24,8 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 	@Autowired
 	MembershipRepository memberInterface;
 
-	// @Autowired
-	// SeatRepository seatInterface;
+	@Autowired
+	SeatRepository seatInterface;
 
 	public static void main(String[] args) {
 		SpringApplication.run(FlightAppDemoApplication.class, args);
@@ -73,11 +73,11 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		Membership membership4 = new Membership("2023-04-10", "101 Pine St", "45678", "City4", "Country4", "2023-12-31");
 		Membership membership5 = new Membership("2023-05-05", "222 Maple St", "56789", "City5", "Country5", "2023-12-31");
 
-		// Seat seat1 = new Seat("A1", 1, 1);  // Economy seat in row 1, seat number A1
-		// Seat seat2 = new Seat("B3", 2, 2);  // Business seat in row 2, seat number B3
-		// Seat seat3 = new Seat("C5", 3, 3);  // First class seat in row 3, seat number C5
-		// Seat seat4 = new Seat("D2", 4, 1);  // Economy seat in row 4, seat number D2
-		// Seat seat5 = new Seat("E4", 5, 2);  // Business seat in row 5, seat number E4
+		Seat seat1 = new Seat("A1", 1, 1);  // Economy seat in row 1, seat number A1
+		Seat seat2 = new Seat("B3", 2, 2);  // Business seat in row 2, seat number B3
+		Seat seat3 = new Seat("C5", 3, 3);  // First class seat in row 3, seat number C5
+		Seat seat4 = new Seat("D2", 4, 1);  // Economy seat in row 4, seat number D2
+		Seat seat5 = new Seat("E4", 5, 2);  // Business seat in row 5, seat number E4
 
 		membership1.setCustomer(customer1);
 		membership2.setCustomer(customer2);
@@ -85,17 +85,12 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		membership4.setCustomer(customer4);
 		membership5.setCustomer(customer5);
 
-		// repoInterface.save(aircraft1);
-		// repoInterface.save(aircraft2);
-		// repoInterface.save(aircraft3);
-		// repoInterface.save(aircraft4);
-		// repoInterface.save(aircraft5);
 
-		repoInterface.save(aircraft1);
-		repoInterface.save(aircraft2);
-		repoInterface.save(aircraft3);
-		repoInterface.save(aircraft4);
-		repoInterface.save(aircraft5);
+		aircraftInterface.save(aircraft1);
+		aircraftInterface.save(aircraft2);
+		aircraftInterface.save(aircraft3);
+		aircraftInterface.save(aircraft4);
+		aircraftInterface.save(aircraft5);
 
 		flight1.setAircraft(aircraft1);
 		flight2.setAircraft(aircraft2);
@@ -109,29 +104,23 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		crew4.setFlight(flight4);
 		crew5.setFlight(flight5);
 
-		// seat1.setAircraft(aircraft1);
-		// seat2.setAircraft(aircraft2);
-		// seat3.setAircraft(aircraft3);
-		// seat4.setAircraft(aircraft4);
-		// seat5.setAircraft(aircraft5);
-
-		// seat1.setFlight(flight1);
-		// seat2.setFlight(flight2);
-		// seat3.setFlight(flight3);
-		// seat4.setFlight(flight4);
-		// seat5.setFlight(flight5);
-
 		flightInterface.save(flight1);
 		flightInterface.save(flight2);
 		flightInterface.save(flight3);
 		flightInterface.save(flight4);
 		flightInterface.save(flight5);
 
-		// seatInterface.save(seat1);
-		// seatInterface.save(seat2);
-		// seatInterface.save(seat3);
-		// seatInterface.save(seat4);
-		// seatInterface.save(seat5);
+		seat1.setFlight(flight1);
+		seat2.setFlight(flight2);
+		seat3.setFlight(flight3);
+		seat4.setFlight(flight4);
+		seat5.setFlight(flight5);
+
+		seatInterface.save(seat1);
+		seatInterface.save(seat2);
+		seatInterface.save(seat3);
+		seatInterface.save(seat4);
+		seatInterface.save(seat5);
 
 		crewInterface.save(crew1);
 		crewInterface.save(crew2);
@@ -152,7 +141,7 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		memberInterface.save(membership5);
 
 
-		// repoInterface.findByowned(true).forEach(
+		// aircraftInterface.findByowned(true).forEach(
 		// 	val -> System.out.println(val)
 		// );
 

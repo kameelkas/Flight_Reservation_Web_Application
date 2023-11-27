@@ -54,4 +54,9 @@ public class CustomerServiceImpl implements CustomerService {
     public List<Customer> getAllCustomers(){
         return customerRepository.findAll();
     }
+
+    @Override
+    public List<String> getAllPasswords() {
+        return customerRepository.findAllcustomerPassword();
+    }
 }

@@ -40,11 +40,11 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args){
-		Customer customer1 = new Customer("Alice", "alice@example.com", "+1234567890");
-		Customer customer2 = new Customer("Bob", "bob@example.com", "+1987654321");
-		Customer customer3 = new Customer("Charlie", "charlie@example.com", "+1654321890");
-		Customer customer4 = new Customer("Diana", "diana@example.com", "+1789456231");
-		Customer customer5 = new Customer("Eve", "eve@example.com", "+1567894321");
+		Customer customer1 = new Customer("Alice", "alice@example.com", "+1234567890", "abc");
+		Customer customer2 = new Customer("Bob", "bob@example.com", "+1987654321", "xyz");
+		Customer customer3 = new Customer("Charlie", "charlie@example.com", "+1654321890", "def");
+		Customer customer4 = new Customer("Diana", "diana@example.com", "+1789456231", "ghi");
+		Customer customer5 = new Customer("Eve", "eve@example.com", "+1567894321", "lmn");
 
 		Aircraft aircraft1 = new Aircraft("Boeing 757", 30, 20, true);
 		Aircraft aircraft2 = new Aircraft("Airbus A320", 150, 25, false);

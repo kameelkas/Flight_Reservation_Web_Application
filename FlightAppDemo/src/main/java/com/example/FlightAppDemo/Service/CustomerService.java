@@ -8,4 +8,5 @@ public interface CustomerService {
     public String deleteCustomer(Integer customer_id);
     public Customer getCustomer(Integer customer_id);
     public List<Customer> getAllCustomers();
+    public List<String> getAllPasswords();
 }

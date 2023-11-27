@@ -19,12 +19,14 @@ public class Customer {
     private String name;
     private String emailAddr;
     private String phoneNum;
+    private String customerPassword;
 
     public Customer() {};
-    public Customer(String lol, String email, String phone) {
+    public Customer(String lol, String email, String phone, String password) {
         this.name = lol;
         this.emailAddr = email;
         this.phoneNum = phone;
+        this.customerPassword = password;
     }
 
     //Getter for customer_id
@@ -47,6 +49,10 @@ public class Customer {
         return emailAddr;
     }
 
+    public String getcustomerPassword() {
+        return customerPassword;
+    }
+
     // Setter for emailAddr
     public void setEmailAddr(String emailAddrs) {
         this.emailAddr = emailAddrs;
@@ -60,6 +66,10 @@ public class Customer {
     // Setter for phoneNum
     public void setPhoneNum(String phoneN) {
         this.phoneNum = phoneN;
+    }
+
+    public void setcustomerPassword(String password) {
+        this.customerPassword = password;
     }
 }
 

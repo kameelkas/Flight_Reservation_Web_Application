@@ -33,6 +33,11 @@ public class APIServiceController {
         return customerService.getAllCustomers();
     }
 
+    @GetMapping("/Customer/GetAllPasswords")
+    public List<String> getAllCustomerPasswordDetails() {
+        return customerService.getAllPasswords();
+    }
+
     @PostMapping("/Customer/Create")   //POST IN HTTP TO ADD STUFF
     public String createCustomerDetails(@RequestBody Customer customerNew){
         customerService.createCustomer(customerNew);

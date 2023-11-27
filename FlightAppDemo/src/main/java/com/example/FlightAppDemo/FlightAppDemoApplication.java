@@ -174,18 +174,5 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		payment1.setTicket(ticket1);
 		paymentInterface.save(payment1);
 
-
-
-		// aircraftInterface.findByowned(true).forEach(
-		// 	val -> System.out.println(val)
-		// );
-
-		// custInterface.findByname("Diana").forEach(
-		// 	val -> System.out.println(val)
-		// );
-
-		// flightInterface.findBydepartureCity("Paris").forEach(
-		// 	val -> System.out.println(val)
-		// );
 	}
 }

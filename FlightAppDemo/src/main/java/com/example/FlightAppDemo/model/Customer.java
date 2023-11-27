@@ -27,6 +27,11 @@ public class Customer {
         this.phoneNum = phone;
     }
 
+    //Getter for customer_id
+    public int getCustomerID() {
+        return customer_id;
+    }
+
     // Getter for name
     public String getName() {
         return name;
@@ -56,15 +61,5 @@ public class Customer {
     public void setPhoneNum(String phoneN) {
         this.phoneNum = phoneN;
     }
-
-    // @Override
-    // public String toString() {
-    //     return "Customer{" +
-    //             "customerID=" + customer_id +
-    //             ", name='" + name + '\'' +
-    //             ", emailAddr='" + emailAddr + '\'' +
-    //             ", phoneNum='" + phoneNum + '\'' +
-    //             '}';
-    // }
 }
 

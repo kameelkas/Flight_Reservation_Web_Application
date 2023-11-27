@@ -20,12 +20,8 @@ public class Ticket {
 
     private float price;
 
-    // @OneToOne  //(cascade = CascadeType.ALL)
-    // @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
-    // private Customer passenger;
-
     @OneToOne  //(cascade = CascadeType.ALL)
-    @JoinColumn(name = "email_address", referencedColumnName = "email_address")
+    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
     private Customer passenger;
 
     @OneToOne

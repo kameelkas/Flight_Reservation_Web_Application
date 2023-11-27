@@ -29,7 +29,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer getCustomer(String customer_id) {
+    public Customer getCustomer(Integer customer_id) {
         System.out.println("Received customer_id: " + customer_id); // Print the customer_id
         return customerRepository.findById(customer_id).get();
     }

@@ -11,23 +11,19 @@ import jakarta.persistence.Id;
 @Table(name="Customer")
 public class Customer {
 
-    // @Id
-    // @GeneratedValue(strategy = GenerationType.AUTO)
-    // @Column(name = "customer_id")
-    // private Integer customer_id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "customer_id")
+    private Integer customer_id;
 
     private String name;
-
-    @Id
-    @Column(name = "email_address")
-    private String email_address;
-
+    private String emailAddr;
     private String phoneNum;
 
     public Customer() {};
     public Customer(String lol, String email, String phone) {
         this.name = lol;
-        this.email_address = email;
+        this.emailAddr = email;
         this.phoneNum = phone;
     }
 

@@ -2,17 +2,19 @@ package com.example.FlightAppDemo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
+@Table(name="Customer")
 public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "customer_id")
-    private Integer customerID;
+    private Integer customer_id;
 
     private String name;
     private String emailAddr;
@@ -62,14 +64,14 @@ public class Customer {
     //     this.phoneNum = phoneNum;
     // }
 
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "customerID=" + customerID +
-                ", name='" + name + '\'' +
-                ", emailAddr='" + emailAddr + '\'' +
-                ", phoneNum='" + phoneNum + '\'' +
-                '}';
-    }
+    // @Override
+    // public String toString() {
+    //     return "Customer{" +
+    //             "customerID=" + customer_id +
+    //             ", name='" + name + '\'' +
+    //             ", emailAddr='" + emailAddr + '\'' +
+    //             ", phoneNum='" + phoneNum + '\'' +
+    //             '}';
+    // }
 }
 

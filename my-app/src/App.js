@@ -14,6 +14,7 @@ function App() {
   const [origin, setOrigin] = useState("");
   const [ticketId, setTicketId] = useState("");
   const [role, setRole] = useState(""); // State to store the selected role
+  const [showSeatSelection, setShowSeatSelection] = useState(false);
 
   const handleButtonClick = (option) => {
     const lowerCaseOption = option.toLowerCase();
@@ -21,6 +22,11 @@ function App() {
     if (lowerCaseOption === "member") {
       setShowModal(true);
       setShowTicketPurchaseForm(false);
+    } else if (lowerCaseOption === "guest") {
+      // Directly show ticket purchase options for guests
+      setShowTicketPurchaseForm(true);
+      setShowModal(false);
+      setSelectedOption("purchase ticket"); // Ensure this is set for guests
     } else if (lowerCaseOption === "purchase ticket") {
       setShowTicketPurchaseForm(true);
       setShowModal(false);
@@ -51,6 +57,7 @@ function App() {
     console.log("Destination:", destination);
     console.log("Origin:", origin);
     setShowTicketPurchaseForm(false);
+    setShowSeatSelection(true);
   };
 
   const handleLogout = () => {
@@ -225,9 +232,14 @@ function App() {
             </form>
           </div>
         )}
-        {!showTicketPurchaseForm && selectedOption === "purchase ticket" && (
+        {/* {!showTicketPurchaseForm && selectedOption === "purchase ticket" && (
           <SeatSelection onSeatSelect={handleSeatSelect} />
-        )}
+        )} */}
+        {showSeatSelection &&
+          !showTicketPurchaseForm &&
+          selectedOption === "purchase ticket" && (
+            <SeatSelection onSeatSelect={handleSeatSelect} />
+          )}
       </div>
     </div>
   );

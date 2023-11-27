@@ -27,13 +27,6 @@ public class Customer {
         this.phoneNum = phone;
     }
 
-    // Getter for customerID
-
-    // Setter for customerID
-    // public void setCustomerID(int customerID) {
-    //     this.customerID = customerID;
-    // }
-
     // Getter for name
     public String getName() {
         return name;

@@ -9,11 +9,8 @@ import com.example.FlightAppDemo.response.ResponseHandler;
 
 
 @RestController
-@RequestMapping("/FlightApp/Customer")
+@RequestMapping("/FlightApp")
 public class APIServiceController {
-
-    // Customer guy = new Customer("Rohil", "rohil1710@gmail.com", "4038913266");
-    // Customer guy2;
 
     CustomerService customerService;
 
@@ -21,12 +18,12 @@ public class APIServiceController {
         this.customerService = customerServ;
     }
 
-    @GetMapping("/{customer_id}")  //GET TO GET STUFF
+    @GetMapping("/Customer/{customer_id}")  //GET TO GET STUFF
     public ResponseEntity<Object> getCustomerDetails(@PathVariable("customer_id") Integer customer_id) {
         return ResponseHandler.responseBuilder("Here are the requested customer details", HttpStatus.OK, customerService.getCustomer(customer_id));
     }
 
-    @PostMapping("/")   //POST IN HTTP TO ADD STUFF
+    @PostMapping("/Customer/Create")   //POST IN HTTP TO ADD STUFF
     public String createCustomer(@RequestBody Customer customerout){
         customerService.createCustomer(customerout);
         return "Customer Made";

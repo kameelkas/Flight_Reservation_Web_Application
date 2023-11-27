@@ -22,7 +22,7 @@ public class APIServiceController {
     }
 
     @GetMapping("/{customer_id}")  //GET TO GET STUFF
-    public ResponseEntity<Object> getCustomerDetails(@PathVariable("customer_id") Integer customer_id) {
+    public ResponseEntity<Object> getCustomerDetails(@PathVariable("customer_id") String customer_id) {
         return ResponseHandler.responseBuilder("Here are the requested customer details", HttpStatus.OK, customerService.getCustomer(customer_id));
     }
 

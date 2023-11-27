@@ -5,7 +5,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
 @SpringBootApplication  //combination of three annotations
 public class FlightAppDemoApplication implements CommandLineRunner{
 
@@ -26,6 +25,9 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 
 	@Autowired
 	SeatRepository seatInterface;
+
+	@Autowired
+	TicketRepository ticketInterface;
 
 	public static void main(String[] args) {
 		SpringApplication.run(FlightAppDemoApplication.class, args);
@@ -79,6 +81,15 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		Seat seat4 = new Seat("D2", 4, 1);  // Economy seat in row 4, seat number D2
 		Seat seat5 = new Seat("E4", 5, 2);  // Business seat in row 5, seat number E4
 
+		Ticket ticket1 = new Ticket(150.0f);
+		Ticket ticket2 = new Ticket(200.0f);
+		Ticket ticket3 = new Ticket(180.0f);
+		Ticket ticket4 = new Ticket(220.0f);
+		Ticket ticket5 = new Ticket(190.0f);
+
+
+
+		//SETTING AND SAVING
 		membership1.setCustomer(customer1);
 		membership2.setCustomer(customer2);
 		membership3.setCustomer(customer3);
@@ -139,6 +150,17 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		memberInterface.save(membership3);
 		memberInterface.save(membership4);
 		memberInterface.save(membership5);
+
+		ticket1.setPassenger(customer1);
+		ticket1.setFlight(flight1);
+		ticket1.setSeat(seat1);
+
+		ticket2.setPassenger(customer2);
+		ticket1.setFlight(flight2);
+		ticket2.setSeat(seat2);
+
+		ticketInterface.save(ticket1);
+		ticketInterface.save(ticket2);
 
 
 		// aircraftInterface.findByowned(true).forEach(

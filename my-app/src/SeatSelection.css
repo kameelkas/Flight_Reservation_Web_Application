@@ -1,20 +1,24 @@
-.seat-selection {
+.seat-selection-container {
   display: flex;
-  justify-content: center; /* Center the seat selection horizontally */
-  align-items: center; /* Center the seat selection vertically */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.section {
-  margin: 10px;
-  text-align: center;
+.seat-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px; /* Spacing between rows */
 }
 
 .seat {
-  font-size: 12px;
-  padding: 5px;
-  margin: 2px;
+  width: 40px; /* Seat width */
+  height: 40px; /* Seat height */
+  margin: 5px; /* Spacing between seats */
+  border: 1px solid #000; /* Seat border */
+  background-color: #fff; /* Seat background color */
 }
 
-.selected {
-  background-color: rgb(63, 181, 63);
+.seat.selected {
+  background-color: #4caf50; /* Selected seat color */
 }

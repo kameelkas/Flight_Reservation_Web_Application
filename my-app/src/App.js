@@ -43,6 +43,9 @@ function App() {
     }
 
     getAllDestinations();
+    getAllFlightsForLocation();
+    getSeatPrice();
+
   };
 
   const getAllDestinations = async () => {
@@ -60,6 +63,42 @@ function App() {
     console.log(destList);
     setDestOptions(destList);
   };
+
+  const getSeatPrice = async () => {
+    const recieve = await fetch(
+      `http://localhost:8080/FlightApp/Ticket/GetPrice/2`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const seatPrice = await recieve.json();
+    console.log(seatPrice);
+  };
+
+  const getAllFlightsForLocation = async () => {
+    const recieve = await fetch(
+      `http://localhost:8080/FlightApp/Flight/GetAllFlightsByDestination/London`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const allFlightsOfLocation = await recieve.json();
+    console.log(allFlightsOfLocation);
+  };
+
+  //http://localhost:8080/FlightApp/Flight/GetAllFlightsByDestination/London
+
+
+
+  
 
   const handleModalClose = () => {
     setShowModal(false);
@@ -251,22 +290,13 @@ function App() {
                 onChange={(e) => setDepartureDate(e.target.value)}
               /> */}
               <label htmlFor="destination">Destination</label>
-              {/* <input
+              {<input
                 type="text"
                 id="destination"
                 value={destination}
                 onChange={(e) => setDestination(e.target.value)}
-              /> */}
-              <select value={selectedDest} onChange={(e) => setSelectedDest(e.target.value)}>
-                <option value="" disabled>
-                  Select a Destination
-                </option>
-                {destOptions.map((place, index) => (
-                  <option key={index} value={place}>
-                    {place}
-                  </option>
-                ))}
-              </select>
+              />}
+              
               {/* <label htmlFor="origin">Origin</label>
               <input
                 type="text"

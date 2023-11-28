@@ -86,11 +86,11 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		Seat seat4 = new Seat("D2", 4, 1, false);  // Economy seat in row 4, seat number D2
 		Seat seat5 = new Seat("E4", 5, 2, false);  // Business seat in row 5, seat number E4
 
-		Ticket ticket1 = new Ticket(150.0f);
-		Ticket ticket2 = new Ticket(200.0f);
-		Ticket ticket3 = new Ticket(180.0f);
-		Ticket ticket4 = new Ticket(220.0f);
-		Ticket ticket5 = new Ticket(190.0f);
+		Ticket ticket1 = new Ticket(150.0f, "false");
+		Ticket ticket2 = new Ticket(200.0f, "false");
+		Ticket ticket3 = new Ticket(180.0f, "false");
+		Ticket ticket4 = new Ticket(220.0f, "false");
+		Ticket ticket5 = new Ticket(190.0f, "false");
 		
 		Payment payment1 = new Payment("1234567890123456", "12/25", 123, 200);
 		Payment payment2 = new Payment("9876543210987654", "10/24", 456, 150);

@@ -19,6 +19,7 @@ public class Ticket {
     private int ticket_id;
 
     private float price;
+    private String ticket_cancalled;
 
     @OneToOne  //(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
@@ -34,8 +35,9 @@ public class Ticket {
 
 
     public Ticket() {};
-    public Ticket(float price){
+    public Ticket(float price, String tc){
         this.price = price;
+        this.ticket_cancalled = tc;
     }
 
     public void setPassenger(Customer customerPassedIn) {

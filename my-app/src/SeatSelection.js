@@ -1,62 +1,84 @@
 import React, { useState } from "react";
-import "./SeatSelection.css"; // Ensure your CSS file is correctly linked
+import "./SeatSelection.css"; // Import the CSS file for styling
 
-function SeatSelection({ onSeatSelect, onContinue }) {
-  const rows = 3; // Total number of rows
-  const seatsPerRow = 5; // Seats per row
+function SeatSelection({ onSeatSelect }) {
+  const rows = 3;
+  const seatsPerRow = 5;
+  const sections = 1; // Number of sections
   const [selectedSeat, setSelectedSeat] = useState(null);
 
-  const handleSeatClick = (row, seat) => {
-    const seatInfo = { row, seat };
-
-    // Toggle seat selection
+  const handleSeatClick = (section, row, seat) => {
+    // If the clicked seat is already selected, deselect it
     if (
       selectedSeat &&
+      selectedSeat.section === section &&
       selectedSeat.row === row &&
       selectedSeat.seat === seat
     ) {
-      setSelectedSeat(null); // Deselect if the same seat is clicked
+      setSelectedSeat(null);
+      onSeatSelect(null, null, null); // Notify the parent component of deselection
     } else {
-      setSelectedSeat(seatInfo); // Select new seat
+      setSelectedSeat({ section, row, seat });
+      onSeatSelect(section, row, seat); // Notify the parent component of the selected seat
     }
   };
 
   const handleContinue = () => {
-    if (selectedSeat) {
-      onSeatSelect(selectedSeat.row, selectedSeat.seat, true);
-    } else {
-      alert("Please select a seat first.");
-    }
+    onSeatSelect(
+      selectedSeat.section,
+      selectedSeat.row,
+      selectedSeat.seat,
+      true
+    ); // Adding a flag to indicate continuation
+  };
 
-    // Adding a flag to indicate continuation
+  const renderSeats = () => {
+    const seatMap = [];
+    for (let s = 0; s < sections; s++) {
+      const sectionRows = [];
+      for (let i = 0; i < rows; i++) {
+        const row = [];
+        for (let j = 0; j < seatsPerRow; j++) {
+          const seatNumber = j + 1;
+          const isSelected =
+            selectedSeat &&
+            selectedSeat.section === s &&
+            selectedSeat.row === i &&
+            selectedSeat.seat === j;
+          row.push(
+            <button
+              key={`seat-${s}-${i}-${j}`}
+              onClick={() => handleSeatClick(s, i, j)}
+              className={`seat ${isSelected ? "selected" : ""}`}
+            >
+              {`S${s + 1}-R${i + 1}-Seat${seatNumber}`}
+            </button>
+          );
+        }
+        sectionRows.push(
+          <div key={`row-${s}-${i}`} className="seat-row">
+            {row}
+          </div>
+        );
+      }
+      seatMap.push(
+        <div key={`section-${s}`} className="section">
+          <h2>Section {s + 1}</h2>
+          <div className="seat-map">{sectionRows}</div>
+        </div>
+      );
+    }
+    return seatMap;
   };
 
   return (
-    <div className="seat-selection-container">
-      {/* Seat Map */}
-      {Array.from({ length: rows }, (_, rowIndex) => (
-        <div key={rowIndex} className="seat-row">
-          {Array.from({ length: seatsPerRow }, (_, seatIndex) => (
-            <button
-              key={seatIndex}
-              className={`seat ${
-                selectedSeat?.row === rowIndex &&
-                selectedSeat?.seat === seatIndex
-                  ? "selected"
-                  : ""
-              }`}
-              onClick={() => handleSeatClick(rowIndex, seatIndex)}
-            >
-              {rowIndex + 1}-{seatIndex + 1}
-            </button>
-          ))}
-        </div>
-      ))}
-
-      {/* Continue Button */}
-      <button className="continue-button" onClick={handleContinue}>
-        Continue
-      </button>
+    <div className="seat-selection">
+      {renderSeats()}
+      {selectedSeat && (
+        <button className="continue-button" onClick={handleContinue}>
+          Continue
+        </button>
+      )}
     </div>
   );
 }

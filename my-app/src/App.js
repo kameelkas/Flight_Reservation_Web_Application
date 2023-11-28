@@ -53,9 +53,9 @@ function App() {
   };
 
   const handleTicketPurchase = () => {
-    console.log("Departure Date:", departureDate);
+    // console.log("Departure Date:", departureDate);
     console.log("Destination:", destination);
-    console.log("Origin:", origin);
+    // console.log("Origin:", origin);
     setShowTicketPurchaseForm(false);
     setShowSeatSelection(true);
   };
@@ -205,13 +205,13 @@ function App() {
           <div className="ticket-purchase-form">
             <h4>Purchase Ticket</h4>
             <form>
-              <label htmlFor="departureDate">Departure Date</label>
+              {/* <label htmlFor="departureDate">Departure Date</label>
               <input
                 type="date"
                 id="departureDate"
                 value={departureDate}
                 onChange={(e) => setDepartureDate(e.target.value)}
-              />
+              /> */}
               <label htmlFor="destination">Destination</label>
               <input
                 type="text"
@@ -219,13 +219,13 @@ function App() {
                 value={destination}
                 onChange={(e) => setDestination(e.target.value)}
               />
-              <label htmlFor="origin">Origin</label>
+              {/* <label htmlFor="origin">Origin</label>
               <input
                 type="text"
                 id="origin"
                 value={origin}
                 onChange={(e) => setOrigin(e.target.value)}
-              />
+              /> */}
               <button type="button" onClick={handleTicketPurchase}>
                 Next
               </button>

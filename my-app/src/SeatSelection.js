@@ -24,12 +24,12 @@ function SeatSelection({ onSeatSelect }) {
   };
 
   const handleContinue = () => {
-    onSeatSelect(
-      selectedSeat.section,
-      selectedSeat.row,
-      selectedSeat.seat,
-      true
-    ); // Adding a flag to indicate continuation
+    // Handle continue button action here
+    // You can trigger an action or proceed to the next step
+    // For now, it just deselects the seat
+    setSelectedSeat(null);
+    onSeatSelect(null, null, null); // Notify the parent component of deselection
+    // Add your logic to proceed after seat selection
   };
 
   const renderSeats = () => {

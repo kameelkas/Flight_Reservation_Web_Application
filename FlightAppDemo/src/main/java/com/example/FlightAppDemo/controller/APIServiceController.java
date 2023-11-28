@@ -58,6 +58,8 @@ public class APIServiceController {
         return "Customer Deleted";
     }
 
+    /*API Endpoints for Flight*/
+
     @GetMapping("/Flight/GetAllDestinations")
     public List<String> getAllDestinationDetails() {
         return flightService.getAllDestinations();
@@ -67,4 +69,6 @@ public class APIServiceController {
     public List<Flight> getFlightsByDestination(@PathVariable("destination") String destination) {
         return flightService.getFlightsByDestination(destination);
     }
+
+    /*API Endpoints for Ticket*/
 }

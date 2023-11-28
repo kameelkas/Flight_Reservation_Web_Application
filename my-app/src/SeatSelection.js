@@ -63,7 +63,7 @@ function SeatSelection({ onSeatSelect }) {
       }
       seatMap.push(
         <div key={`section-${s}`} className="section">
-          <h2>Section {s + 1}</h2>
+          <h2>Seat Map</h2>
           <div className="seat-map">{sectionRows}</div>
         </div>
       );

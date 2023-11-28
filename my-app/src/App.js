@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./App.css";
 import SeatSelection from "./SeatSelection";
+import Insurance from "./Insurance";
+import Payment from "./Payment";
 
 function App() {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -15,6 +17,8 @@ function App() {
   const [ticketId, setTicketId] = useState("");
   const [role, setRole] = useState(""); // State to store the selected role
   const [showSeatSelection, setShowSeatSelection] = useState(false);
+  const [showPayment, setShowPayment] = useState(false);
+  const [showInsurance, setShowInsurance] = useState(false);
 
   const handleButtonClick = (option) => {
     const lowerCaseOption = option.toLowerCase();
@@ -71,9 +75,23 @@ function App() {
     setDestination("");
     setOrigin("");
   };
-  const handleSeatSelect = (row, seat) => {
-    // Handle seat selection logic here
-    console.log(`Selected Seat: Row ${row} - Seat ${seat}`);
+
+  const handleSeatSelect = (section, row, seat, continueToInsurance) => {
+    if (continueToInsurance) {
+      setShowSeatSelection(false);
+      setShowInsurance(true);
+      // Save the selected seat info if necessary
+    }
+    // ... existing seat selection logic ...
+  };
+  const handlePaymentSubmit = (paymentDetails) => {
+    console.log("Payment Details:", paymentDetails);
+    // Handle the payment submission logic here
+  };
+
+  const handleInsuranceContinue = () => {
+    setShowInsurance(false);
+    setShowPayment(true);
   };
 
   return (
@@ -240,6 +258,10 @@ function App() {
           selectedOption === "purchase ticket" && (
             <SeatSelection onSeatSelect={handleSeatSelect} />
           )}
+        {showInsurance && (
+          <Insurance onInsuranceSubmit={handleInsuranceContinue} />
+        )}
+        {showPayment && <Payment onPaymentSubmit={handlePaymentSubmit} />}
       </div>
     </div>
   );

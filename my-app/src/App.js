@@ -42,7 +42,7 @@ function App() {
       setSelectedOption(lowerCaseOption);
     }
 
-
+    getAllDestinations();
   };
 
   const getAllDestinations = async () => {

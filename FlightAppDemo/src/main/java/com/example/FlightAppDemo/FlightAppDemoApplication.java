@@ -80,11 +80,11 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		Membership membership4 = new Membership("2023-04-10", "101 Pine St", "45678", "City4", "Country4", "2023-12-31");
 		Membership membership5 = new Membership("2023-05-05", "222 Maple St", "56789", "City5", "Country5", "2023-12-31");
 
-		Seat seat1 = new Seat("A1", 1, 1);  // Economy seat in row 1, seat number A1
-		Seat seat2 = new Seat("B3", 2, 2);  // Business seat in row 2, seat number B3
-		Seat seat3 = new Seat("C5", 3, 3);  // First class seat in row 3, seat number C5
-		Seat seat4 = new Seat("D2", 4, 1);  // Economy seat in row 4, seat number D2
-		Seat seat5 = new Seat("E4", 5, 2);  // Business seat in row 5, seat number E4
+		Seat seat1 = new Seat("A1", 1, 1, false);  // Economy seat in row 1, seat number A1
+		Seat seat2 = new Seat("B3", 2, 2, false);  // Business seat in row 2, seat number B3
+		Seat seat3 = new Seat("C5", 3, 3, false);  // First class seat in row 3, seat number C5
+		Seat seat4 = new Seat("D2", 4, 1, false);  // Economy seat in row 4, seat number D2
+		Seat seat5 = new Seat("E4", 5, 2, false);  // Business seat in row 5, seat number E4
 
 		Ticket ticket1 = new Ticket(150.0f);
 		Ticket ticket2 = new Ticket(200.0f);
@@ -131,7 +131,7 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		flightInterface.save(flight5);
 
 		seat1.setFlight(flight1);
-		seat2.setFlight(flight2);
+		seat2.setFlight(flight1);
 		seat3.setFlight(flight3);
 		seat4.setFlight(flight4);
 		seat5.setFlight(flight5);

@@ -21,6 +21,7 @@ public class Seat {
     private String seatNumber;
     private int seatRow;
     private int seatType;   //for seat type 1 for economy, 2 for business, 3 for first class
+    public boolean seat_taken;
     
     @ManyToOne  //(cascade = CascadeType.ALL)   //A flight can have multiple crew members, but each crew member is assigned to only one flight at a time. 
     @JoinColumn(name = "flight_id", referencedColumnName = "flight_id")
@@ -28,10 +29,11 @@ public class Seat {
 
     public Seat() {};
 
-    public Seat(String seatNum, int seatrow, int seatType) {
+    public Seat(String seatNum, int seatrow, int seatType, boolean seatTaken) {
         this.seatNumber = seatNum;
         this.seatRow = seatrow;
         this.seatType = seatType;
+        this.seat_taken = seatTaken;
     }
 
     public void setFlight(Flight flightPassedIn){

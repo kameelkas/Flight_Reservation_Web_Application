@@ -16,10 +16,12 @@ public class APIServiceController {
 
     /*Instances of Service Classes*/
     CustomerService customerService;
+    FlightService flightService;
 
     /*Aggregate service instances in ctor of the controller*/
-    public APIServiceController(CustomerService customerServ){  //passed in so we can call the service function that perform DB operations
+    public APIServiceController(CustomerService customerServ, FlightService flightServ){  //passed in so we can call the service function that perform DB operations
         this.customerService = customerServ;
+        flightService = flightServ;
     }
 
     /*API Endpoints for Customer*/
@@ -54,5 +56,15 @@ public class APIServiceController {
     public String deleteCustomerDetails(Integer customerID){
         customerService.deleteCustomer(customerID);
         return "Customer Deleted";
+    }
+
+    @GetMapping("/Flight/GetAllDestinations")
+    public List<String> getAllDestinationDetails() {
+        return flightService.getAllDestinations();
+    }
+
+    @GetMapping("/Flight/GetAllFlightsByDestination/{destination}")
+    public List<Flight> getFlightsByDestination(@PathVariable("destination") String destination) {
+        return flightService.getFlightsByDestination(destination);
     }
 }

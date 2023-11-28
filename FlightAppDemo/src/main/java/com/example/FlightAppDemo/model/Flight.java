@@ -8,9 +8,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
-public class Flight {  //unidirectional to aircraft, 
+@Table(name="Flight")
+public class Flight {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,16 +29,11 @@ public class Flight {  //unidirectional to aircraft,
     private String destinationCity;
     private String destinationCountry;
     private String destinationAirport;
-    // private Aircraft airplaneUsed;
-
-    @ManyToOne //(cascade = CascadeType.ALL)  //many flights to one aircraft
-    @JoinColumn(name = "aircraft_id", referencedColumnName = "aircraft_id")
-    private Aircraft aircraft;
 
     public Flight() {};
     public Flight(String depDate, String depTime, String arrDate, String ArrTime, String depCity,
             String depCntry, String depAirport, String destCity, String destCntry, String destAirport) {
-        //this.flightID = fID;
+        
         this.departureDate = depDate;
         this.departureTime = depTime;
         this.arrivalDate = arrDate;
@@ -49,12 +46,107 @@ public class Flight {  //unidirectional to aircraft,
         this.destinationAirport = destAirport;
     }
 
-    // public int getFlightID() {
-    //     return this.flightID;
-    // }
+    @ManyToOne
+    @JoinColumn(name = "aircraft_id", referencedColumnName = "aircraft_id")
+    private Aircraft aircraft;
 
-    public void setAircraft(Aircraft planePassedIn) {
-        this.aircraft = planePassedIn;
+    // Getters
+    public int getFlight_ID() {
+        return flight_ID;
     }
 
+    public String getDepartureDate() {
+        return departureDate;
+    }
+
+    public String getDepartureTime() {
+        return departureTime;
+    }
+
+    public String getArrivalDate() {
+        return arrivalDate;
+    }
+
+    public String getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public String getDepartureCity() {
+        return departureCity;
+    }
+
+    public String getDepartureCountry() {
+        return departureCountry;
+    }
+
+    public String getDepartureAirport() {
+        return departureAirport;
+    }
+
+    public String getDestinationCity() {
+        return destinationCity;
+    }
+
+    public String getDestinationCountry() {
+        return destinationCountry;
+    }
+
+    public String getDestinationAirport() {
+        return destinationAirport;
+    }
+
+    public Aircraft getAircraft() {
+        return aircraft;
+    }
+
+    // Setters
+    public void setFlight_ID(int flight_ID) {
+        this.flight_ID = flight_ID;
+    }
+
+    public void setDepartureDate(String departureDate) {
+        this.departureDate = departureDate;
+    }
+
+    public void setDepartureTime(String departureTime) {
+        this.departureTime = departureTime;
+    }
+
+    public void setArrivalDate(String arrivalDate) {
+        this.arrivalDate = arrivalDate;
+    }
+
+    public void setArrivalTime(String arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
+
+    public void setDepartureCity(String departureCity) {
+        this.departureCity = departureCity;
+    }
+
+    public void setDepartureCountry(String departureCountry) {
+        this.departureCountry = departureCountry;
+    }
+
+    public void setDepartureAirport(String departureAirport) {
+        this.departureAirport = departureAirport;
+    }
+
+    public void setDestinationCity(String destinationCity) {
+        this.destinationCity = destinationCity;
+    }
+
+    public void setDestinationCountry(String destinationCountry) {
+        this.destinationCountry = destinationCountry;
+    }
+
+    public void setDestinationAirport(String destinationAirport) {
+        this.destinationAirport = destinationAirport;
+    }
+
+    public void setAircraft(Aircraft aircraft) {
+        this.aircraft = aircraft;
+    }
 }
+
+

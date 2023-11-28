@@ -14,9 +14,6 @@ import java.util.*;
 public class CustomerServiceImpl implements CustomerService {
     CustomerRepository customerRepository; //object needed as it extends jparepo to perform crud operations and whatnot for db stuff
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
     public CustomerServiceImpl(CustomerRepository customerRepo){  //ctor needs to initialize using aggregation for being able to perform db operations
         this.customerRepository = customerRepo;
     }

@@ -19,6 +19,8 @@ function App() {
   const [showSeatSelection, setShowSeatSelection] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
   const [showInsurance, setShowInsurance] = useState(false);
+  const [destOptions, setDestOptions] = ([]);
+  const [selectedDest, setSelectedDest] = useState('');
 
   const handleButtonClick = (option) => {
     const lowerCaseOption = option.toLowerCase();
@@ -39,6 +41,24 @@ function App() {
       setShowModal(false);
       setSelectedOption(lowerCaseOption);
     }
+
+
+  };
+
+  const getAllDestinations = async () => {
+    const recieve = await fetch(
+      `http://localhost:8080/FlightApp/Flight/GetAllDestinations`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const destList = await recieve.json();
+    console.log(destList);
+    setDestOptions(destList);
   };
 
   const handleModalClose = () => {
@@ -134,9 +154,9 @@ function App() {
         )}
 
         {loggedInUser &&
-        !showTicketPurchaseForm &&
-        selectedOption !== "cancel ticket" &&
-        selectedOption !== "purchase ticket" ? (
+          !showTicketPurchaseForm &&
+          selectedOption !== "cancel ticket" &&
+          selectedOption !== "purchase ticket" ? (
           <div className="ticket-options">
             <button
               className="btn btn-primary"
@@ -231,12 +251,22 @@ function App() {
                 onChange={(e) => setDepartureDate(e.target.value)}
               /> */}
               <label htmlFor="destination">Destination</label>
-              <input
+              {/* <input
                 type="text"
                 id="destination"
                 value={destination}
                 onChange={(e) => setDestination(e.target.value)}
-              />
+              /> */}
+              <select value={selectedDest} onChange={(e) => setSelectedDest(e.target.value)}>
+                <option value="" disabled>
+                  Select a Destination
+                </option>
+                {destOptions.map((place, index) => (
+                  <option key={index} value={place}>
+                    {place}
+                  </option>
+                ))}
+              </select>
               {/* <label htmlFor="origin">Origin</label>
               <input
                 type="text"

@@ -22,12 +22,13 @@ function SeatSelection({ onSeatSelect, onContinue }) {
   };
 
   const handleContinue = () => {
-    // Call onContinue only if a seat is selected
     if (selectedSeat) {
-      onContinue(selectedSeat);
+      onSeatSelect(selectedSeat.row, selectedSeat.seat, true);
     } else {
       alert("Please select a seat first.");
     }
+
+    // Adding a flag to indicate continuation
   };
 
   return (

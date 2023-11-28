@@ -15,6 +15,8 @@ function App() {
   const [ticketId, setTicketId] = useState("");
   const [role, setRole] = useState(""); // State to store the selected role
   const [showSeatSelection, setShowSeatSelection] = useState(false);
+  const [showInsuranceSelection, setShowInsuranceSelection] = useState(false);
+
 
   const handleButtonClick = (option) => {
     const lowerCaseOption = option.toLowerCase();
@@ -74,7 +76,14 @@ function App() {
   const handleSeatSelect = (row, seat) => {
     // Handle seat selection logic here
     console.log(`Selected Seat: Row ${row} - Seat ${seat}`);
+    // setShowInsuranceSelection(true);
   };
+
+  const handleContinueToInsurance = () => {
+    setShowSeatSelection(false);
+    setShowInsuranceSelection(true);
+  }
+
 
   return (
     <div className="container">
@@ -235,11 +244,60 @@ function App() {
         {/* {!showTicketPurchaseForm && selectedOption === "purchase ticket" && (
           <SeatSelection onSeatSelect={handleSeatSelect} />
         )} */}
+        
         {showSeatSelection &&
           !showTicketPurchaseForm &&
           selectedOption === "purchase ticket" && (
-            <SeatSelection onSeatSelect={handleSeatSelect} />
-          )}
+            <SeatSelection
+              onSeatSelect={handleSeatSelect}
+              onContinueToInsurance={handleContinueToInsurance}  
+            />
+        )}
+
+        {showInsuranceSelection && (
+          <div className="insurance-selection">
+            <h2>Insurance Selection</h2>
+            <br></br>
+            <div className="flex-container">
+              <div className="left-div">
+                <h4>Fully Covered</h4>
+                <br></br>
+                <div>
+                  - Cancel or change flight for no additional fees
+                  <br></br>
+                  - 1 free checked bag
+                  <br></br>
+                  - Free seat selection
+                  <br></br>
+                  - Fully refundable
+                  <br></br>
+                  <br></br>
+                  <button>Select</button>
+                </div>
+              </div>
+              <div className="right-div">
+                <h4>Partially Covered</h4>
+                <br></br>
+                <div>
+                  - Cancel or change flight for a fee
+                  <br></br>
+                  - Checked bag for a fee
+                  <br></br>
+                  - Seat selection for a fee
+                  <br></br>
+                  - Partially refundable
+                  <br></br>
+                  <br></br>
+                  <button>Select</button>
+                </div>
+              </div>
+            </div>
+            <br></br>
+            <button>Skip Insurance and Pay</button>
+            
+          </div>
+        )}
+
       </div>
     </div>
   );

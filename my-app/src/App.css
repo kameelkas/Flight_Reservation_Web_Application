@@ -89,3 +89,27 @@
   padding-left: 100px;
   padding-right: 100px;
 }
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: left;
+  text-align: center;
+}
+
+.left-div {
+  width: 50%;
+  height: 50vh;
+  padding: 10px;
+  border: 1px solid #ccc;
+  /* box-sizing: border-box; */
+}
+
+.right-div {
+  width: 50%;
+  height: 50vh;
+  padding: 10px;
+  border: 1px solid #ccc;
+  /* box-sizing: border-box; */
+}

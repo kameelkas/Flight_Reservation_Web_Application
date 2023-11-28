@@ -17,11 +17,13 @@ public class APIServiceController {
     /*Instances of Service Classes*/
     CustomerService customerService;
     FlightService flightService;
+    TicketService ticketService;
 
     /*Aggregate service instances in ctor of the controller*/
-    public APIServiceController(CustomerService customerServ, FlightService flightServ){  //passed in so we can call the service function that perform DB operations
+    public APIServiceController(CustomerService customerServ, FlightService flightServ, TicketService ticketServ){  //passed in so we can call the service function that perform DB operations
         this.customerService = customerServ;
-        flightService = flightServ;
+        this.flightService = flightServ;
+        this.ticketService = ticketServ;
     }
 
     /*API Endpoints for Customer*/
@@ -70,5 +72,9 @@ public class APIServiceController {
         return flightService.getFlightsByDestination(destination);
     }
 
-    /*API Endpoints for Ticket*/
+    /*API Endpoints for Ticket*/ //mostly to get price based on seat_id
+    @GetMapping("/Ticket/GetPrice/{SEAT_ID}")
+    public Integer getPriceBySeatID(@PathVariable("SEAT_ID") Integer seatID) {
+        return ticketService.getPriceBySID(seatID);
+    }
 }

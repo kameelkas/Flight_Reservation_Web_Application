@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./SeatSelection.css"; // Make sure to style your seats and rows appropriately in CSS
+import "./SeatSelection.css"; // Ensure your CSS file is correctly linked
 
-function SeatSelection({ onSeatSelect }) {
+function SeatSelection({ onSeatSelect, onContinue }) {
   const rows = 3; // Total number of rows
   const seatsPerRow = 5; // Seats per row
   const [selectedSeat, setSelectedSeat] = useState(null);
@@ -16,15 +16,23 @@ function SeatSelection({ onSeatSelect }) {
       selectedSeat.seat === seat
     ) {
       setSelectedSeat(null); // Deselect if the same seat is clicked
-      onSeatSelect(null);
     } else {
       setSelectedSeat(seatInfo); // Select new seat
-      onSeatSelect(seatInfo);
+    }
+  };
+
+  const handleContinue = () => {
+    // Call onContinue only if a seat is selected
+    if (selectedSeat) {
+      onContinue(selectedSeat);
+    } else {
+      alert("Please select a seat first.");
     }
   };
 
   return (
     <div className="seat-selection-container">
+      {/* Seat Map */}
       {Array.from({ length: rows }, (_, rowIndex) => (
         <div key={rowIndex} className="seat-row">
           {Array.from({ length: seatsPerRow }, (_, seatIndex) => (
@@ -43,6 +51,11 @@ function SeatSelection({ onSeatSelect }) {
           ))}
         </div>
       ))}
+
+      {/* Continue Button */}
+      <button className="continue-button" onClick={handleContinue}>
+        Continue
+      </button>
     </div>
   );
 }

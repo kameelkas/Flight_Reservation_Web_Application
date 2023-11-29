@@ -1,10 +1,6 @@
 package com.example.FlightAppDemo;
 
 import org.springframework.stereotype.Service;
-
-import com.example.FlightAppDemo.Service.SeatService;
-import com.example.FlightAppDemo.controller.SeatRepository;
-
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;

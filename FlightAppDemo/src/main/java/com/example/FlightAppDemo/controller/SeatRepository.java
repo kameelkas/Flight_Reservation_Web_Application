@@ -17,4 +17,6 @@ public interface SeatRepository extends JpaRepository<Seat, Integer> {
     @Modifying
     @Query("UPDATE Seat s SET s.seat_taken = true WHERE s.seatID = :seatId")
     void setSeatTaken(Integer seatId);
+
+    List<Seat> findAll();
 }

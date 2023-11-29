@@ -85,4 +85,9 @@ public class APIServiceController {
     public void postSeatTaken(@PathVariable("seatID") Integer seat_ID) {
         seatService.setSeatTaken(seat_ID);
     }
+
+    @GetMapping("/Seat/GetAllSeats")
+    public List<Seat> getAllSeatDetails() {
+        return seatService.getAllSeats();
+    }
 }

@@ -20,4 +20,8 @@ public class SeatServiceImpl implements SeatService {
     public void setSeatTaken(Integer seatID) {
         seatRepository.setSeatTaken(seatID);
     }
+
+    public List<Seat> getAllSeats() {
+        return seatRepository.findAll();
+    }
 }

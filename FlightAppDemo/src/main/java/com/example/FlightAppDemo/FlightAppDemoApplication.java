@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.event.EventListener;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 
 
 @SpringBootApplication  //combination of three annotations
@@ -33,8 +35,16 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 	@Autowired
 	PaymentRepository paymentInterface;
 
+	@Autowired 
+	private EmailSenderService senderService;
+
 	public static void main(String[] args) {
 		SpringApplication.run(FlightAppDemoApplication.class, args);
+	}
+
+	@EventListener(ApplicationReadyEvent.class)
+	public void sendMail(){
+		senderService.sendEmail("rohil1710@gmail.com", "This is the subject", "This is the Body of the email");
 	}
 
 	@Override

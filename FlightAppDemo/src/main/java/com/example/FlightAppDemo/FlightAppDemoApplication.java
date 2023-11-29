@@ -77,6 +77,9 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		Flight flight5 = new Flight("2023-12-05", "16:45", "2023-12-05", "19:20", "Moscow", "Russia", "SVO",
 				"Singapore", "Singapore", "Changi");
 
+		Flight flight6 = new Flight("2023-12-06", "07:30", "2023-12-06", "13:45", "New York", "USA", "JFK", "Dubai", "UAE", "DXB");
+
+
 		Crew crew1 = new Crew(1, "Alice", "Pilot");
 		Crew crew2 = new Crew(2, "Bob", "Co-Pilot");
 		Crew crew3 = new Crew(3, "Charlie", "Flight Attendant");
@@ -184,6 +187,7 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		flightInterface.save(flight3);
 		flightInterface.save(flight4);
 		flightInterface.save(flight5);
+		flightInterface.save(flight6);
 
 		// Set all seats to flight1
 		seat1.setFlight(flight1);

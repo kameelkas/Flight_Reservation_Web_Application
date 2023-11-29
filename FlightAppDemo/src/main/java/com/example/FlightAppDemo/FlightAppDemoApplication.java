@@ -161,7 +161,7 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		flight2.setAircraft(aircraft2);
 		flight3.setAircraft(aircraft3);
 		flight4.setAircraft(aircraft4);
-		flight5.setAircraft(aircraft5);
+		flight5.setAircraft(aircraft5);  //lol
 
 		crew1.setFlight(flight1);
 		crew2.setFlight(flight2);

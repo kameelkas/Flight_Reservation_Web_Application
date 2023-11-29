@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import "./App.css";
 import SeatSelection from "./SeatSelection";
 import Insurance from "./Insurance";
@@ -19,8 +19,9 @@ function App() {
   const [showSeatSelection, setShowSeatSelection] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
   const [showInsurance, setShowInsurance] = useState(false);
-  const [destOptions, setDestOptions] = ([]);
+  const [destOptions, setDestOptions] = useState([]);
   const [selectedDest, setSelectedDest] = useState('');
+  
 
   const handleButtonClick = (option) => {
     const lowerCaseOption = option.toLowerCase();
@@ -48,22 +49,30 @@ function App() {
 
   };
 
+  useEffect(() => {
+    getAllDestinations();
+  }, []);
+
+
   const getAllDestinations = async () => {
-    const recieve = await fetch(
-      `http://localhost:8080/FlightApp/Flight/GetAllDestinations`,
-      {
+    try {
+      const response = await fetch(`http://localhost:8080/FlightApp/Flight/GetAllDestinations`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-    );
-
-    const destList = await recieve.json();
-    console.log(destList);
-    setDestOptions(destList);
+      const destList = await response.json();
+      setDestOptions(destList); // Update state here
+    } catch (error) {
+      console.error('There was a problem with the fetch operation:', error);
+    }
   };
 
+  
   const getSeatPrice = async () => {
     const recieve = await fetch(
       `http://localhost:8080/FlightApp/Ticket/GetPrice/2`,
@@ -290,12 +299,28 @@ function App() {
                 onChange={(e) => setDepartureDate(e.target.value)}
               /> */}
               <label htmlFor="destination">Destination</label>
-              {<input
+              {/* {<input
                 type="text"
                 id="destination"
                 value={destination}
                 onChange={(e) => setDestination(e.target.value)}
-              />}
+              />} */}
+          
+            <select 
+              className="form-select" 
+              id="inputGroupSelect01" 
+              value={selectedDest}
+              onChange={(e) => setSelectedDest(e.target.value)}
+            >
+              <option value="">Choose...</option>
+              {destOptions.map((destination, index) => (
+                <option key={index} value={destination}>
+                  {destination}
+                </option>
+              ))}
+            </select>
+
+
               
               {/* <label htmlFor="origin">Origin</label>
               <input

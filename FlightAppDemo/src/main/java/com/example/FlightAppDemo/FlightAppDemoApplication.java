@@ -42,10 +42,10 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		SpringApplication.run(FlightAppDemoApplication.class, args);
 	}
 
-	@EventListener(ApplicationReadyEvent.class)
-	public void sendMail(){
-		senderService.sendEmail("rohil1710@gmail.com", "This is the subject", "This is the Body of the email");
-	}
+	// @EventListener(ApplicationReadyEvent.class)
+	//  public void sendMail(){
+	// 	senderService.sendEmail("rohil1710@gmail.com", "This is the subject", "This is the Body of the email");
+	// }
 
 	@Override
 	public void run(String... args){

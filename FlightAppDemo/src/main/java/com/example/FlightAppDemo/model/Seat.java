@@ -23,7 +23,7 @@ public class Seat {
     private int seatType;   //for seat type 1 for economy, 2 for business, 3 for first class
     public boolean seat_taken;
     
-    @ManyToOne  //(cascade = CascadeType.ALL)   //A flight can have multiple crew members, but each crew member is assigned to only one flight at a time. 
+    @ManyToOne //A flight can have multiple crew members, but each crew member is assigned to only one flight at a time. 
     @JoinColumn(name = "flight_id", referencedColumnName = "flight_id")
     private Flight flight;
 
@@ -39,8 +39,6 @@ public class Seat {
     public void setFlight(Flight flightPassedIn){
         this.flight  = flightPassedIn;  //what flight that crew member operates on, can be null if ground crew or something
     }
-    // public int getSeatID() {
-    //     return this.seatID;
-    // }
+    
 
 }

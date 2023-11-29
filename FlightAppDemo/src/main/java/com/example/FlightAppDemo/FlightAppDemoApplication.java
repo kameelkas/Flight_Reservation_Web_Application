@@ -80,7 +80,7 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		Membership membership4 = new Membership("2023-04-10", "101 Pine St", "45678", "City4", "Country4", "2023-12-31");
 		Membership membership5 = new Membership("2023-05-05", "222 Maple St", "56789", "City5", "Country5", "2023-12-31");
 
-		Seat seat1 = new Seat("A1", 1, 1, false);  // Economy seat in row 1, seat number A1
+		Seat seat1 = new Seat("A1", 1, 1, true);  // Economy seat in row 1, seat number A1
 		Seat seat2 = new Seat("B3", 2, 2, false);  // Business seat in row 2, seat number B3
 		Seat seat3 = new Seat("C5", 3, 3, false);  // First class seat in row 3, seat number C5
 		Seat seat4 = new Seat("D2", 4, 1, false);  // Economy seat in row 4, seat number D2

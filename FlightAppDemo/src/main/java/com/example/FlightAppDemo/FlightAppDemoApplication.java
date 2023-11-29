@@ -5,8 +5,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
-
 @SpringBootApplication  //combination of three annotations
 public class FlightAppDemoApplication implements CommandLineRunner{
 
@@ -80,11 +78,22 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		Membership membership4 = new Membership("2023-04-10", "101 Pine St", "45678", "City4", "Country4", "2023-12-31");
 		Membership membership5 = new Membership("2023-05-05", "222 Maple St", "56789", "City5", "Country5", "2023-12-31");
 
-		Seat seat1 = new Seat("A1", 1, 1, true);  // Economy seat in row 1, seat number A1
-		Seat seat2 = new Seat("B3", 2, 2, false);  // Business seat in row 2, seat number B3
-		Seat seat3 = new Seat("C5", 3, 3, false);  // First class seat in row 3, seat number C5
-		Seat seat4 = new Seat("D2", 4, 1, false);  // Economy seat in row 4, seat number D2
-		Seat seat5 = new Seat("E4", 5, 2, false);  // Business seat in row 5, seat number E4
+		Seat seat1 = new Seat("1A", 1, 1, true);  // Economy seat in row 1, seat number A1
+		Seat seat2 = new Seat("1B", 1, 1, false);  // Business seat in row 2, seat number B3
+		Seat seat3 = new Seat("1C", 1, 1, false);  // First class seat in row 3, seat number C5
+		Seat seat4 = new Seat("2A", 2, 2, false);  // Economy seat in row 4, seat number D2
+		Seat seat5 = new Seat("2B", 2, 2, false);  // Business seat in row 5, seat number E4
+		Seat seat6 = new Seat("2C", 2, 2, false);
+		Seat seat7 = new Seat("3A", 3, 3, false);
+		Seat seat8 = new Seat("3B", 3, 3, false);
+		Seat seat9 = new Seat("3C", 3, 3, false);
+		Seat seat10 = new Seat("4A", 4, 3, false);
+		Seat seat11 = new Seat("4B", 4, 3, false);
+		Seat seat12 = new Seat("4C", 4, 3, false);
+		Seat seat13 = new Seat("5A", 5, 3, false);
+		Seat seat14 = new Seat("5B", 5, 3, false);
+		Seat seat15 = new Seat("5C", 5, 3, false);
+
 
 		Ticket ticket1 = new Ticket(150.0f, "false");
 		Ticket ticket2 = new Ticket(200.0f, "false");
@@ -130,17 +139,73 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		flightInterface.save(flight4);
 		flightInterface.save(flight5);
 
+		// Set all seats to flight1
 		seat1.setFlight(flight1);
 		seat2.setFlight(flight1);
+		seat3.setFlight(flight1);
+		seat4.setFlight(flight1);
+		seat5.setFlight(flight1);
+		seat6.setFlight(flight1);
+		seat7.setFlight(flight1);
+		seat8.setFlight(flight1);
+		seat9.setFlight(flight1);
+		seat10.setFlight(flight1);
+		seat11.setFlight(flight1);
+		seat12.setFlight(flight1);
+		seat13.setFlight(flight1);
+		seat14.setFlight(flight1);
+		seat15.setFlight(flight1);
+
+		// Set all seats to flight2
+		seat1.setFlight(flight2);
+		seat2.setFlight(flight2);
+		seat3.setFlight(flight2);
+		seat4.setFlight(flight2);
+		seat5.setFlight(flight2);
+		seat6.setFlight(flight2);
+		seat7.setFlight(flight2);
+		seat8.setFlight(flight2);
+		seat9.setFlight(flight2);
+		seat10.setFlight(flight2);
+		seat11.setFlight(flight2);
+		seat12.setFlight(flight2);
+		seat13.setFlight(flight2);
+		seat14.setFlight(flight2);
+		seat15.setFlight(flight2);
+
+		// Set all seats to flight3
+		seat1.setFlight(flight3);
+		seat2.setFlight(flight3);
 		seat3.setFlight(flight3);
-		seat4.setFlight(flight4);
-		seat5.setFlight(flight5);
+		seat4.setFlight(flight3);
+		seat5.setFlight(flight3);
+		seat6.setFlight(flight3);
+		seat7.setFlight(flight3);
+		seat8.setFlight(flight3);
+		seat9.setFlight(flight3);
+		seat10.setFlight(flight3);
+		seat11.setFlight(flight3);
+		seat12.setFlight(flight3);
+		seat13.setFlight(flight3);
+		seat14.setFlight(flight3);
+		seat15.setFlight(flight3);
+
 
 		seatInterface.save(seat1);
 		seatInterface.save(seat2);
 		seatInterface.save(seat3);
 		seatInterface.save(seat4);
 		seatInterface.save(seat5);
+		seatInterface.save(seat6);
+		seatInterface.save(seat7);
+		seatInterface.save(seat8);
+		seatInterface.save(seat9);
+		seatInterface.save(seat10);
+		seatInterface.save(seat11);
+		seatInterface.save(seat12);
+		seatInterface.save(seat13);
+		seatInterface.save(seat14);
+		seatInterface.save(seat15);
 
 		crewInterface.save(crew1);
 		crewInterface.save(crew2);

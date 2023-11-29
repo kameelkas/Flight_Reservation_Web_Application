@@ -5,6 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+
 @SpringBootApplication  //combination of three annotations
 public class FlightAppDemoApplication implements CommandLineRunner{
 
@@ -94,6 +95,41 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		Seat seat14 = new Seat("5B", 5, 3, false);
 		Seat seat15 = new Seat("5C", 5, 3, false);
 
+		// Seats 16 to 30
+		Seat seat16 = new Seat("1A", 1, 3, false);
+		Seat seat17 = new Seat("1B", 1, 3, false);
+		Seat seat18 = new Seat("1C", 1, 3, false);
+		Seat seat19 = new Seat("2A", 2, 3, false);
+		Seat seat20 = new Seat("2B", 2, 3, false);
+		Seat seat21 = new Seat("2C", 2, 3, false);
+		Seat seat22 = new Seat("3A", 3, 3, false);
+		Seat seat23 = new Seat("3B", 3, 3, false);
+		Seat seat24 = new Seat("3C", 3, 3, false);
+		Seat seat25 = new Seat("4A", 4, 3, false);
+		Seat seat26 = new Seat("4B", 4, 3, false);
+		Seat seat27 = new Seat("4C", 4, 3, false);
+		Seat seat28 = new Seat("5A", 5, 3, false);
+		Seat seat29 = new Seat("5B", 5, 3, false);
+		Seat seat30 = new Seat("5C", 5, 3, false);
+
+		// Seats 31 to 45
+		Seat seat31 = new Seat("1A", 1, 3, false);
+		Seat seat32 = new Seat("1B", 1, 3, false);
+		Seat seat33 = new Seat("1C", 1, 3, false);
+		Seat seat34 = new Seat("2A", 2, 3, false);
+		Seat seat35 = new Seat("2B", 2, 3, false);
+		Seat seat36 = new Seat("2C", 2, 3, false);
+		Seat seat37 = new Seat("3A", 3, 3, false);
+		Seat seat38 = new Seat("3B", 3, 3, false);
+		Seat seat39 = new Seat("3C", 3, 3, false);
+		Seat seat40 = new Seat("4A", 4, 3, false);
+		Seat seat41 = new Seat("4B", 4, 3, false);
+		Seat seat42 = new Seat("4C", 4, 3, false);
+		Seat seat43 = new Seat("5A", 5, 3, false);
+		Seat seat44 = new Seat("5B", 5, 3, false);
+		Seat seat45 = new Seat("5C", 5, 3, false);
+
+
 
 		Ticket ticket1 = new Ticket(150.0f, "false");
 		Ticket ticket2 = new Ticket(200.0f, "false");
@@ -157,38 +193,40 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		seat15.setFlight(flight1);
 
 		// Set all seats to flight2
-		seat1.setFlight(flight2);
-		seat2.setFlight(flight2);
-		seat3.setFlight(flight2);
-		seat4.setFlight(flight2);
-		seat5.setFlight(flight2);
-		seat6.setFlight(flight2);
-		seat7.setFlight(flight2);
-		seat8.setFlight(flight2);
-		seat9.setFlight(flight2);
-		seat10.setFlight(flight2);
-		seat11.setFlight(flight2);
-		seat12.setFlight(flight2);
-		seat13.setFlight(flight2);
-		seat14.setFlight(flight2);
-		seat15.setFlight(flight2);
+		seat16.setFlight(flight2);
+		seat17.setFlight(flight2);
+		seat18.setFlight(flight2);
+		seat19.setFlight(flight2);
+		seat20.setFlight(flight2);
+		seat21.setFlight(flight2);
+		seat22.setFlight(flight2);
+		seat23.setFlight(flight2);
+		seat24.setFlight(flight2);
+		seat25.setFlight(flight2);
+		seat26.setFlight(flight2);
+		seat27.setFlight(flight2);
+		seat28.setFlight(flight2);
+		seat29.setFlight(flight2);
+		seat30.setFlight(flight2);
+
 
 		// Set all seats to flight3
-		seat1.setFlight(flight3);
-		seat2.setFlight(flight3);
-		seat3.setFlight(flight3);
-		seat4.setFlight(flight3);
-		seat5.setFlight(flight3);
-		seat6.setFlight(flight3);
-		seat7.setFlight(flight3);
-		seat8.setFlight(flight3);
-		seat9.setFlight(flight3);
-		seat10.setFlight(flight3);
-		seat11.setFlight(flight3);
-		seat12.setFlight(flight3);
-		seat13.setFlight(flight3);
-		seat14.setFlight(flight3);
-		seat15.setFlight(flight3);
+		seat31.setFlight(flight3);
+		seat32.setFlight(flight3);
+		seat33.setFlight(flight3);
+		seat34.setFlight(flight3);
+		seat35.setFlight(flight3);
+		seat36.setFlight(flight3);
+		seat37.setFlight(flight3);
+		seat38.setFlight(flight3);
+		seat39.setFlight(flight3);
+		seat40.setFlight(flight3);
+		seat41.setFlight(flight3);
+		seat42.setFlight(flight3);
+		seat43.setFlight(flight3);
+		seat44.setFlight(flight3);
+		seat45.setFlight(flight3);
+
 
 
 		seatInterface.save(seat1);
@@ -206,6 +244,37 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		seatInterface.save(seat13);
 		seatInterface.save(seat14);
 		seatInterface.save(seat15);
+		seatInterface.save(seat16);
+		seatInterface.save(seat17);
+		seatInterface.save(seat18);
+		seatInterface.save(seat19);
+		seatInterface.save(seat20);
+		seatInterface.save(seat21);
+		seatInterface.save(seat22);
+		seatInterface.save(seat23);
+		seatInterface.save(seat24);
+		seatInterface.save(seat25);
+		seatInterface.save(seat26);
+		seatInterface.save(seat27);
+		seatInterface.save(seat28);
+		seatInterface.save(seat29);
+		seatInterface.save(seat30);
+		seatInterface.save(seat31);
+		seatInterface.save(seat32);
+		seatInterface.save(seat33);
+		seatInterface.save(seat34);
+		seatInterface.save(seat35);
+		seatInterface.save(seat36);
+		seatInterface.save(seat37);
+		seatInterface.save(seat38);
+		seatInterface.save(seat39);
+		seatInterface.save(seat40);
+		seatInterface.save(seat41);
+		seatInterface.save(seat42);
+		seatInterface.save(seat43);
+		seatInterface.save(seat44);
+		seatInterface.save(seat45);
+
 
 		crewInterface.save(crew1);
 		crewInterface.save(crew2);

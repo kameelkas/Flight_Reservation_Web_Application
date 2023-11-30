@@ -139,6 +139,15 @@ function App() {
     setShowSeatSelection(true);
   };
 
+  const changeToNum = (flightId) => {
+    const parsedNum = parseInt(flightId, 10);
+    if(!isNaN(parsedNum)) {
+      setSendFlightID(parsedNum);
+    } else {
+      console.error("INVALID: PAIN");
+    };
+  };
+
   const handleLogout = () => {
     setLoggedInUser(null);
     setSelectedOption(null);
@@ -358,7 +367,7 @@ function App() {
                       Departure: {flight.departureDate} {flight.departureTime} - Arrival: {flight.arrivalDate} {flight.arrivalTime}
                     </p>
                     <button onClick={() => {
-                      setSendFlightID(flight.flight_id);
+                      changeToNum(flight.flight_id);
                       handleFlightSelection(flight);
                       }}>
                       Select this Flight

@@ -102,7 +102,14 @@ public class APIServiceController {
         return seatService.getSeatStatus(flightID);
     }
 
+    // /*API Endpoints for Ticket*/
+    // @PostMapping("/Ticket/Create/{emailAddr}/{flight_id}/{seat_id}")
+    // public void createTicket(@PathVariable("emailAddr") String emailAddr, @PathVariable("flight_id") Integer flight_id, @PathVariable Integer seat_id) {
 
+    // }
+
+    
 
     //@Post mapping for payment and then call emailservice and fill in body with receipt and whatnot, flight_id, etc
+
 }

@@ -10,5 +10,4 @@ import org.springframework.data.repository.CrudRepository;
 public interface AircraftRepository extends JpaRepository<Aircraft, Integer> {
     List<Aircraft> findBymodel(String model);
     List<Aircraft> findByowned(Boolean companyOwned);
-    
 }

@@ -19,10 +19,10 @@ public class Ticket {
     private int ticket_id;
 
     private float price;
-    private String ticket_cancalled;
-    //private String ticket_cancellation_insurance;
+    private Boolean ticket_cancelled;
+    private Boolean ticket_cancellation_insurance;
 
-    @OneToOne  //(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
     private Customer passenger;
 
@@ -36,9 +36,10 @@ public class Ticket {
 
 
     public Ticket() {};
-    public Ticket(float price, String tc){
+    public Ticket(float price, Boolean tc, Boolean cancel_insure){
         this.price = price;
-        this.ticket_cancalled = tc;
+        this.ticket_cancelled = tc;
+        this.ticket_cancellation_insurance = cancel_insure;
     }
 
     public void setPassenger(Customer customerPassedIn) {

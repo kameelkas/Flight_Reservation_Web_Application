@@ -132,8 +132,9 @@ function App() {
 
   const handleFlightSelection = (flight) => {
     console.log("Selected flight:", flight);
-    setSendFlightID(flight.flight_ID);
-    console.log(sendFlightID);
+    console.log("flightID: ", flight.flight_id);
+    // setSendFlightID(flightID);
+    // console.log(sendFlightID);
     // Implement what happens after a flight is selected, e.g., storing flight data
     // and transitioning to the seat selection phase
     setShowSearchFlight(false);
@@ -352,7 +353,7 @@ function App() {
                 {availableFlights.map((flight, index) => (
                   <div key={index}>
                     <p>
-                      Flight: {flight.flight_ID}: {flight.departureCity} {flight.departureCountry} {flight.departureAirport}
+                      Flight: {flight.flight_id}: {flight.departureCity} {flight.departureCountry} {flight.departureAirport}
                     </p>
                     <p>
                       Departure: {flight.departureDate} {flight.departureTime} - Arrival: {flight.arrivalDate} {flight.arrivalTime}

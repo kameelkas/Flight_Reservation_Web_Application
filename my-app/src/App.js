@@ -132,10 +132,7 @@ function App() {
 
   const handleFlightSelection = (flight) => {
     console.log("Selected flight:", flight);
-    console.log(typeof flight.flight_id);
-    console.log("flightID: ", flight.flight_id);
-    setSendFlightID(sendFlightID => sendFlightID + flight.flight_id);
-    console.log("Checking:", sendFlightID);
+    console,log("CHECK:", sendFlightID);
     // Implement what happens after a flight is selected, e.g., storing flight data
     // and transitioning to the seat selection phase
     setShowSearchFlight(false);
@@ -152,6 +149,7 @@ function App() {
     setDepartureDate("");
     setSelectedDest("");
     setOrigin("");
+    setSendFlightID(0);
   };
 
   const handleSeatSelect = (section, row, seat, continueToInsurance) => {
@@ -359,7 +357,10 @@ function App() {
                     <p>
                       Departure: {flight.departureDate} {flight.departureTime} - Arrival: {flight.arrivalDate} {flight.arrivalTime}
                     </p>
-                    <button onClick={() => handleFlightSelection(flight)}>
+                    <button onClick={() => {
+                      setSendFlightID(flight.flight_id);
+                      handleFlightSelection(flight);
+                      }}>
                       Select this Flight
                     </button>
                   </div>

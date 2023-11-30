@@ -20,6 +20,7 @@ public class Ticket {
 
     private float price;
     private String ticket_cancalled;
+    //private String ticket_cancellation_insurance;
 
     @OneToOne  //(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")

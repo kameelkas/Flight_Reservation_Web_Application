@@ -17,34 +17,10 @@ function Insurance({ onInsuranceSubmit }) {
             <h4>Fully Covered</h4>
             <br></br>
             <div>
-              - Cancel or change flight for no additional fees
-              <br></br>- 1 free checked bag
-              <br></br>- Free seat selection
-              <br></br>- Fully refundable
-              <br></br>
-              <br></br>
-              <button>Select</button>
-            </div>
-          </div>
-          <div className="right-div">
-            <h4>Partially Covered</h4>
-            <br></br>
-            <div>
-              - Cancel or change flight for a fee
-              <br></br>- Checked bag for a fee
-              <br></br>- Seat selection for a fee
-              <br></br>- Partially refundable
-              <br></br>
-              <br></br>
-              <button>Select</button>
-            </div>
-          </div>
-        </div>
-        <br></br>
-      </div>
-      <button onClick={handleInsuranceSubmit}>Skip Insurance and Pay</button>
-    </div>
-  );
+              
+Cancel or change flight for no additional fees<br></br>- 1 free checked bag<br></br>- Free seat selection<br></br>- Fully refundable<br></br><br></br><button>Select</button></div></div><div className="right-div"><h4>Partially Covered</h4><br></br><div>
+Cancel or change flight for a fee<br></br>- Checked bag for a fee<br></br>- Seat selection for a fee<br></br>- Partially refundable<br></br><br></br><button>Select</button></div></div></div><br></br></div><button onClick={handleInsuranceSubmit}>Skip Insurance and Pay</button></div>
+);
 }
 
 export default Insurance;

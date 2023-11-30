@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import SeatSelection from "./SeatSelection";
 import Insurance from "./Insurance";
@@ -12,15 +12,18 @@ function App() {
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [showTicketPurchaseForm, setShowTicketPurchaseForm] = useState(false);
   const [departureDate, setDepartureDate] = useState("");
-  const [destination, setDestination] = useState("");
+  //const [destination, setDestination] = useState("");
   const [origin, setOrigin] = useState("");
   const [ticketId, setTicketId] = useState("");
   const [role, setRole] = useState(""); // State to store the selected role
   const [showSeatSelection, setShowSeatSelection] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
   const [showInsurance, setShowInsurance] = useState(false);
-  const [destOptions, setDestOptions] = ([]);
-  const [selectedDest, setSelectedDest] = useState('');
+  const [destOptions, setDestOptions] = useState([]);
+  const [selectedDest, setSelectedDest] = useState("");
+  const [availableFlights, setAvailableFlights] = useState([]);
+  const [showSearchFlight, setShowSearchFlight] = useState(false);
+  const [sendFlightID, setSendFlightID] = useState(0);
 
   const handleButtonClick = (option) => {
     const lowerCaseOption = option.toLowerCase();
@@ -45,9 +48,34 @@ function App() {
     getAllDestinations();
   };
 
+  useEffect(() => {
+    getAllDestinations();
+  }, []);
+
   const getAllDestinations = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/FlightApp/Flight/GetAllDestinations`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const destList = await response.json();
+      setDestOptions(destList); // Update state here
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+    }
+  };
+
+  const getSeatPrice = async () => {
     const recieve = await fetch(
-      `http://localhost:8080/FlightApp/Flight/GetAllDestinations`,
+      `http://localhost:8080/FlightApp/Ticket/GetPrice/2`,
       {
         method: "GET",
         headers: {
@@ -56,10 +84,28 @@ function App() {
       }
     );
 
-    const destList = await recieve.json();
-    console.log(destList);
-    setDestOptions(destList);
+    const seatPrice = await recieve.json();
+    console.log(seatPrice);
   };
+
+  const getAllFlightsForLocation = async () => {
+    console.log(selectedDest);
+    const recieve = await fetch(
+      `http://localhost:8080/FlightApp/Flight/GetAllFlightsByDestination/${selectedDest}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const allFlightsOfLocation = await recieve.json();
+    setAvailableFlights(allFlightsOfLocation);
+    console.log(allFlightsOfLocation);
+  };
+
+  //http://localhost:8080/FlightApp/Flight/GetAllFlightsByDestination/London
 
   const handleModalClose = () => {
     setShowModal(false);
@@ -77,10 +123,19 @@ function App() {
   };
 
   const handleTicketPurchase = () => {
-    // console.log("Departure Date:", departureDate);
-    console.log("Destination:", destination);
-    // console.log("Origin:", origin);
+    console.log("Destination:", selectedDest);
+    getAllFlightsForLocation(); // Fetch and set available flights
     setShowTicketPurchaseForm(false);
+    setShowSearchFlight(true); // Show the flight search UI
+  };
+  
+
+  const handleFlightSelection = (flight) => {
+    console.log("Selected flight:", flight);
+    console,log("CHECK:", sendFlightID);
+    // Implement what happens after a flight is selected, e.g., storing flight data
+    // and transitioning to the seat selection phase
+    setShowSearchFlight(false);
     setShowSeatSelection(true);
   };
 
@@ -92,8 +147,9 @@ function App() {
     setPassword("");
     setShowTicketPurchaseForm(false);
     setDepartureDate("");
-    setDestination("");
+    setSelectedDest("");
     setOrigin("");
+    setSendFlightID(0);
   };
 
   const handleSeatSelect = (section, row, seat, continueToInsurance) => {
@@ -154,9 +210,9 @@ function App() {
         )}
 
         {loggedInUser &&
-          !showTicketPurchaseForm &&
-          selectedOption !== "cancel ticket" &&
-          selectedOption !== "purchase ticket" ? (
+        !showTicketPurchaseForm &&
+        selectedOption !== "cancel ticket" &&
+        selectedOption !== "purchase ticket" ? (
           <div className="ticket-options">
             <button
               className="btn btn-primary"
@@ -251,22 +307,27 @@ function App() {
                 onChange={(e) => setDepartureDate(e.target.value)}
               /> */}
               <label htmlFor="destination">Destination</label>
-              {/* <input
+              {/* {<input
                 type="text"
                 id="destination"
                 value={destination}
                 onChange={(e) => setDestination(e.target.value)}
-              /> */}
-              <select value={selectedDest} onChange={(e) => setSelectedDest(e.target.value)}>
-                <option value="" disabled>
-                  Select a Destination
-                </option>
-                {destOptions.map((place, index) => (
-                  <option key={index} value={place}>
-                    {place}
+              />} */}
+
+              <select
+                className="form-select"
+                id="inputGroupSelect01"
+                value={selectedDest}
+                onChange={(e) => setSelectedDest(e.target.value)}
+              >
+                <option value="">Choose...</option>
+                {destOptions.map((destination, index) => (
+                  <option key={index} value={destination}>
+                    {destination}
                   </option>
                 ))}
               </select>
+
               {/* <label htmlFor="origin">Origin</label>
               <input
                 type="text"
@@ -283,10 +344,37 @@ function App() {
         {/* {!showTicketPurchaseForm && selectedOption === "purchase ticket" && (
           <SeatSelection onSeatSelect={handleSeatSelect} />
         )} */}
+        {showSearchFlight && (
+          <div>
+            <h2>Select a Flight</h2>
+            {availableFlights.length > 0 ? (
+              <div>
+                {availableFlights.map((flight, index) => (
+                  <div key={index}>
+                    <p>
+                      Flight: {flight.flight_id}: {flight.departureCity} {flight.departureCountry} {flight.departureAirport}
+                    </p>
+                    <p>
+                      Departure: {flight.departureDate} {flight.departureTime} - Arrival: {flight.arrivalDate} {flight.arrivalTime}
+                    </p>
+                    <button onClick={() => {
+                      setSendFlightID(flight.flight_id);
+                      handleFlightSelection(flight);
+                      }}>
+                      Select this Flight
+                    </button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p>No flights available for the selected destination.</p>
+            )}
+          </div>
+        )}
         {showSeatSelection &&
           !showTicketPurchaseForm &&
           selectedOption === "purchase ticket" && (
-            <SeatSelection onSeatSelect={handleSeatSelect} />
+            <SeatSelection onSeatSelect={handleSeatSelect} flightID={sendFlightID} />
           )}
         {showInsurance && (
           <Insurance onInsuranceSubmit={handleInsuranceContinue} />

@@ -1,22 +1,22 @@
 .insurance-selection {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: left;
-  text-align: center;
-}
-
-.left-div {
-  width: 50%;
-  height: 50vh;
-  padding: 10px;
-  border: 1px solid #ccc;
-}
-
-.right-div {
-  width: 50%;
-  height: 50vh;
-  padding: 10px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: left;
+    text-align: center;
+  }
+  
+  .left-div {
+    width: 50%;
+    height: 50vh;
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  .right-div {
+    width: 50%;
+    height: 50vh;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }

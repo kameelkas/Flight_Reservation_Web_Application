@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import "./SeatSelection.css"; // Import the CSS file for styling
 
 function SeatSelection({ onSeatSelect }) {
-  const rows = 3;
-  const seatsPerRow = 5;
-  const sections = 1; // Number of sections
+  const rows = 9;
+  const seatsPerRow = 3;
+  const sections = 2; // Number of sections
   const [selectedSeat, setSelectedSeat] = useState(null);
 
   const handleSeatClick = (section, row, seat) => {
@@ -30,6 +30,8 @@ function SeatSelection({ onSeatSelect }) {
       selectedSeat.seat,
       true
     ); // Adding a flag to indicate continuation
+    console.log(selectedSeat.row);
+    console.log(selectedSeat.seat);
   };
 
   const renderSeats = () => {

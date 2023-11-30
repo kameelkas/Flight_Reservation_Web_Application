@@ -30,6 +30,8 @@ function SeatSelection({ onSeatSelect }) {
       selectedSeat.seat,
       true
     ); // Adding a flag to indicate continuation
+    console.log(selectedSeat.row);
+    console.log(selectedSeat.seat);
   };
 
   const renderSeats = () => {

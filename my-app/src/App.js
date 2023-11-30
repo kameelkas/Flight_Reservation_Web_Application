@@ -12,7 +12,7 @@ function App() {
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [showTicketPurchaseForm, setShowTicketPurchaseForm] = useState(false);
   const [departureDate, setDepartureDate] = useState("");
-  const [destination, setDestination] = useState("");
+  //const [destination, setDestination] = useState("");
   const [origin, setOrigin] = useState("");
   const [ticketId, setTicketId] = useState("");
   const [role, setRole] = useState(""); // State to store the selected role
@@ -45,8 +45,6 @@ function App() {
     }
 
     getAllDestinations();
-    getAllFlightsForLocation();
-    getSeatPrice();
   };
 
   useEffect(() => {
@@ -90,8 +88,9 @@ function App() {
   };
 
   const getAllFlightsForLocation = async () => {
+    console.log(selectedDest);
     const recieve = await fetch(
-      `http://localhost:8080/FlightApp/Flight/GetAllFlightsByDestination/London`,
+      `http://localhost:8080/FlightApp/Flight/GetAllFlightsByDestination/${selectedDest}`,
       {
         method: "GET",
         headers: {
@@ -101,6 +100,7 @@ function App() {
     );
 
     const allFlightsOfLocation = await recieve.json();
+    setAvailableFlights(allFlightsOfLocation);
     console.log(allFlightsOfLocation);
   };
 
@@ -122,11 +122,12 @@ function App() {
   };
 
   const handleTicketPurchase = () => {
-    console.log("Destination:", destination);
-    getAllFlightsForLocation(destination); // This will fetch and set available flights
+    console.log("Destination:", selectedDest);
+    getAllFlightsForLocation(); // Fetch and set available flights
     setShowTicketPurchaseForm(false);
     setShowSearchFlight(true); // Show the flight search UI
   };
+  
 
   const handleFlightSelection = (flight) => {
     console.log("Selected flight:", flight);
@@ -144,7 +145,7 @@ function App() {
     setPassword("");
     setShowTicketPurchaseForm(false);
     setDepartureDate("");
-    setDestination("");
+    setSelectedDest("");
     setOrigin("");
   };
 
@@ -348,11 +349,10 @@ function App() {
                 {availableFlights.map((flight, index) => (
                   <div key={index}>
                     <p>
-                      Flight: {flight.flightNumber} - {flight.airline}
+                      Flight: {flight.flight_ID}: {flight.departureCity} {flight.departureCountry} {flight.departureAirport}
                     </p>
                     <p>
-                      Departure: {flight.departureTime} - Arrival:{" "}
-                      {flight.arrivalTime}
+                      Departure: {flight.departureDate} {flight.departureTime} - Arrival: {flight.arrivalDate} {flight.arrivalTime}
                     </p>
                     <button onClick={() => handleFlightSelection(flight)}>
                       Select this Flight

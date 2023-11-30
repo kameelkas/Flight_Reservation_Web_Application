@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./SeatSelection.css"; // Import the CSS file for styling
 
 function SeatSelection({ onSeatSelect, flightID }) {

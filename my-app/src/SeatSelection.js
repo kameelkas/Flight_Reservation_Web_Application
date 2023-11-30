@@ -33,11 +33,8 @@ function SeatSelection({ onSeatSelect, flightID }) {
     console.log(selectedSeat.row);
     console.log(selectedSeat.seat);
     console.log(flightID);
-    const seatIDToSend = [(flightID - 1)*15] + (selectedSeat.row*5) + (selectedSeat.seat + 1);
+    const seatIDToSend = (((flightID - 1)*15) + (selectedSeat.row*5) + (selectedSeat.seat + 1));
     console.log(seatIDToSend);
-
-    
-
   };
 
   const renderSeats = () => {

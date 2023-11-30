@@ -87,7 +87,7 @@ public class APIServiceController {
     }
 
     /*API Endpoints for Seatt*/
-    @PatchMapping("/Seat/SeatTaken/{seatID}")
+    @PostMapping("/Seat/SeatTaken/{seatID}")
     public void postSeatTaken(@PathVariable("seatID") Integer seat_ID) {
         seatService.setSeatTaken(seat_ID);
     }

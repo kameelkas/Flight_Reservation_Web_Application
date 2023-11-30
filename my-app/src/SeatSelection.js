@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./SeatSelection.css"; // Import the CSS file for styling
 
 function SeatSelection({ onSeatSelect, flightID }) {
@@ -6,9 +6,43 @@ function SeatSelection({ onSeatSelect, flightID }) {
   const seatsPerRow = 5;
   const sections = 1; // Number of sections
   const [selectedSeat, setSelectedSeat] = useState(null);
+  const [takenSeats, setTakenSeats] = useState([]);
+
+  useEffect(() => {
+    // Fetch taken seats from the backend
+    const fetchTakenSeats = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/FlightApp/Seat/GetAllTakenOrNot/ByFlightID/${flightID}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await response.json();
+        setTakenSeats(data); 
+      } catch (error) {
+        console.error("Error fetching taken seats:", error);
+      }
+    };
+
+    fetchTakenSeats();
+  }, [flightID]);
+
+  const isSeatTaken = (index) => {
+    return takenSeats[index];
+  };
 
   const handleSeatClick = (section, row, seat) => {
-    // If the clicked seat is already selected, deselect it
+    const seatIndex = row * seatsPerRow + seat;
+
+    if (isSeatTaken(seatIndex)) {
+      // If the seat is already taken, do not proceed
+      return;
+    }
+
     if (
       selectedSeat &&
       selectedSeat.section === section &&
@@ -16,10 +50,10 @@ function SeatSelection({ onSeatSelect, flightID }) {
       selectedSeat.seat === seat
     ) {
       setSelectedSeat(null);
-      onSeatSelect(null, null, null); // Notify the parent component of deselection
+      onSeatSelect(null, null, null);
     } else {
       setSelectedSeat({ section, row, seat });
-      onSeatSelect(section, row, seat); // Notify the parent component of the selected seat
+      onSeatSelect(section, row, seat);
     }
   };
 
@@ -32,6 +66,18 @@ function SeatSelection({ onSeatSelect, flightID }) {
     ); // Adding a flag to indicate continuation
     console.log(selectedSeat.row);
     console.log(selectedSeat.seat);
+    console.log(flightID);
+    const seatIDToSend = (((flightID - 1)*15) + (selectedSeat.row*5) + (selectedSeat.seat + 1));
+    console.log(seatIDToSend);
+
+    fetch(`http://localhost:8080/FlightApp/Seat/SeatTaken/${seatIDToSend}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
   };
 
   const renderSeats = () => {
@@ -47,11 +93,15 @@ function SeatSelection({ onSeatSelect, flightID }) {
             selectedSeat.section === s &&
             selectedSeat.row === i &&
             selectedSeat.seat === j;
+          const seatIndex = i * seatsPerRow + j;
+          const isDisabled = isSeatTaken(seatIndex);
+
           row.push(
             <button
               key={`seat-${s}-${i}-${j}`}
               onClick={() => handleSeatClick(s, i, j)}
               className={`seat ${isSelected ? "selected" : ""}`}
+              disabled={isDisabled}
             >
               {`S${s + 1}-R${i + 1}-Seat${seatNumber}`}
             </button>

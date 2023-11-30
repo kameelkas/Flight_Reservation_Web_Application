@@ -161,6 +161,15 @@ function App() {
     setShowSeatSelection(true);
   };
 
+  const changeToNum = (flightId) => {
+    const parsedNum = parseInt(flightId, 10);
+    if (!isNaN(parsedNum)) {
+      setSendFlightID(parsedNum);
+    } else {
+      console.error("INVALID: PAIN");
+    }
+  };
+
   const handleLogout = () => {
     setLoggedInUser(null);
     setSelectedOption(null);

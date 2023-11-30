@@ -24,6 +24,10 @@ function App() {
   const [availableFlights, setAvailableFlights] = useState([]);
   const [showSearchFlight, setShowSearchFlight] = useState(false);
   const [sendFlightID, setSendFlightID] = useState(0);
+  const [signupUsername, setSignupUsername] = useState("");
+  const [signupEmail, setSignupEmail] = useState("");
+  const [signupPhone, setSignupPhone] = useState("");
+  const [signupPassword, setSignupPassword] = useState("");
 
   const handleButtonClick = (option) => {
     const lowerCaseOption = option.toLowerCase();
@@ -43,9 +47,28 @@ function App() {
       setShowTicketPurchaseForm(false);
       setShowModal(false);
       setSelectedOption(lowerCaseOption);
+    } else if (lowerCaseOption === "third option") {
+      setSelectedOption("signup");
     }
 
     getAllDestinations();
+  };
+
+  const handleSignup = () => {
+    // Logic to handle user signup here
+    const signupData = {
+      username: signupUsername,
+      email: signupEmail,
+      phone: signupPhone,
+      password: signupPassword,
+    };
+    console.log("Signup Data:", signupData);
+
+    // Add logic to send signupData to your backend for user registration
+    // ...
+
+    // After successful signup, you can redirect the user to the initial page
+    setSelectedOption(null); // Assuming this clears the signup form and displays initial options
   };
 
   useEffect(() => {
@@ -128,11 +151,10 @@ function App() {
     setShowTicketPurchaseForm(false);
     setShowSearchFlight(true); // Show the flight search UI
   };
-  
 
   const handleFlightSelection = (flight) => {
     console.log("Selected flight:", flight);
-    console,log("CHECK:", sendFlightID);
+    console, log("CHECK:", sendFlightID);
     // Implement what happens after a flight is selected, e.g., storing flight data
     // and transitioning to the seat selection phase
     setShowSearchFlight(false);
@@ -206,6 +228,43 @@ function App() {
             >
               Don't have an account? Sign up here
             </a>
+          </div>
+        )}
+
+        {selectedOption === "signup" && (
+          <div className="signup-form">
+            <h2>Sign Up</h2>
+            <form onSubmit={handleSignup}>
+              <label htmlFor="signup-username">First and Last Name</label>
+              <input
+                type="text"
+                id="signup-username"
+                value={signupUsername}
+                onChange={(e) => setSignupUsername(e.target.value)}
+              />
+              <label htmlFor="signup-email">Email</label>
+              <input
+                type="email"
+                id="signup-email"
+                value={signupEmail}
+                onChange={(e) => setSignupEmail(e.target.value)}
+              />
+              <label htmlFor="signup-phone">Phone Number</label>
+              <input
+                type="tel"
+                id="signup-phone"
+                value={signupPhone}
+                onChange={(e) => setSignupPhone(e.target.value)}
+              />
+              <label htmlFor="signup-password">Password</label>
+              <input
+                type="password"
+                id="signup-password"
+                value={signupPassword}
+                onChange={(e) => setSignupPassword(e.target.value)}
+              />
+              <button type="submit">Sign Up</button>
+            </form>
           </div>
         )}
 
@@ -352,15 +411,19 @@ function App() {
                 {availableFlights.map((flight, index) => (
                   <div key={index}>
                     <p>
-                      Flight: {flight.flight_id}: {flight.departureCity} {flight.departureCountry} {flight.departureAirport}
+                      Flight: {flight.flight_id}: {flight.departureCity}{" "}
+                      {flight.departureCountry} {flight.departureAirport}
                     </p>
                     <p>
-                      Departure: {flight.departureDate} {flight.departureTime} - Arrival: {flight.arrivalDate} {flight.arrivalTime}
+                      Departure: {flight.departureDate} {flight.departureTime} -
+                      Arrival: {flight.arrivalDate} {flight.arrivalTime}
                     </p>
-                    <button onClick={() => {
-                      setSendFlightID(flight.flight_id);
-                      handleFlightSelection(flight);
-                      }}>
+                    <button
+                      onClick={() => {
+                        setSendFlightID(flight.flight_id);
+                        handleFlightSelection(flight);
+                      }}
+                    >
                       Select this Flight
                     </button>
                   </div>
@@ -374,7 +437,10 @@ function App() {
         {showSeatSelection &&
           !showTicketPurchaseForm &&
           selectedOption === "purchase ticket" && (
-            <SeatSelection onSeatSelect={handleSeatSelect} flightID={sendFlightID} />
+            <SeatSelection
+              onSeatSelect={handleSeatSelect}
+              flightID={sendFlightID}
+            />
           )}
         {showInsurance && (
           <Insurance onInsuranceSubmit={handleInsuranceContinue} />

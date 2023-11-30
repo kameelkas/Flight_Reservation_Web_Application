@@ -32,6 +32,7 @@ function SeatSelection({ onSeatSelect, flightID }) {
     ); // Adding a flag to indicate continuation
     console.log(selectedSeat.row);
     console.log(selectedSeat.seat);
+    console.log(flightID);
   };
 
   const renderSeats = () => {

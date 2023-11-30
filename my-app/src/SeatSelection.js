@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./SeatSelection.css"; // Import the CSS file for styling
 
-function SeatSelection({ onSeatSelect }) {
+function SeatSelection({ onSeatSelect, flightID }) {
   const rows = 3;
   const seatsPerRow = 5;
   const sections = 1; // Number of sections

@@ -102,9 +102,9 @@ public class APIServiceController {
         return seatService.getSeatStatus(flightID);
     }
 
-    // /*API Endpoints for Ticket*/
+    /*API Endpoints for Ticket*/
     // @PostMapping("/Ticket/Create/{emailAddr}/{flight_id}/{seat_id}")
-    // public void createTicket(@PathVariable("emailAddr") String emailAddr, @PathVariable("flight_id") Integer flight_id, @PathVariable Integer seat_id) {
+    // public void createTicket(@PathVariable("emailAddr") String emailAddr, @PathVariable("flight_id") Integer flight_id, @PathVariable("seat_id") Integer seat_id) {
 
     // }
 

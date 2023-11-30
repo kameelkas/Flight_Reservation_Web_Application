@@ -131,6 +131,9 @@ function SeatSelection({ onSeatSelect, flightID }) {
           Continue
         </button>
       )}
+      <p>Purple: Comfort</p>
+      <p>Green: Business</p>
+      <p>Purple: Economy</p>
     </div>
   );
 }

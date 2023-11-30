@@ -18,3 +18,16 @@
 .selected {
   background-color: rgb(63, 181, 63);
 }
+
+/* Apply different background colors based on row index */
+.seat-row:nth-child(1) .seat {
+  background-color: purple;
+}
+
+.seat-row:nth-child(2) .seat {
+  background-color: green;
+}
+
+.seat-row:last-child .seat {
+  background-color: grey;
+}

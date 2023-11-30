@@ -28,6 +28,7 @@ function App() {
   const [signupEmail, setSignupEmail] = useState("");
   const [signupPhone, setSignupPhone] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
+  const uniqueDestOptions = [...new Set(destOptions)];
 
   const handleButtonClick = (option) => {
     const lowerCaseOption = option.toLowerCase();
@@ -389,7 +390,7 @@ function App() {
                 onChange={(e) => setSelectedDest(e.target.value)}
               >
                 <option value="">Choose...</option>
-                {destOptions.map((destination, index) => (
+                {uniqueDestOptions.map((destination, index) => (
                   <option key={index} value={destination}>
                     {destination}
                   </option>

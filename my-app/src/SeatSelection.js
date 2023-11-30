@@ -35,6 +35,15 @@ function SeatSelection({ onSeatSelect, flightID }) {
     console.log(flightID);
     const seatIDToSend = (((flightID - 1)*15) + (selectedSeat.row*5) + (selectedSeat.seat + 1));
     console.log(seatIDToSend);
+
+    fetch(`http://localhost:8080/FlightApp/Seat/SeatTaken/${seatIDToSend}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
   };
 
   const renderSeats = () => {

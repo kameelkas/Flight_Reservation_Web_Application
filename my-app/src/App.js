@@ -23,7 +23,7 @@ function App() {
   const [selectedDest, setSelectedDest] = useState("");
   const [availableFlights, setAvailableFlights] = useState([]);
   const [showSearchFlight, setShowSearchFlight] = useState(false);
-  const [sendFlightID, setSendFlightID] = useState("");
+  const [sendFlightID, setSendFlightID] = useState(0);
 
   const handleButtonClick = (option) => {
     const lowerCaseOption = option.toLowerCase();
@@ -132,9 +132,10 @@ function App() {
 
   const handleFlightSelection = (flight) => {
     console.log("Selected flight:", flight);
+    console.log(typeof flight.flight_id);
     console.log("flightID: ", flight.flight_id);
-    // setSendFlightID(flightID);
-    // console.log(sendFlightID);
+    setSendFlightID(sendFlightID => sendFlightID + flight.flight_id);
+    console.log("Checking:", sendFlightID);
     // Implement what happens after a flight is selected, e.g., storing flight data
     // and transitioning to the seat selection phase
     setShowSearchFlight(false);

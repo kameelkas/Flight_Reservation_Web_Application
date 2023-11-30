@@ -38,7 +38,7 @@ function SeatSelection({ onSeatSelect, flightID }) {
 
     fetch(`http://localhost:8080/FlightApp/Seat/SeatTaken/${seatIDToSend}`,
         {
-          method: "PATCH",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },

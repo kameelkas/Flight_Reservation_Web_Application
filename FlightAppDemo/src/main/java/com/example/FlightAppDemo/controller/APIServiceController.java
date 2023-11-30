@@ -4,7 +4,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
-
 import com.example.FlightAppDemo.response.ResponseHandler;
 
 
@@ -19,13 +18,15 @@ public class APIServiceController {
     FlightService flightService;
     TicketService ticketService;
     SeatService seatService;
+    EmailService emailService;
 
     /*Aggregate service instances in ctor of the controller*/
-    public APIServiceController(CustomerService customerServ, FlightService flightServ, TicketService ticketServ, SeatService seatServ){  //passed in so we can call the service function that perform DB operations
+    public APIServiceController(CustomerService customerServ, FlightService flightServ, TicketService ticketServ, SeatService seatServ, EmailService emailServ){  //passed in so we can call the service function that perform DB operations
         this.customerService = customerServ;
         this.flightService = flightServ;
         this.ticketService = ticketServ;
         this.seatService = seatServ;
+        this.emailService = emailServ;
     }
 
     /*API Endpoints for Customer*/
@@ -46,6 +47,11 @@ public class APIServiceController {
 
     @PostMapping("/Customer/Create")   //POST IN HTTP TO ADD STUFF
     public String createCustomerDetails(@RequestBody Customer customerNew){
+        String welcomeMessage = String.format("Hi %s,\n\n" +
+            "We at the ENSF 480 FlightApp would like to welcome you to our Flight App " +
+            "and hope you have a good experience booking your travel experiences.\n\n" +
+            "Best Regards,\nENSF480 Flight App Team", customerNew.getName());
+        emailService.sendEmail(customerNew.getEmailAddr(), "Welcome to your ENSF480 Flight Account!", welcomeMessage);
         customerService.createCustomer(customerNew);
         return "Customer Made";
     }
@@ -90,4 +96,13 @@ public class APIServiceController {
     public List<Seat> getAllSeatDetails() {
         return seatService.getAllSeats();
     }
+
+    @GetMapping("/Seat/GetAllTakenOrNot/ByFlightID/{flightID}")
+    public List<Boolean> getSeatTakenOrNot(@PathVariable("flightID") Integer flightID) {
+        return seatService.getSeatStatus(flightID);
+    }
+
+
+
+    //@Post mapping for payment and then call emailservice and fill in body with receipt and whatnot, flight_id, etc
 }

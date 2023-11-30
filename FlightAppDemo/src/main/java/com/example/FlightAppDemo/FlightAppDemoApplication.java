@@ -35,17 +35,9 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 	@Autowired
 	PaymentRepository paymentInterface;
 
-	@Autowired 
-	private EmailSenderService senderService;
-
 	public static void main(String[] args) {
 		SpringApplication.run(FlightAppDemoApplication.class, args);
 	}
-
-	// @EventListener(ApplicationReadyEvent.class)
-	//  public void sendMail(){
-	// 	senderService.sendEmail("rohil1710@gmail.com", "This is the subject", "This is the Body of the email");
-	// }
 
 	@Override
 	public void run(String... args){

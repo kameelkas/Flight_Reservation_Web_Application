@@ -1,13 +1,8 @@
 package com.example.FlightAppDemo;
 
 import java.util.List;
-
 import org.springframework.data.repository.CrudRepository;
-
 import jakarta.transaction.Transactional;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.*;
 
 public interface SeatRepository extends JpaRepository<Seat, Integer> {
@@ -19,4 +14,8 @@ public interface SeatRepository extends JpaRepository<Seat, Integer> {
     void setSeatTaken(Integer seatId);
 
     List<Seat> findAll();
+
+    @Transactional
+    @Query("SELECT s.seat_taken FROM Seat s WHERE s.flight.flight_id = :flight_iD")
+    List <Boolean> getSeatStauses(Integer flight_iD);
 }

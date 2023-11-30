@@ -17,7 +17,7 @@ public class Flight {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "flight_id")
-    private int flight_ID;
+    private int flight_id;
 
     private String departureDate;
     private String departureTime;
@@ -51,8 +51,8 @@ public class Flight {
     private Aircraft aircraft;
 
     // Getters
-    public int getFlight_ID() {
-        return flight_ID;
+    public int getflight_id() {
+        return flight_id;
     }
 
     public String getDepartureDate() {
@@ -101,7 +101,7 @@ public class Flight {
 
     // Setters
     public void setFlight_ID(int flight_ID) {
-        this.flight_ID = flight_ID;
+        this.flight_id = flight_ID;
     }
 
     public void setDepartureDate(String departureDate) {

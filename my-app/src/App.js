@@ -130,8 +130,10 @@ function App() {
   };
   
 
-  const handleFlightSelection = (flight) => {
-    console.log("Selected flight:", flight);
+  const handleFlightSelection = (flightID) => {
+    // console.log("Selected flight:", flight);
+    setSendFlightID(flightID); // Set the flight ID here
+    console.log("Selected flight ID:", flightID);
     console.log("CHECK:", sendFlightID);
     // Implement what happens after a flight is selected, e.g., storing flight data
     // and transitioning to the seat selection phase
@@ -367,8 +369,7 @@ function App() {
                       Departure: {flight.departureDate} {flight.departureTime} - Arrival: {flight.arrivalDate} {flight.arrivalTime}
                     </p>
                     <button onClick={() => {
-                      changeToNum(flight.flight_id);
-                      handleFlightSelection(flight);
+                      handleFlightSelection(flight.flight_id);
                       }}>
                       Select this Flight
                     </button>

@@ -71,20 +71,22 @@ function App() {
     }
 
     const signupData = {
-      username: signupUsername,
-      email: signupEmail,
-      phone: signupPhone,
-      password: signupPassword,
-      addr: signupAddress,
-      postal: signupPostalCode,
-      city: signupCity,
-      country: signupCountry
+      name: signupUsername,
+      emailAddr: signupEmail,
+      phoneNum: signupPhone,
+      customerPassword: signupPassword
     };
     console.log("Signup Data:", signupData);
 
-    // Add logic to send signupData to your backend for user registration
-    // ...
-
+    fetch(`http://localhost:8080/FlightApp/Customer/Create/${signupAddress}/${signupPostalCode}/${signupCity}/${signupCountry}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(signupData);
+        }
+      );
 
     setSignupUsername("");
     setSignupEmail("");
@@ -190,15 +192,6 @@ function App() {
     setShowSeatSelection(true);
   };
 
-  const changeToNum = (flightId) => {
-    const parsedNum = parseInt(flightId, 10);
-    if (!isNaN(parsedNum)) {
-      setSendFlightID(parsedNum);
-    } else {
-      console.error("INVALID: PAIN");
-    }
-  };
-
   const handleLogout = () => {
     setLoggedInUser(null);
     setSelectedOption(null);
@@ -289,6 +282,7 @@ function App() {
                 id="signup-username"
                 value={signupUsername}
                 onChange={(e) => setSignupUsername(e.target.value)}
+                required
               />
               <label htmlFor="signup-email">Email</label>
               <input
@@ -299,6 +293,7 @@ function App() {
                   setSignupEmail(e.target.value);
                   setEmailError(""); // Clear email error on input change
                 }}
+                required
               />
               {emailError && <p style={{ color: "red" }}>{emailError}</p>}
 
@@ -308,6 +303,7 @@ function App() {
                 id="signup-phone"
                 value={signupPhone}
                 onChange={(e) => setSignupPhone(e.target.value)}
+                required
               />
               <label htmlFor="signup-password">Password</label>
               <input
@@ -315,6 +311,7 @@ function App() {
                 id="signup-password"
                 value={signupPassword}
                 onChange={(e) => setSignupPassword(e.target.value)}
+                required
               />
               <label htmlFor="signup-address">Address</label>
               <input
@@ -322,6 +319,7 @@ function App() {
                 id="signup-address"
                 value={signupAddress}
                 onChange={(e) => setSignupAddress(e.target.value)}
+                required
               />
 
               <label htmlFor="signup-postal-code">Postal Code</label>
@@ -330,6 +328,7 @@ function App() {
                 id="signup-postal-code"
                 value={signupPostalCode}
                 onChange={(e) => setSignupPostalCode(e.target.value)}
+                required
               />
 
               <label htmlFor="signup-city">City</label>
@@ -338,6 +337,7 @@ function App() {
                 id="signup-city"
                 value={signupCity}
                 onChange={(e) => setSignupCity(e.target.value)}
+                required
               />
 
               <label htmlFor="signup-country">Country</label>
@@ -346,6 +346,7 @@ function App() {
                 id="signup-country"
                 value={signupCountry}
                 onChange={(e) => setSignupCountry(e.target.value)}
+                required
               />
               <button type="submit">Sign Up</button>
             </form>

@@ -255,37 +255,17 @@ function App() {
         )}
 
         {showInsuranceSelection && (
-          <div className="insurance-selection">
-            <h2>Insurance Selection</h2>
-            <br></br>
+          <div>
             <div className="flex-container">
-              <div className="left-div">
-                <h4>Fully Covered</h4>
+              <div className="insurance-container">
+                <h2>Purchase an Insurance Plan</h2>
                 <br></br>
                 <div>
                   - Cancel or change flight for no additional fees
                   <br></br>
                   - 1 free checked bag
                   <br></br>
-                  - Free seat selection
-                  <br></br>
-                  - Fully refundable
-                  <br></br>
-                  <br></br>
-                  <button>Select</button>
-                </div>
-              </div>
-              <div className="right-div">
-                <h4>Partially Covered</h4>
-                <br></br>
-                <div>
-                  - Cancel or change flight for a fee
-                  <br></br>
-                  - Checked bag for a fee
-                  <br></br>
-                  - Seat selection for a fee
-                  <br></br>
-                  - Partially refundable
+                  - Full refund upon cancellation
                   <br></br>
                   <br></br>
                   <button>Select</button>
@@ -293,8 +273,8 @@ function App() {
               </div>
             </div>
             <br></br>
+            <br></br>
             <button>Skip Insurance and Pay</button>
-            
           </div>
         )}
 

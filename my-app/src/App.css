@@ -90,26 +90,16 @@
   padding-right: 100px;
 }
 
-.flex-container {
+ .flex-container {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: left;
-  text-align: center;
+  justify-content: center;
+  align-items: center;
+  /* text-align: center; */
 }
 
-.left-div {
+.insurance-container {
   width: 50%;
   height: 50vh;
-  padding: 10px;
-  border: 1px solid #ccc;
-  /* box-sizing: border-box; */
-}
-
-.right-div {
-  width: 50%;
-  height: 50vh;
-  padding: 10px;
-  border: 1px solid #ccc;
-  /* box-sizing: border-box; */
+  padding: 30px;
+  border: 1px solid #000;
 }

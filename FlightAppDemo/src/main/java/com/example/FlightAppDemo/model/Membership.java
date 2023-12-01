@@ -17,12 +17,10 @@ public class Membership {
     @Column(name = "membership_id")
     private int membership_ID;
 
-    private String startDate;
     private String streetAddress;
     private String postalCode;
     private String city;
     private String country;
-    private String terminationDate;
 
     @OneToOne  //(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
@@ -30,13 +28,11 @@ public class Membership {
         
     public Membership() {};
 
-    public Membership(String start, String address, String postal, String city, String country, String end){
-        this.startDate = start;
+    public Membership(String address, String postal, String city, String country){
         this.streetAddress = address;
         this.postalCode = postal;
         this.city = city;
         this.country = country;
-        this.terminationDate = end;
     }
 
     public void setCustomer(Customer customerPassedIn) {

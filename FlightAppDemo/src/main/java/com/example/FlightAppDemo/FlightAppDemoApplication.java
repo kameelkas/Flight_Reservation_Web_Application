@@ -78,11 +78,11 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		Crew crew4 = new Crew(4, "Diana", "Engineer");
 		Crew crew5 = new Crew(5, "Eve", "Navigator");
 
-		Membership membership1 = new Membership("2023-01-01", "123 Main St", "12345", "City1", "Country1", "2023-12-31");
-		Membership membership2 = new Membership("2023-02-15", "456 Elm St", "23456", "City2", "Country2", "2023-12-31");
-		Membership membership3 = new Membership("2023-03-20", "789 Oak St", "34567", "City3", "Country3", "2023-12-31");
-		Membership membership4 = new Membership("2023-04-10", "101 Pine St", "45678", "City4", "Country4", "2023-12-31");
-		Membership membership5 = new Membership("2023-05-05", "222 Maple St", "56789", "City5", "Country5", "2023-12-31");
+		Membership membership1 = new Membership("123 Main St", "12345", "City1", "Country1");
+		Membership membership2 = new Membership("456 Elm St", "23456", "City2", "Country2");
+		Membership membership3 = new Membership("789 Oak St", "34567", "City3", "Country3");
+		Membership membership4 = new Membership("101 Pine St", "45678", "City4", "Country4");
+		Membership membership5 = new Membership("222 Maple St", "56789", "City5", "Country5");
 
 		Seat seat1 = new Seat("1A", 1, 1, true);  // Economy seat in row 1, seat number A1
 		Seat seat2 = new Seat("1B", 1, 1, false);  // Business seat in row 2, seat number B3

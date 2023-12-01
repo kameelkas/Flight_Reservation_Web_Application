@@ -22,8 +22,8 @@ public class Customer {
     private String customerPassword;
 
     public Customer() {};
-    public Customer(String lol, String email, String phone, String password) {
-        this.name = lol;
+    public Customer(String namepassed, String email, String phone, String password) {
+        this.name = namepassed;
         this.emailAddr = email;
         this.phoneNum = phone;
         this.customerPassword = password;

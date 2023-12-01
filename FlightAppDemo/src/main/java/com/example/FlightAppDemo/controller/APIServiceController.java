@@ -20,18 +20,20 @@ public class APIServiceController {
     SeatService seatService;
     EmailService emailService;
     PaymentService paymentService;
+    MembershipService membershipService;
 
     /*Aggregate service instances in ctor of the controller*/
-    public APIServiceController(CustomerService customerServ, FlightService flightServ, TicketService ticketServ, SeatService seatServ, EmailService emailServ, PaymentService paymentServ){  //passed in so we can call the service function that perform DB operations
+    public APIServiceController(CustomerService customerServ, FlightService flightServ, TicketService ticketServ, SeatService seatServ, EmailService emailServ, PaymentService paymentServ, MembershipService membershipServ){  //passed in so we can call the service function that perform DB operations
         this.customerService = customerServ;
         this.flightService = flightServ;
         this.ticketService = ticketServ;
         this.seatService = seatServ;
         this.emailService = emailServ;
         this.paymentService = paymentServ;
+        this.membershipService = membershipServ;
     }
 
-    /*API Endpoints for Customer*/
+    /*API Endpoints for Customer & Membership*/
     @GetMapping("/Customer/Get/{customer_id}")  //GET TO GET STUFF
     public  ResponseEntity<Object> getCustomerDetails(@PathVariable("customer_id") Integer customer_id) {
         return ResponseHandler.responseBuilder("Here are the requested customer details", HttpStatus.OK, customerService.getCustomer(customer_id));
@@ -47,14 +49,18 @@ public class APIServiceController {
         return customerService.getAllPasswords();
     }
 
-    @PostMapping("/Customer/Create")   //POST IN HTTP TO ADD STUFF
-    public String createCustomerDetails(@RequestBody Customer customerNew){     /////UNCOMMENT THIS BEFORE SUBMISSION.
+    @PostMapping("/Customer/Create/{address}/{postal}/{city}/{country}")   //POST IN HTTP TO ADD STUFF //CREATING MEMBER AS SOON AS CUSTOMER SIGNS UP
+    public String createCustomerDetails(@RequestBody Customer customerNew, @PathVariable("address") String address, @PathVariable("postal") String postal, @PathVariable("city") String city, @PathVariable("country") String country){     /////UNCOMMENT THIS BEFORE SUBMISSION.
         // String welcomeMessage = String.format("Hi %s,\n\n" +
         //     "We at the ENSF 480 FlightApp would like to welcome you to our Flight App " +
         //     "and hope you have a good experience booking your travel experiences.\n\n" +
         //     "Best Regards,\nENSF480 Flight App Team", customerNew.getName());
         // emailService.sendEmail(customerNew.getEmailAddr(), "Welcome to your ENSF480 Flight Account!", welcomeMessage);
         customerService.createCustomer(customerNew);
+
+        Membership membership = new Membership(address, postal, city, country);
+        membership.setCustomer(customerNew);
+        membershipService.saveMembership(membership);
         return "Customer Made";
     }
 
@@ -154,6 +160,14 @@ public class APIServiceController {
 
         //saving the new payment
         paymentService.savePayment(payment);  //uses saving logic from the main function in the service layer.
+
+
+        /*Payment confirmation and receipt with ticket*/
+        // String welcomeMessage = String.format("Hi %s,\n\n" +
+        //     "We at the ENSF 480 FlightApp would like to welcome you to our Flight App " +
+        //     "and hope you have a good experience booking your travel experiences.\n\n" +
+        //     "Best Regards,\nENSF480 Flight App Team", customerNew.getName());
+        // emailService.sendEmail(customerNew.getEmailAddr(), "Welcome to your ENSF480 Flight Account!", welcomeMessage);
         return "Payment succesfully sent and receipt sent with ticket details";
     }
 }

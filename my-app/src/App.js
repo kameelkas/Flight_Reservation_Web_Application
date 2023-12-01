@@ -40,6 +40,7 @@ function App() {
   const [passengerList, setPassengerList] = [];
   const uniqueDestOptions = [...new Set(destOptions)];
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const [showCrewLogin, setShowCrewLogin] = useState(false);
 
   const handleButtonClick = (option) => {
     const lowerCaseOption = option.toLowerCase();
@@ -64,6 +65,7 @@ function App() {
     } else if (lowerCaseOption === "crew view") {
       setShowModal(false);
       setSelectedOption("crew login");
+      setShowCrewLogin(true);
     }
 
     getAllDestinations();
@@ -180,7 +182,7 @@ function App() {
     const res = await recieve.json();
     if (res === true) {
       setShowPassengerList(true);
-
+      setShowCrewLogin(false);
       const recieve = await fetch(
         `http://localhost:8080/FlightApp/GetPassengerList/${crewID}`,
         {
@@ -193,8 +195,8 @@ function App() {
 
       const customers = await recieve.json();
       setPassengerList(customers);
-      console.log("Returned Customers:",customers);
-      console.log("Set Customers:",passengerList);
+      console.log("Returned Customers:", customers);
+      console.log("Set Customers:", passengerList);
     } else if (res === false) {
       setSelectedOption(null);
       setCrewID("");
@@ -477,7 +479,7 @@ function App() {
             </div>
           )}
 
-        {selectedOption === "crew login" && (
+        {showCrewLogin && selectedOption === "crew login" && (
           <div className="crew-login-input">
             <label htmlFor="crewId">Enter your Crew ID</label>
             <input
@@ -512,7 +514,9 @@ function App() {
                 ))}
               </div>
             ) : (
-              <p>No passengers have currently booked a ticket for your flight.</p>
+              <p>
+                No passengers have currently booked a ticket for your flight.
+              </p>
             )}
           </div>
         )}

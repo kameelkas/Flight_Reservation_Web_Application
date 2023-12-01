@@ -21,9 +21,10 @@ public class APIServiceController {
     EmailService emailService;
     PaymentService paymentService;
     MembershipService membershipService;
+    CrewService crewService;
 
     /*Aggregate service instances in ctor of the controller*/
-    public APIServiceController(CustomerService customerServ, FlightService flightServ, TicketService ticketServ, SeatService seatServ, EmailService emailServ, PaymentService paymentServ, MembershipService membershipServ){  //passed in so we can call the service function that perform DB operations
+    public APIServiceController(CustomerService customerServ, FlightService flightServ, TicketService ticketServ, SeatService seatServ, EmailService emailServ, PaymentService paymentServ, MembershipService membershipServ, CrewService crewServ){  //passed in so we can call the service function that perform DB operations
         this.customerService = customerServ;
         this.flightService = flightServ;
         this.ticketService = ticketServ;
@@ -31,6 +32,7 @@ public class APIServiceController {
         this.emailService = emailServ;
         this.paymentService = paymentServ;
         this.membershipService = membershipServ;
+        this.crewService = crewServ;
     }
 
     /*API Endpoints for Customer & Membership*/
@@ -86,6 +88,19 @@ public class APIServiceController {
     @GetMapping("/Flight/GetAllFlightsByDestination/{destination}")
     public List<Flight> getFlightsByDestination(@PathVariable("destination") String destination) {
         return flightService.getFlightsByDestination(destination);
+    }
+
+    @GetMapping("/Flight/GetPassengerList/{crewID}")
+    public List<Customer> getPassengerListDetails(@PathVariable("crewID") Integer crewID) {
+        //get flight_id based on crew_id, call to crewServ
+        Integer flightID = crewService.getFlightIDfromCrewID(crewID);
+        //get ticket_ids based on flight_id, call to ticketService
+        List<Integer> customerIDs = ticketService.getCustomersIDsfromFlightID(flightID);
+        //get customer_ids associated with those ticket_ids, call to ticketService
+        //get customers based on those customer_ids, and hold in list<customer>
+        List<Customer> customers = customerService.getCustomersFromCustomerIDs(customerIDs);
+        //send them back to the frontend, return
+        return customers;
     }
 
     /*API Endpoints for Ticket*/ //mostly to get price based on seat_id
@@ -148,6 +163,7 @@ public class APIServiceController {
     //     return ticketService.getLatestTID(); //JUST USE THIS DONT NEED TO MAKE ANOTHER API CALL
     // }
 
+    /*API Endpoints for Payments*/
     @PostMapping("/Payment/Create/{cardNum}/{expDate}/{cvv}/{paidAmount}")
     public String createPayment(@PathVariable("cardNum") String cardNum, @PathVariable("expDate") String expDate, @PathVariable("cvv") Integer cvv, @PathVariable("paidAmount") Integer paidAmount) {
 
@@ -170,4 +186,11 @@ public class APIServiceController {
         // emailService.sendEmail(customerNew.getEmailAddr(), "Welcome to your ENSF480 Flight Account!", welcomeMessage);
         return "Payment succesfully sent and receipt sent with ticket details";
     }
+
+    /*API Endpoints for Crew*/
+    @GetMapping("/Crew/Validation/{crewID}/{crewPassword}")
+    public Boolean validateCrewCredentials(@PathVariable("crewID") Integer crewID, @PathVariable("crewPassword") String crewPassword) {
+        return crewService.validateCrew(crewID, crewPassword);
+    }
+
 }

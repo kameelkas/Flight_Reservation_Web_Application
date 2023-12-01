@@ -47,4 +47,10 @@ public class TicketServiceImpl implements TicketService {
     public Ticket getTicketByID(Integer TIDPassedIn) {
         return ticketRepository.findByticket_id(TIDPassedIn);
     }
+
+    @Override
+    public List<Integer> getCustomersIDsfromFlightID(Integer fligth_ID) {
+       return ticketRepository.getCIDsfromFID(fligth_ID);
+    }
+
 }

@@ -72,11 +72,11 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		Flight flight6 = new Flight("2023-12-06", "07:30", "2023-12-06", "13:45", "New York", "USA", "JFK", "Dubai", "UAE", "DXB");
 
 
-		Crew crew1 = new Crew(1, "Alice", "Pilot");
-		Crew crew2 = new Crew(2, "Bob", "Co-Pilot");
-		Crew crew3 = new Crew(3, "Charlie", "Flight Attendant");
-		Crew crew4 = new Crew(4, "Diana", "Engineer");
-		Crew crew5 = new Crew(5, "Eve", "Navigator");
+		Crew crew1 = new Crew(1, "Alice", "Pilot", "123");
+		Crew crew2 = new Crew(2, "Bob", "Co-Pilot", "456");
+		Crew crew3 = new Crew(3, "Charlie", "Flight Attendant", "789");
+		Crew crew4 = new Crew(4, "Diana", "Engineer", "910");
+		Crew crew5 = new Crew(5, "Eve", "Navigator", "911");
 
 		Membership membership1 = new Membership("123 Main St", "12345", "City1", "Country1");
 		Membership membership2 = new Membership("456 Elm St", "23456", "City2", "Country2");

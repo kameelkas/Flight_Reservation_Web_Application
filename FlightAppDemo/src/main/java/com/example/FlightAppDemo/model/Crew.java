@@ -18,6 +18,7 @@ public class Crew {
 
     private String name;
     private String role;
+    private String crewPassword;
 
     @ManyToOne  //A flight can have multiple crew members, but each crew member is assigned to only one flight at a time. 
     @JoinColumn(name = "flight_id", referencedColumnName = "flight_id")
@@ -25,10 +26,11 @@ public class Crew {
     
     public Crew() {};
 
-    public Crew(int cID, String name, String role){
+    public Crew(int cID, String name, String role, String cp){
         this.crewID = cID;
         this.name = name;
         this.role = role;
+        this.crewPassword = cp;
     }
 
     public void setFlight(Flight flightPassedIn){

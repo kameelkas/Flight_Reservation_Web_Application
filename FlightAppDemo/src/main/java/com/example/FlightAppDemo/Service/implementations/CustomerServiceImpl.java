@@ -61,4 +61,9 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer findCustomerByEmailAddr(String emailAddress) {
         return customerRepository.findByemailAddr(emailAddress);
     }
+
+    @Override
+    public List<Customer> getCustomersFromCustomerIDs(List<Integer> CIDs) {
+        return customerRepository.getCustomersFromIDs(CIDs);
+    }
 }

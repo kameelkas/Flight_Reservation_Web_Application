@@ -26,4 +26,9 @@ public class FlightServiceImpl implements FlightService {
     public List<Flight> getFlightsByDestination(String destination) {
         return flightRepository.findAllFlightsByDestination(destination);
     }
+
+    @Override
+    public Flight getFlightById(Integer flightID) {
+        return flightRepository.findByflight_id(flightID);
+    }
 }

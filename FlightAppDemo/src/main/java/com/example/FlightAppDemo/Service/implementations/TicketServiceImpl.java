@@ -1,5 +1,6 @@
 package com.example.FlightAppDemo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
@@ -13,6 +14,9 @@ import java.util.*;
 public class TicketServiceImpl implements TicketService {
     TicketRepository ticketRepository;
 
+    @Autowired
+	TicketRepository ticketInterface;
+
     TicketServiceImpl(TicketRepository TicketRepo) {
         this.ticketRepository = TicketRepo;
     }
@@ -20,5 +24,10 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public Integer getPriceBySID(Integer SID) {
         return ticketRepository.getPriceBySEATID(SID);
+    }
+
+    @Override
+    public void saveTicket(Ticket ticketPassedIn) {
+        ticketInterface.save(ticketPassedIn);
     }
 }

@@ -28,4 +28,8 @@ public class SeatServiceImpl implements SeatService {
     public List<Boolean> getSeatStatus(Integer flight_ID) {
         return seatRepository.getSeatStauses(flight_ID);
     }
+
+    public Seat getSeatById(Integer seat_ID) {
+        return seatRepository.findByseatID(seat_ID);
+    }
 }

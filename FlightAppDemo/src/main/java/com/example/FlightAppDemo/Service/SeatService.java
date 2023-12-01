@@ -6,4 +6,5 @@ public interface SeatService {
     public void setSeatTaken(Integer seatID);
     public List<Seat> getAllSeats();
     public List<Boolean> getSeatStatus(Integer flightID);
+    public Seat getSeatById(Integer seat_ID);
 }

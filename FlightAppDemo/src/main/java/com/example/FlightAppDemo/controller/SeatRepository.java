@@ -18,4 +18,6 @@ public interface SeatRepository extends JpaRepository<Seat, Integer> {
     @Transactional
     @Query("SELECT s.seat_taken FROM Seat s WHERE s.flight.flight_id = :flight_iD")
     List <Boolean> getSeatStauses(Integer flight_iD);
+
+    Seat findByseatID(Integer seatID);
 }

@@ -16,4 +16,7 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
 
     @Query("SELECT f FROM Flight f WHERE f.destinationCity = :destination")
     List<Flight> findAllFlightsByDestination(@Param("destination") String destination);
+
+    @Query("SELECT f FROM Flight f WHERE f.flight_id = :flight_id")
+    Flight findByflight_id(Integer flight_id);
 }

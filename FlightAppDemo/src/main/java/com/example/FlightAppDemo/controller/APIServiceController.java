@@ -46,12 +46,12 @@ public class APIServiceController {
     }
 
     @PostMapping("/Customer/Create")   //POST IN HTTP TO ADD STUFF
-    public String createCustomerDetails(@RequestBody Customer customerNew){
-        String welcomeMessage = String.format("Hi %s,\n\n" +
-            "We at the ENSF 480 FlightApp would like to welcome you to our Flight App " +
-            "and hope you have a good experience booking your travel experiences.\n\n" +
-            "Best Regards,\nENSF480 Flight App Team", customerNew.getName());
-        emailService.sendEmail(customerNew.getEmailAddr(), "Welcome to your ENSF480 Flight Account!", welcomeMessage);
+    public String createCustomerDetails(@RequestBody Customer customerNew){     /////UNCOMMENT THIS BEFORE SUBMISSION.
+        // String welcomeMessage = String.format("Hi %s,\n\n" +
+        //     "We at the ENSF 480 FlightApp would like to welcome you to our Flight App " +
+        //     "and hope you have a good experience booking your travel experiences.\n\n" +
+        //     "Best Regards,\nENSF480 Flight App Team", customerNew.getName());
+        // emailService.sendEmail(customerNew.getEmailAddr(), "Welcome to your ENSF480 Flight Account!", welcomeMessage);
         customerService.createCustomer(customerNew);
         return "Customer Made";
     }
@@ -103,13 +103,35 @@ public class APIServiceController {
     }
 
     /*API Endpoints for Ticket*/
-    // @PostMapping("/Ticket/Create/{emailAddr}/{flight_id}/{seat_id}")
-    // public void createTicket(@PathVariable("emailAddr") String emailAddr, @PathVariable("flight_id") Integer flight_id, @PathVariable("seat_id") Integer seat_id) {
+    @PostMapping("/Ticket/Create/{emailAddr}/{flight_id}/{seat_id}/{price}/{ticketCancelled}/{cancellationInsurance}")
+    public ResponseEntity<?> createTicket(@PathVariable("emailAddr") String emailAddr, 
+                                        @PathVariable("flight_id") Integer flight_id, 
+                                        @PathVariable("seat_id") Integer seat_id,
+                                        @PathVariable("price") float price,
+                                        @PathVariable("ticketCancelled") Boolean ticketCancelled,
+                                        @PathVariable("cancellationInsurance") Boolean cancellationInsurance) {
+        
+        // Fetch or create Customer, Flight, and Seat entities based on path variables
+        Customer customer = customerService.findCustomerByEmailAddr(emailAddr);
+        Flight flight = flightService.getFlightById(flight_id);
+        Seat seat = seatService.getSeatById(seat_id);
 
-    // }
+        if (customer == null || flight == null || seat == null) {
+            // Handle the case where one of the entities doesn't exist
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid data provided");
+        }
 
-    
+        // Create a new Ticket instance
+        Ticket ticket = new Ticket(price, ticketCancelled, cancellationInsurance);
 
+        // Set associated entities
+        ticket.setPassenger(customer);
+        ticket.setFlight(flight);
+        ticket.setSeat(seat);
+
+        // Save the Ticket entity
+        ticketService.saveTicket(ticket);  //uses saving logic from the main function.
+        return ResponseEntity.ok("Ticket created successfully and receipt sent");
+    }
     //@Post mapping for payment and then call emailservice and fill in body with receipt and whatnot, flight_id, etc
-
 }

@@ -14,4 +14,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     @Query("SELECT c.customerPassword FROM Customer c")
     List<String> findAllcustomerPassword();
     //findall();
+
+    Customer findByemailAddr(String email);
 }

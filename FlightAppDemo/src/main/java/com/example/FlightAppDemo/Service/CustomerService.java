@@ -9,5 +9,6 @@ public interface CustomerService {
     public Customer getCustomer(Integer customer_id);
     public List<Customer> getAllCustomers();
     public List<String> getAllPasswords();
+    public Customer findCustomerByEmailAddr(String emailAddress);
     //sendMail() //call this in service functions for post payment and post customer for welcome email and payment receipt.
 }

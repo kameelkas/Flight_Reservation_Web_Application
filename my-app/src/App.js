@@ -34,6 +34,10 @@ function App() {
   const [signupCity, setSignupCity] = useState("");
   const [signupCountry, setSignupCountry] = useState("");
   const [insurance, setInsurance] = useState(false);
+  const [crewID, setCrewID] = useState("");
+  const [crewPassword, setCrewPassword] = useState("");
+  const [showPassnegerList, setShowPassengerList] = useState(false);
+  const [passengerList, setPassengerList] = ([]);
   const uniqueDestOptions = [...new Set(destOptions)];
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -57,6 +61,9 @@ function App() {
       setSelectedOption(lowerCaseOption);
     } else if (lowerCaseOption === "third option") {
       setSelectedOption("signup");
+    } else if (lowerCaseOption === "crew view") {
+      setShowModal(false);
+      setSelectedOption("crew login");
     }
 
     getAllDestinations();
@@ -74,19 +81,20 @@ function App() {
       name: signupUsername,
       emailAddr: signupEmail,
       phoneNum: signupPhone,
-      customerPassword: signupPassword
+      customerPassword: signupPassword,
     };
     console.log("Signup Data:", signupData);
 
-    fetch(`http://localhost:8080/FlightApp/Customer/Create/${signupAddress}/${signupPostalCode}/${signupCity}/${signupCountry}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(signupData),
-        }
-      );
+    fetch(
+      `http://localhost:8080/FlightApp/Customer/Create/${signupAddress}/${signupPostalCode}/${signupCity}/${signupCountry}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(signupData),
+      }
+    );
 
     setSignupUsername("");
     setSignupEmail("");
@@ -97,9 +105,8 @@ function App() {
     setSignupCity("");
     setSignupCountry("");
 
-    // ***HOW DO WE REDIRECT TO FRONT PAGE ***
+    // ***HOW DO WE REDIRECT TO FRONT PAGE *** //
     setSelectedOption(null); // Assuming this clears the signup form and displays initial options
-
   };
 
   useEffect(() => {
@@ -127,7 +134,7 @@ function App() {
     }
   };
 
-  const getSeatPrice = async () => {
+  /*const getSeatPrice = async () => {
     const recieve = await fetch(
       `http://localhost:8080/FlightApp/Ticket/GetPrice/2`,
       {
@@ -140,7 +147,7 @@ function App() {
 
     const seatPrice = await recieve.json();
     console.log(seatPrice);
-  };
+  };*/
 
   const getAllFlightsForLocation = async () => {
     console.log(selectedDest);
@@ -159,7 +166,39 @@ function App() {
     console.log(allFlightsOfLocation);
   };
 
-  //http://localhost:8080/FlightApp/Flight/GetAllFlightsByDestination/London
+  const checkCrewLogin = async () => {
+    const recieve = await fetch(
+      `http://localhost:8080/FlightApp/CHANGE/${crewID}/${crewID}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const res = await recieve.json();
+    if(res === true){
+      setShowPassengerList(true);
+
+      const recieve = await fetch(
+        `http://localhost:8080/FlightApp/CHANGE/`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const customers = await recieve.json();
+      setPassengerList(customers);
+
+    } else if(res === false){
+      setSelectedOption(null);
+      window.alert("You have attempted to access confidential information without proper authentication credentials. Page exited");
+    }
+  }
 
   const handleModalClose = () => {
     setShowModal(false);
@@ -261,6 +300,13 @@ function App() {
               onClick={() => handleButtonClick("cancel ticket")}
             >
               Cancel Ticket
+            </button>
+            <button
+              className="btn btn-primary"
+              type="button"
+              onClick={() => handleButtonClick("crew view")}
+            >
+              Crew Login
             </button>
             <a
               href="#"
@@ -425,6 +471,27 @@ function App() {
               </div>
             </div>
           )}
+
+        {selectedOption === "crew login" && (
+          <div className="crew-login-input">
+            <label htmlFor="crewId">Enter your Crew ID</label>
+            <input
+              type="text"
+              id="crewId"
+              value={crewID}
+              onChange={(e) => setCrewID(e.target.value)}
+            />
+
+            <label htmlFor="crewPass">Enter your Password</label>
+            <input
+              type="text"
+              id="crewPass"
+              value={crewPassword}
+              onChange={(e) => setCrewPassword(e.target.value)}
+            />
+            <button onClick={() => checkCrewLogin()}>Login</button>
+          </div>
+        )}
 
         {selectedOption === "cancel ticket" && (
           <div className="ticket-id-input">

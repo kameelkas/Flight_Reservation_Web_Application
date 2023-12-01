@@ -16,6 +16,7 @@ function Insurance({ onInsuranceSubmit, setInsurance }) {
       <div className="flex-container">
         <div className="insurance-container">
           <h2>Purchase an Insurance Plan</h2>
+          <h1><b>$50.00</b></h1>
           <br></br>
           <div>
             - Cancel for no additional fees

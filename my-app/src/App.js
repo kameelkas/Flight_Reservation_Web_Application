@@ -26,6 +26,7 @@ function App() {
   const [sendFlightID, setSendFlightID] = useState(0);
   const [signupUsername, setSignupUsername] = useState("");
   const [signupEmail, setSignupEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [signupPhone, setSignupPhone] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
   const [signupAddress, setSignupAddress] = useState("");
@@ -61,7 +62,7 @@ function App() {
     getAllDestinations();
   };
 
-  const handleSignup = () => {
+  const handleSignup = (e) => {
     e.preventDefault();
 
     if (!emailRegex.test(signupEmail)) {
@@ -205,9 +206,9 @@ function App() {
     setUsername("");
     setPassword("");
     setShowTicketPurchaseForm(false);
-    setDepartureDate("");
+    //setDepartureDate("");
     setSelectedDest("");
-    setOrigin("");
+    //setOrigin("");
     setSendFlightID(0);
     setInsurance(false);
   };
@@ -300,7 +301,7 @@ function App() {
                 }}
               />
               {emailError && <p style={{ color: "red" }}>{emailError}</p>}
-              
+
               <label htmlFor="signup-phone">Phone Number</label>
               <input
                 type="tel"

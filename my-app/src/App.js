@@ -11,9 +11,9 @@ function App() {
   const [password, setPassword] = useState("");
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [showTicketPurchaseForm, setShowTicketPurchaseForm] = useState(false);
-  const [departureDate, setDepartureDate] = useState("");
+  //const [departureDate, setDepartureDate] = useState("");
   //const [destination, setDestination] = useState("");
-  const [origin, setOrigin] = useState("");
+  //const [origin, setOrigin] = useState("");
   const [ticketId, setTicketId] = useState("");
   const [role, setRole] = useState(""); // State to store the selected role
   const [showSeatSelection, setShowSeatSelection] = useState(false);
@@ -28,8 +28,13 @@ function App() {
   const [signupEmail, setSignupEmail] = useState("");
   const [signupPhone, setSignupPhone] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
+  const [signupAddress, setSignupAddress] = useState("");
+  const [signupPostalCode, setSignupPostalCode] = useState("");
+  const [signupCity, setSignupCity] = useState("");
+  const [signupCountry, setSignupCountry] = useState("");
   const [insurance, setInsurance] = useState(false);
   const uniqueDestOptions = [...new Set(destOptions)];
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const handleButtonClick = (option) => {
     const lowerCaseOption = option.toLowerCase();
@@ -57,20 +62,41 @@ function App() {
   };
 
   const handleSignup = () => {
-    // Logic to handle user signup here
+    e.preventDefault();
+
+    if (!emailRegex.test(signupEmail)) {
+      setEmailError("Please enter a valid email address.");
+      return;
+    }
+
     const signupData = {
       username: signupUsername,
       email: signupEmail,
       phone: signupPhone,
       password: signupPassword,
+      addr: signupAddress,
+      postal: signupPostalCode,
+      city: signupCity,
+      country: signupCountry
     };
     console.log("Signup Data:", signupData);
 
     // Add logic to send signupData to your backend for user registration
     // ...
 
-    // After successful signup, you can redirect the user to the initial page
+
+    setSignupUsername("");
+    setSignupEmail("");
+    setSignupPhone("");
+    setSignupPassword("");
+    setSignupAddress("");
+    setSignupPostalCode("");
+    setSignupCity("");
+    setSignupCountry("");
+
+    // ***HOW DO WE REDIRECT TO FRONT PAGE ***
     setSelectedOption(null); // Assuming this clears the signup form and displays initial options
+
   };
 
   useEffect(() => {
@@ -183,6 +209,7 @@ function App() {
     setSelectedDest("");
     setOrigin("");
     setSendFlightID(0);
+    setInsurance(false);
   };
 
   const handleSeatSelect = (section, row, seat, continueToInsurance) => {
@@ -234,6 +261,13 @@ function App() {
             >
               Guest
             </button>
+            <button
+              className="btn btn-primary"
+              type="button"
+              onClick={() => handleButtonClick("cancel ticket")}
+            >
+              Cancel Ticket
+            </button>
             <a
               href="#"
               className="underlined-text"
@@ -260,8 +294,13 @@ function App() {
                 type="email"
                 id="signup-email"
                 value={signupEmail}
-                onChange={(e) => setSignupEmail(e.target.value)}
+                onChange={(e) => {
+                  setSignupEmail(e.target.value);
+                  setEmailError(""); // Clear email error on input change
+                }}
               />
+              {emailError && <p style={{ color: "red" }}>{emailError}</p>}
+              
               <label htmlFor="signup-phone">Phone Number</label>
               <input
                 type="tel"
@@ -275,6 +314,37 @@ function App() {
                 id="signup-password"
                 value={signupPassword}
                 onChange={(e) => setSignupPassword(e.target.value)}
+              />
+              <label htmlFor="signup-address">Address</label>
+              <input
+                type="text"
+                id="signup-address"
+                value={signupAddress}
+                onChange={(e) => setSignupAddress(e.target.value)}
+              />
+
+              <label htmlFor="signup-postal-code">Postal Code</label>
+              <input
+                type="text"
+                id="signup-postal-code"
+                value={signupPostalCode}
+                onChange={(e) => setSignupPostalCode(e.target.value)}
+              />
+
+              <label htmlFor="signup-city">City</label>
+              <input
+                type="text"
+                id="signup-city"
+                value={signupCity}
+                onChange={(e) => setSignupCity(e.target.value)}
+              />
+
+              <label htmlFor="signup-country">Country</label>
+              <input
+                type="text"
+                id="signup-country"
+                value={signupCountry}
+                onChange={(e) => setSignupCountry(e.target.value)}
               />
               <button type="submit">Sign Up</button>
             </form>
@@ -293,13 +363,13 @@ function App() {
             >
               Purchase Ticket
             </button>
-            <button
+            {/* <button
               className="btn btn-secondary"
               type="button"
               onClick={() => handleButtonClick("cancel ticket")}
             >
               Cancel Ticket
-            </button>
+            </button> */}
           </div>
         ) : null}
 
@@ -456,7 +526,10 @@ function App() {
             />
           )}
         {showInsurance && (
-          <Insurance onInsuranceSubmit={handleInsuranceContinue} setInsurance={setInsurance} />
+          <Insurance
+            onInsuranceSubmit={handleInsuranceContinue}
+            setInsurance={setInsurance}
+          />
         )}
         {showPayment && <Payment onPaymentSubmit={handlePaymentSubmit} />}
       </div>

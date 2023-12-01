@@ -15,7 +15,7 @@ function App() {
   //const [destination, setDestination] = useState("");
   //const [origin, setOrigin] = useState("");
   const [ticketId, setTicketId] = useState("");
-  const [role, setRole] = useState(""); // State to store the selected role
+  //const [role, setRole] = useState(""); // State to store the selected role
   const [showSeatSelection, setShowSeatSelection] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
   const [showInsurance, setShowInsurance] = useState(false);
@@ -211,13 +211,13 @@ function App() {
     setShowModal(false);
     setUsername("");
     setPassword("");
-    setRole(""); // Reset the role when the modal is closed
+    //setRole(""); // Reset the role when the modal is closed
   };
 
   const handleLogin = () => {
     console.log("Username:", username);
     console.log("Password:", password);
-    console.log("Role:", role); // Log the selected role
+    //console.log("Role:", role); // Log the selected role
     setLoggedInUser(username);
     handleModalClose();
   };
@@ -239,17 +239,21 @@ function App() {
   };
 
   const handleLogout = () => {
+    // Clear necessary states and reset them to default values
     setLoggedInUser(null);
     setSelectedOption(null);
     setShowModal(false);
     setUsername("");
     setPassword("");
     setShowTicketPurchaseForm(false);
-    //setDepartureDate("");
     setSelectedDest("");
-    //setOrigin("");
     setSendFlightID(0);
     setInsurance(false);
+    setShowSeatSelection(false);
+    setShowPayment(false);
+    setShowInsurance(false);
+    setShowSearchFlight(false);
+    setShowCrewLogin(false); // Ensure crew login form is hidden
   };
 
   const handleSeatSelect = (section, row, seat, continueToInsurance) => {
@@ -451,7 +455,7 @@ function App() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
-                  <div className="input-group mb-3">
+                  {/* <div className="input-group mb-3">
                     <label
                       className="input-group-text"
                       htmlFor="inputGroupSelect01"
@@ -469,7 +473,7 @@ function App() {
                       <option value="Crew">Crew</option>
                       <option value="System Admin">System Admin</option>
                     </select>
-                  </div>
+                  </div> */}
 
                   <button type="button" onClick={handleLogin}>
                     Login

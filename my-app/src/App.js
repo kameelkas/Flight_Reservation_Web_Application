@@ -37,7 +37,7 @@ function App() {
   const [crewID, setCrewID] = useState("");
   const [crewPassword, setCrewPassword] = useState("");
   const [showPassnegerList, setShowPassengerList] = useState(false);
-  const [passengerList, setPassengerList] = [];
+  const [passengerList, setPassengerList] = useState([]);
   const uniqueDestOptions = [...new Set(destOptions)];
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const [showCrewLogin, setShowCrewLogin] = useState(false);

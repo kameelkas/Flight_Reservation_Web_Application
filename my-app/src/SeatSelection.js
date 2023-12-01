@@ -124,6 +124,12 @@ function SeatSelection({ onSeatSelect, flightID }) {
   };
 
   return (
+    <>
+    <div>
+      <p>Pink: Comfort</p>
+      <p>Orange: Business</p>
+      <p>Grey: Economy</p>
+    </div>
     <div className="seat-selection">
       {renderSeats()}
       {selectedSeat && (
@@ -131,10 +137,8 @@ function SeatSelection({ onSeatSelect, flightID }) {
           Continue
         </button>
       )}
-      <p>Purple: Comfort</p>
-      <p>Green: Business</p>
-      <p>Purple: Economy</p>
     </div>
+    </>
   );
 }
 

@@ -15,19 +15,19 @@
   margin: 2px;
 }
 
-.selected {
+.selected:hover {
   background-color: rgb(63, 181, 63);
 }
 
 /* Apply different background colors based on row index */
 .seat-row:nth-child(1) .seat {
-  background-color: purple;
+  background-color: rgb(232, 89, 232);
 }
 
 .seat-row:nth-child(2) .seat {
-  background-color: green;
+  background-color: rgb(192, 129, 11);
 }
 
 .seat-row:last-child .seat {
-  background-color: grey;
+  background-color: rgb(158, 153, 153);
 }

@@ -1,9 +1,13 @@
 import React from "react";
 import "./Insurance.css";
 
-function Insurance({ onInsuranceSubmit }) {
+function Insurance({ onInsuranceSubmit, setInsurance }) {
   const handleInsuranceSubmit = () => {
-    // Implement your logic for insurance submission
+    onInsuranceSubmit();
+  };
+
+  const chosenInsurance = () => {
+    setInsurance(true);
     onInsuranceSubmit();
   };
 
@@ -14,12 +18,12 @@ function Insurance({ onInsuranceSubmit }) {
           <h2>Purchase an Insurance Plan</h2>
           <br></br>
           <div>
-            - Cancel or change flight for no additional fees
+            - Cancel for no additional fees
             <br></br>- 1 free checked bag
             <br></br>- Full refund upon cancellation
             <br></br>
             <br></br>
-            <button>Select</button>
+            <button onClick={chosenInsurance}>Select</button>
           </div>
         </div>
       </div>

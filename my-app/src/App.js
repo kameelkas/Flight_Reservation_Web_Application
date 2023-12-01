@@ -28,6 +28,7 @@ function App() {
   const [signupEmail, setSignupEmail] = useState("");
   const [signupPhone, setSignupPhone] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
+  const [insurance, setInsurance] = useState(false);
   const uniqueDestOptions = [...new Set(destOptions)];
 
   const handleButtonClick = (option) => {
@@ -188,6 +189,7 @@ function App() {
     if (continueToInsurance) {
       setShowSeatSelection(false);
       setShowInsurance(true);
+      console.log("BEFORE INS CHOSEN:", insurance);
       // Save the selected seat info if necessary
     }
     // ... existing seat selection logic ...
@@ -200,6 +202,7 @@ function App() {
   const handleInsuranceContinue = () => {
     setShowInsurance(false);
     setShowPayment(true);
+    console.log("AFTER INS CHOSEN:", insurance);
   };
 
   return (
@@ -453,7 +456,7 @@ function App() {
             />
           )}
         {showInsurance && (
-          <Insurance onInsuranceSubmit={handleInsuranceContinue} />
+          <Insurance onInsuranceSubmit={handleInsuranceContinue} setInsurance={setInsurance} />
         )}
         {showPayment && <Payment onPaymentSubmit={handlePaymentSubmit} />}
       </div>

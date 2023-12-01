@@ -42,4 +42,9 @@ public class TicketServiceImpl implements TicketService {
         }
         return page.getContent().get(0).getTicket_id(); // Assuming there is a getter for ticket_id
     }
+
+    @Override
+    public Ticket getTicketByID(Integer TIDPassedIn) {
+        return ticketRepository.findByticket_id(TIDPassedIn);
+    }
 }

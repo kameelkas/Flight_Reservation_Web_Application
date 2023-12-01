@@ -19,14 +19,16 @@ public class APIServiceController {
     TicketService ticketService;
     SeatService seatService;
     EmailService emailService;
+    PaymentService paymentService;
 
     /*Aggregate service instances in ctor of the controller*/
-    public APIServiceController(CustomerService customerServ, FlightService flightServ, TicketService ticketServ, SeatService seatServ, EmailService emailServ){  //passed in so we can call the service function that perform DB operations
+    public APIServiceController(CustomerService customerServ, FlightService flightServ, TicketService ticketServ, SeatService seatServ, EmailService emailServ, PaymentService paymentServ){  //passed in so we can call the service function that perform DB operations
         this.customerService = customerServ;
         this.flightService = flightServ;
         this.ticketService = ticketServ;
         this.seatService = seatServ;
         this.emailService = emailServ;
+        this.paymentService = paymentServ;
     }
 
     /*API Endpoints for Customer*/
@@ -130,15 +132,28 @@ public class APIServiceController {
         ticket.setSeat(seat);
 
         // Save the Ticket entity
-        ticketService.saveTicket(ticket);  //uses saving logic from the main function.
+        ticketService.saveTicket(ticket);  //uses saving logic from the main function in the service layer
         return ResponseEntity.ok("Ticket created successfully");
     }
 
     //@Post mapping for payment and then call emailservice and fill in body with receipt and whatnot, flight_id, etc
-    @GetMapping("/Ticket/GetRecentTID")
-    public Integer getRecentTicketID() {
-        return ticketService.getLatestTID();
-    }
+    // @GetMapping("/Ticket/GetRecentTID")
+    // public Integer getRecentTicketID() {
+    //     return ticketService.getLatestTID(); //JUST USE THIS DONT NEED TO MAKE ANOTHER API CALL
+    // }
 
-    // @PostMapping("/Payment/Create/{cardNum}/{expDate}/{cvv}/{paidAmount}")
+    @PostMapping("/Payment/Create/{cardNum}/{expDate}/{cvv}/{paidAmount}")
+    public String createPayment(@PathVariable("cardNum") String cardNum, @PathVariable("expDate") String expDate, @PathVariable("cvv") Integer cvv, @PathVariable("paidAmount") Integer paidAmount) {
+
+        //Creating the ticket object that payment because of the foreign key
+        Ticket ticket = ticketService.getTicketByID(ticketService.getLatestTID());
+
+        Payment payment = new Payment(cardNum, expDate, cvv, paidAmount);
+
+        payment.setTicket(ticket);
+
+        //saving the new payment
+        paymentService.savePayment(payment);  //uses saving logic from the main function in the service layer.
+        return "Payment succesfully sent and receipt sent with ticket details";
+    }
 }

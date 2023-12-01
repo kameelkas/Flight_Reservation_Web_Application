@@ -17,4 +17,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
     @Query(value = "SELECT t FROM Ticket t ORDER BY t.ticket_id DESC")
     Page<Ticket> findTopByOrderByIdDesc(Pageable pageable);
+
+    @Query("SELECT t FROM Ticket t WHERE t.ticket_id = :ticket_id")
+    Ticket findByticket_id(Integer ticket_id);
 }

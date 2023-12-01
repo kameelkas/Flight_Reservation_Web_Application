@@ -5,4 +5,5 @@ import java.util.*;
 public interface TicketService {
     public Integer getPriceBySID(Integer SID);
     public void saveTicket(Ticket ticketPassedIn);
+    public Integer getLatestTID();
 }

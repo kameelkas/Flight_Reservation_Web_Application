@@ -9,6 +9,8 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import java.util.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 @Service
 public class TicketServiceImpl implements TicketService {
@@ -29,5 +31,15 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public void saveTicket(Ticket ticketPassedIn) {
         ticketInterface.save(ticketPassedIn);
+    }
+
+    @Override
+    public Integer getLatestTID() {
+        Page<Ticket> page = ticketRepository.findTopByOrderByIdDesc(PageRequest.of(0, 1));
+        if (!page.hasContent()) {
+            // Handle the case where there are no tickets
+            return null;
+        }
+        return page.getContent().get(0).getTicket_id(); // Assuming there is a getter for ticket_id
     }
 }

@@ -131,7 +131,14 @@ public class APIServiceController {
 
         // Save the Ticket entity
         ticketService.saveTicket(ticket);  //uses saving logic from the main function.
-        return ResponseEntity.ok("Ticket created successfully and receipt sent");
+        return ResponseEntity.ok("Ticket created successfully");
     }
+
     //@Post mapping for payment and then call emailservice and fill in body with receipt and whatnot, flight_id, etc
+    @GetMapping("/Ticket/GetRecentTID")
+    public Integer getRecentTicketID() {
+        return ticketService.getLatestTID();
+    }
+
+    // @PostMapping("/Payment/Create/{cardNum}/{expDate}/{cvv}/{paidAmount}")
 }

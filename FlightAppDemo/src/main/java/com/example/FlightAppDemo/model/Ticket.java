@@ -53,4 +53,8 @@ public class Ticket {
     public void setSeat(Seat passedInSeat) {
         this.seat  = passedInSeat;
     }
+
+    public Integer getTicket_id() {
+        return this.ticket_id;
+    }
 }

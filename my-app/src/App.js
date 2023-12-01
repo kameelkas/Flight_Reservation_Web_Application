@@ -184,7 +184,7 @@ function App() {
       setShowPassengerList(true);
       setShowCrewLogin(false);
       const recieve = await fetch(
-        `http://localhost:8080/FlightApp/GetPassengerList/${crewID}`,
+        `http://localhost:8080/FlightApp/Flight/GetPassengerList/${crewID}`,
         {
           method: "GET",
           headers: {

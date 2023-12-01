@@ -13,10 +13,12 @@
   font-size: 12px;
   padding: 5px;
   margin: 2px;
+  transition: background-color 0.3s;
 }
 
-.selected:hover {
-  background-color: rgb(63, 181, 63);
+.selected,
+.seat:hover {
+  background-color: rgb(63, 181, 63); /* Green color for selected or hovered seats */
 }
 
 /* Apply different background colors based on row index */

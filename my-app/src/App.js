@@ -37,7 +37,7 @@ function App() {
   const [crewID, setCrewID] = useState("");
   const [crewPassword, setCrewPassword] = useState("");
   const [showPassnegerList, setShowPassengerList] = useState(false);
-  const [passengerList, setPassengerList] = ([]);
+  const [passengerList, setPassengerList] = [];
   const uniqueDestOptions = [...new Set(destOptions)];
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -168,9 +168,9 @@ function App() {
 
   const checkCrewLogin = async () => {
     const recieve = await fetch(
-      `http://localhost:8080/FlightApp/CHANGE/${crewID}/${crewID}`,
+      `http://localhost:8080/FlightApp/Crew/Validation/${crewID}/${crewPassword}`,
       {
-        method: "POST",
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
@@ -178,11 +178,11 @@ function App() {
     );
 
     const res = await recieve.json();
-    if(res === true){
+    if (res === true) {
       setShowPassengerList(true);
 
       const recieve = await fetch(
-        `http://localhost:8080/FlightApp/CHANGE/`,
+        `http://localhost:8080/FlightApp/GetPassengerList/${crewID}`,
         {
           method: "GET",
           headers: {
@@ -193,12 +193,17 @@ function App() {
 
       const customers = await recieve.json();
       setPassengerList(customers);
-
-    } else if(res === false){
+      console.log("Returned Customers:",customers);
+      console.log("Set Customers:",passengerList);
+    } else if (res === false) {
       setSelectedOption(null);
-      window.alert("You have attempted to access confidential information without proper authentication credentials. Page exited");
+      setCrewID("");
+      setCrewPassword("");
+      window.alert(
+        "You have attempted to access confidential information without proper authentication credentials. Page exited"
+      );
     }
-  }
+  };
 
   const handleModalClose = () => {
     setShowModal(false);
@@ -490,6 +495,25 @@ function App() {
               onChange={(e) => setCrewPassword(e.target.value)}
             />
             <button onClick={() => checkCrewLogin()}>Login</button>
+          </div>
+        )}
+
+        {showPassnegerList && (
+          <div className="crew-login-input">
+            {passengerList.length > 0 ? (
+              <div>
+                {passengerList.map((passenger, index) => (
+                  <div key={index}>
+                    <p>Name: {passenger.name}</p>
+                    <p>Email: {passenger.emailAddr}</p>
+                    <p>Phone Number: {passenger.phoneNum}</p>
+                    <p>ID: {passenger.customerID}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p>No passengers have currently booked a ticket for your flight.</p>
+            )}
           </div>
         )}
 

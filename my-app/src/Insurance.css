@@ -2,8 +2,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: red;
+  
 }
 
 .insurance-container {
+  flex: 1;
   border: 1px solid #000;
+  padding: 10px;
 }

@@ -1,23 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import "./Payment.css";
 
-function Payment({ onPaymentSubmit }) {
+function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID }) {
   const [cardNumber, setCardNumber] = useState("");
   const [expiryMonth, setExpiryMonth] = useState("");
   const [expiryYear, setExpiryYear] = useState("");
   const [cvv, setCvv] = useState("");
   const [isPaymentSuccessful, setPaymentSuccessful] = useState(false);
 
+  useEffect(() => {
+    console.log("Insurance:", hasInsurance);
+    console.log("seatID:", seatID);
+    console.log("flightID:", flightID);
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const expiryDate = expiryMonth + "/" + expiryYear; // Combine month and year
-    onPaymentSubmit({ cardNumber, expiryDate, cvv });
+    if (
+      cardNumber.length !== 16 ||
+      expiryMonth.length !== 2 ||
+      expiryYear.length !== 2 ||
+      cvv.length !== 3 ||
+      !/^\d+$/.test(cardNumber) ||
+      !/^\d+$/.test(expiryMonth) ||
+      !/^\d+$/.test(expiryYear) ||
+      !/^\d+$/.test(cvv)
+    ) {
+      setCardNumber("");
+      setExpiryMonth("");
+      setExpiryYear("");
+      setCvv("");
+      window.alert("One or more entered fields was incorrect. Please try again.")
+      return;
+    }
+    
     setPaymentSuccessful(true);
   };
 
   const handlePaymentSuccessClose = () => {
     setPaymentSuccessful(false);
+    const expiryDate = expiryMonth + "/" + expiryYear; // Combine month and year
+    onPaymentSubmit({ cardNumber, expiryDate, cvv });
+
   }
 
   return (

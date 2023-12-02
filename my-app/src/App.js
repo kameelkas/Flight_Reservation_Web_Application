@@ -24,6 +24,7 @@ function App() {
   const [availableFlights, setAvailableFlights] = useState([]);
   const [showSearchFlight, setShowSearchFlight] = useState(false);
   const [sendFlightID, setSendFlightID] = useState(0);
+  const [sendSeatID, setSendSeatID] = useState(0);
   const [signupUsername, setSignupUsername] = useState("");
   const [signupEmail, setSignupEmail] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -269,6 +270,7 @@ function App() {
     setShowTicketPurchaseForm(false);
     setSelectedDest("");
     setSendFlightID(0);
+    setSendSeatID(0);
     setInsurance(false);
     setShowSeatSelection(false);
     setShowPayment(false);
@@ -281,10 +283,10 @@ function App() {
     if (continueToInsurance) {
       setShowSeatSelection(false);
       setShowInsurance(true);
-      console.log("BEFORE INS CHOSEN:", insurance);
-      // Save the selected seat info if necessary
     }
-    // ... existing seat selection logic ...
+
+    const seatID = (((sendFlightID - 1)*15) + (row*5) + (seat + 1));
+    setSendSeatID(seatID);
   };
   const handlePaymentSubmit = (paymentDetails) => {
     console.log("Payment Details:", paymentDetails);
@@ -658,7 +660,7 @@ function App() {
             setInsurance={setInsurance}
           />
         )}
-        {showPayment && <Payment onPaymentSubmit={handlePaymentSubmit} />}
+        {showPayment && <Payment onPaymentSubmit={handlePaymentSubmit} hasInsurance={insurance} seatID={sendSeatID} flightID={sendFlightID}/>}
       </div>
     </div>
   );

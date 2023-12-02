@@ -58,7 +58,6 @@ function GuestPayment({ onPaymentSubmit, hasInsurance, seatID, flightID }) {
     };
 
     getPriceDetails();
-    console.log(email);
   }, []);
 
   useEffect(() => {

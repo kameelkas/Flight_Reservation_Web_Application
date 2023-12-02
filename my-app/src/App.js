@@ -643,7 +643,7 @@ function App() {
             setInsurance={setInsurance}
           />
         )}
-        {showPayment && <Payment onPaymentSubmit={handlePaymentSubmit} hasInsurance={insurance} seatID={sendSeatID} flightID={sendFlightID}/>}
+        {showPayment && <Payment onPaymentSubmit={handlePaymentSubmit} hasInsurance={insurance} seatID={sendSeatID} flightID={sendFlightID} email={username}/>}
       </div>
     </div>
   );

@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import "./Payment.css";
 
-function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID }) {
+function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID, email }) {
   const [cardNumber, setCardNumber] = useState("");
-  const [expiryMonth, setExpiryMonth] = useState("");
-  const [expiryYear, setExpiryYear] = useState("");
+  const [expiry, setExpiry] = useState("");
   const [cvv, setCvv] = useState("");
   const [isPaymentSuccessful, setPaymentSuccessful] = useState(false);
   const [seatPrice, setSeatPrice] = useState(0);
@@ -13,7 +12,6 @@ function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID }) {
   const [subtotal, setSubtotal] = useState(0);
   const [totalAmnt, setTotalAmnt] = useState(0);
   var formattedNumber = 0;
-
 
   useEffect(() => {
     const getPriceDetails = async () => {
@@ -24,33 +22,35 @@ function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID }) {
           headers: {
             "Content-Type": "application/json",
           },
-        })
+        }
+      );
 
-        const gottenSeatPrice = await recieveSeatPrice.json();
-        setSeatPrice(gottenSeatPrice);
+      const gottenSeatPrice = await recieveSeatPrice.json();
+      setSeatPrice(gottenSeatPrice);
 
-        const recieveFlightPrice = await fetch(
-          `http://localhost:8080/FlightApp/Flight/GetFlightPriceUsingFlightID/${flightID}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-  
-          const gottenFlightPrice = await recieveFlightPrice.json();
-          setFlightPrice(gottenFlightPrice);
+      const recieveFlightPrice = await fetch(
+        `http://localhost:8080/FlightApp/Flight/GetFlightPriceUsingFlightID/${flightID}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-          //calculateSubtotal();
+      const gottenFlightPrice = await recieveFlightPrice.json();
+      setFlightPrice(gottenFlightPrice);
+
+      //calculateSubtotal();
     };
     getPriceDetails();
   }, []);
 
   useEffect(() => {
-    const calculateDiscount = (subtotal * 1.05) - ((subtotal * 1.05) * 0.2);
+    const calculateDiscount = subtotal * 1.05 - subtotal * 1.05 * 0.2;
     console.log(calculateDiscount);
     setTotalAmnt(calculateDiscount);
-    console.log(totalAmnt)
+    console.log(totalAmnt);
     formattedNumber = parseFloat(totalAmnt.toFixed(2)).toString();
     console.log(formattedNumber);
   }, [subtotal]);
@@ -60,45 +60,65 @@ function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID }) {
   }, [seatPrice, flightPrice, hasInsurance]);
 
   const calculateSubtotal = () => {
-    if(hasInsurance){
+    if (hasInsurance) {
       setSubtotal(seatPrice + flightPrice + 50);
     } else {
-      setSubtotal(seatPrice + flightPrice);    
+      setSubtotal(seatPrice + flightPrice);
     }
   };
 
+  const sendCustomerFlightDetails = () => {
+    fetch(
+      `http://localhost:8080/FlightApp/Ticket/Create/${email}/${flightID}/${seatID}/${totalAmnt}/false/${hasInsurance}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (
-      cardNumber.length !== 16 ||
-      expiryMonth.length !== 2 ||
-      expiryYear.length !== 2 ||
-      cvv.length !== 3 ||
-      !/^\d+$/.test(cardNumber) ||
-      !/^\d+$/.test(expiryMonth) ||
-      !/^\d+$/.test(expiryYear) ||
-      !/^\d+$/.test(cvv)
-    ) {
-      setCardNumber("");
-      setExpiryMonth("");
-      setExpiryYear("");
-      setCvv("");
-      window.alert(
-        "One or more entered fields was incorrect. Please try again."
-      );
-      return;
-    }
+  const sendPaymentDetails = () => {
+    fetch(
+      `http://localhost:8080/FlightApp/Payment/Create/${cardNumber}/${expiry}/${cvv}/${totalAmnt}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  };
+
+  const handleSubmit = () => {
+    // e.preventDefault();
+    // if (
+    //   cardNumber.length !== 16 ||
+    //   expiry.length !== 4 ||
+    //   cvv.length !== 3 ||
+    //   !/^\d+$/.test(cardNumber) ||
+    //   !/^\d+$/.test(expiry) ||
+    //   !/^\d+$/.test(cvv)
+    // ) {
+    //   setCardNumber("");
+    //   setExpiry("");
+    //   setCvv("");
+    //   window.alert(
+    //     "One or more entered fields was incorrect. Please try again."
+    //   );
+    //   return;
+    // }
 
     //SEND successive POST's to backend
-
+    sendCustomerFlightDetails();
+    sendPaymentDetails();
     setPaymentSuccessful(true);
   };
 
   const handlePaymentSuccessClose = () => {
     setPaymentSuccessful(false);
-    const expiryDate = expiryMonth + "/" + expiryYear; // Combine month and year
-    onPaymentSubmit({ cardNumber, expiryDate, cvv });
+    onPaymentSubmit({ cardNumber, expiry, cvv });
   };
 
   return (
@@ -115,9 +135,11 @@ function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID }) {
         )}
         <div>Subtotal: {subtotal}</div>
         <div>Tax: ${subtotal * 0.05}</div>
-        <div>Since you're a registed member, we are offering you a 20% discount!</div>
         <div>
-          <b>Total Amount: {totalAmnt}</b>
+          Since you're a registed member, we are offering you a 20% discount!
+        </div>
+        <div>
+          <b>Total Amount: ${totalAmnt}</b>
         </div>
       </div>
       <form onSubmit={handleSubmit}>
@@ -125,40 +147,30 @@ function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID }) {
         <input
           type="text"
           id="cardNumber"
+          pattern="\d{16}"
           value={cardNumber}
           onChange={(e) => setCardNumber(e.target.value)}
         />
         <div className="expiry-fields">
-          <div>
-            <label htmlFor="expiryMonth">Expiry Month</label>
-            <input
-              type="text"
-              id="expiryMonth"
-              value={expiryMonth}
-              onChange={(e) => setExpiryMonth(e.target.value)}
-              maxLength="2" // Limit input to 2 characters
-              placeholder="MM"
-            />
-          </div>
-          <div>
-            <label htmlFor="expiryYear">Expiry Year</label>
-            <input
-              type="text"
-              id="expiryYear"
-              value={expiryYear}
-              onChange={(e) => setExpiryYear(e.target.value)}
-              maxLength="2" // Limit input to 2 characters
-              placeholder="YY"
-            />
-          </div>
+          <label htmlFor="expiry">Expiry Year</label>
+          <input
+            type="text"
+            id="expiry"
+            value={expiry}
+            pattern="\d{4}"
+            onChange={(e) => setExpiry(e.target.value)}
+            maxLength="4" // Limit input to 4 characters
+            placeholder="MMYY"
+          />
         </div>
         <label htmlFor="cvv">CVV</label>
         <input
           type="text"
           id="cvv"
           value={cvv}
+          pattern="\d{3}"
           onChange={(e) => setCvv(e.target.value)}
-          maxLength="3" // Limit input to 2 characters
+          maxLength="3" // Limit input to 3 characters
           placeholder="###"
         />
         <button type="submit">Submit Payment</button>
@@ -171,7 +183,7 @@ function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID }) {
         <div>
           <h2>Payment Successful!</h2>
           <p>Check your email for your ticket and receipt.</p>
-          <button onClick={handlePaymentSuccessClose}>OK</button>
+          <button onClick={handlePaymentSuccessClose}>OK!</button>
         </div>
       </Modal>
     </div>

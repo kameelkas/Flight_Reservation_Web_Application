@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Modal from "react-modal";
 import "./Payment.css";
 
 function Payment({ onPaymentSubmit }) {
@@ -6,12 +7,18 @@ function Payment({ onPaymentSubmit }) {
   const [expiryMonth, setExpiryMonth] = useState("");
   const [expiryYear, setExpiryYear] = useState("");
   const [cvv, setCvv] = useState("");
+  const [isPaymentSuccessful, setPaymentSuccessful] = useState[false];
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const expiryDate = expiryMonth + "/" + expiryYear; // Combine month and year
     onPaymentSubmit({ cardNumber, expiryDate, cvv });
+    setPaymentSuccessful(true);
   };
+
+  const handlePaymentSuccess = () => {
+    setPaymentSuccessful(false);
+  }
 
   return (
     <div className="payment-form">
@@ -57,6 +64,17 @@ function Payment({ onPaymentSubmit }) {
         />
         <button type="submit">Submit Payment</button>
       </form>
+      <Modal
+        isOpen={isPaymentSuccessful}
+        onRequestClose={handlePaymentSuccessClose}
+        contentLabel="Payment Success Modal"
+      >
+        <div>
+          <h2>Payment Successful!</h2>
+          <p>Check your email for your ticket and receipt.</p>
+          <button onClick={handlePaymentSuccessClose}>OK</button>
+        </div>
+      </Modal>
     </div>
   );
 }

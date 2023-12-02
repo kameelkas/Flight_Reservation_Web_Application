@@ -81,8 +81,13 @@ function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID, email }) {
 
     const gottenTicketID = await getTicketID.json();
     setTicketID(gottenTicketID);
+    console.log("FromBACK: ", gottenTicketID);
     console.log("TicketID: ", ticketID);
   };
+
+  useEffect(() => {
+    sendPaymentDetails();
+  }, [ticketID]);
 
   const sendPaymentDetails = () => {
     fetch(
@@ -99,7 +104,6 @@ function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID, email }) {
   const handleSubmit = () => {
     //SEND successive POST's to backend
     sendCustomerFlightDetails();
-    sendPaymentDetails();
     setPaymentSuccessful(true);
   };
 

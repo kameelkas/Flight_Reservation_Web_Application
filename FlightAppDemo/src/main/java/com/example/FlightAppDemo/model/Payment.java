@@ -21,14 +21,14 @@ public class Payment {
     private String cardNumber;
     private String expiryDate;
     private int CVV;
-    private int paidAmount;
+    private float paidAmount;
 
     @OneToOne  
     @JoinColumn(name = "ticket_id", referencedColumnName = "ticket_id")
     private Ticket ticketPaidFor;
 
     public Payment() {};
-    public Payment(String cardNum, String expDate, int cvv, int amount){
+    public Payment(String cardNum, String expDate, int cvv, float amount){
         this.cardNumber = cardNum;
         this.expiryDate = expDate;
         this.CVV = cvv;

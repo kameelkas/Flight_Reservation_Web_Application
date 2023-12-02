@@ -190,7 +190,7 @@ public class APIServiceController {
 
     /*API Endpoints for Payments*/
     @PostMapping("/Payment/Create/{cardNum}/{expDate}/{cvv}/{paidAmount}/{ticket_id}")
-    public String createPayment(@PathVariable("cardNum") String cardNum, @PathVariable("expDate") String expDate, @PathVariable("cvv") Integer cvv, @PathVariable("paidAmount") Integer paidAmount, @PathVariable("ticket_id") Integer ticket_id) {
+    public String createPayment(@PathVariable("cardNum") String cardNum, @PathVariable("expDate") String expDate, @PathVariable("cvv") Integer cvv, @PathVariable("paidAmount") float paidAmount, @PathVariable("ticket_id") Integer ticket_id) {
 
         //Creating the ticket object that payment because of the foreign key
         Ticket ticket = ticketService.getTicketByID(ticket_id);  //get lastest ticket from the database.
@@ -228,7 +228,7 @@ public class APIServiceController {
             "Your flight arrives at %s, %s, %s at %s on %s\n"                             +
             "Your ticket ID is: %d.\n"                                                    +
             "\n\n---------------------------RECEIPT----------------------------------\n\n" +
-            "Your payment using a Visa Credit Card ending with %s for %d$ has been approved.\n", customer.getName(), flight.getflight_id(), flight.getDestinationCity(), flight.getDepartureAirport(), flight.getDepartureCity(), flight.getDepartureCountry(),
+            "Your payment using a Visa Credit Card ending with %s for %f$ has been approved.\n", customer.getName(), flight.getflight_id(), flight.getDestinationCity(), flight.getDepartureAirport(), flight.getDepartureCity(), flight.getDepartureCountry(),
                                     flight.getDepartureTime(), flight.getDepartureDate(), flight.getDestinationAirport(), flight.getDestinationCity(), flight.getDestinationCountry(), flight.getArrivalTime(), flight.getArrivalDate(),
                                     ticket.getTicket_id(), lastFourDigits, paidAmount); 
 

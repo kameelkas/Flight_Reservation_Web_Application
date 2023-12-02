@@ -42,7 +42,7 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args){
 		Customer customer1 = new Customer("Rohil", "1234@gmail.com", "+1234567890", "abc");
-		Customer customer2 = new Customer("Kameel", "rohil1710@gmail.com", "+1987654321", "xyz");
+		Customer customer2 = new Customer("Kameel", "456@gmail.com", "+1987654321", "xyz");
 		Customer customer3 = new Customer("Raisa", "rafi.raisar@gmail.com", "+1654321890", "def");
 		Customer customer4 = new Customer("Mehrnaz", "merymer920@gmail.com", "+1789456231", "ghi");
 		Customer customer5 = new Customer("RohilAgain", "compsciencerohil@gmail.com", "+1567894321", "lmn");

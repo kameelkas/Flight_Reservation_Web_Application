@@ -289,6 +289,7 @@ function App() {
   const handlePaymentSubmit = (paymentDetails) => {
     console.log("Payment Details:", paymentDetails);
     // Handle the payment submission logic here
+    setShowPayment(false);
   };
 
   const handleInsuranceContinue = () => {
@@ -619,8 +620,9 @@ function App() {
                 {availableFlights.map((flight, index) => (
                   <div key={index}>
                     <p>
-                      Flight: {flight.flight_id}: {flight.departureCity}{" "}
-                      {flight.departureCountry} {flight.departureAirport}
+                      Flight: {flight.flight_id}
+                      From: {flight.departureCity} {flight.departureCountry} {flight.departureAirport}
+                      To: {flight.destinationCity} {flight.destinationCountry} {flight.destinationAirport}
                     </p>
                     <p>
                       Departure: {flight.departureDate} {flight.departureTime} -

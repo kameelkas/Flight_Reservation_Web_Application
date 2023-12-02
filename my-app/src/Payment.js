@@ -50,8 +50,8 @@ function Payment({ onPaymentSubmit }) {
               id="expiryYear"
               value={expiryYear}
               onChange={(e) => setExpiryYear(e.target.value)}
-              maxLength="4" // Limit input to 4 characters
-              placeholder="YYYY"
+              maxLength="2" // Limit input to 2 characters
+              placeholder="YY"
             />
           </div>
         </div>
@@ -61,6 +61,8 @@ function Payment({ onPaymentSubmit }) {
           id="cvv"
           value={cvv}
           onChange={(e) => setCvv(e.target.value)}
+          maxLength="3" // Limit input to 2 characters
+          placeholder="###"
         />
         <button type="submit">Submit Payment</button>
       </form>

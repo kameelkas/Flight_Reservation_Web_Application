@@ -29,10 +29,11 @@ public class Flight {
     private String destinationCity;
     private String destinationCountry;
     private String destinationAirport;
+    private Integer flightPrice;
 
     public Flight() {};
     public Flight(String depDate, String depTime, String arrDate, String ArrTime, String depCity,
-            String depCntry, String depAirport, String destCity, String destCntry, String destAirport) {
+            String depCntry, String depAirport, String destCity, String destCntry, String destAirport, Integer fp) {
         
         this.departureDate = depDate;
         this.departureTime = depTime;
@@ -44,6 +45,7 @@ public class Flight {
         this.destinationCity = destCity;
         this.destinationCountry = destCntry;
         this.destinationAirport = destAirport;
+        this.flightPrice = fp;
     }
 
     @ManyToOne
@@ -99,6 +101,10 @@ public class Flight {
         return aircraft;
     }
 
+    public Integer getflightPrice() {
+        return this.flightPrice;
+    }
+
     // Setters
     public void setFlight_ID(int flight_ID) {
         this.flight_id = flight_ID;
@@ -146,6 +152,10 @@ public class Flight {
 
     public void setAircraft(Aircraft aircraft) {
         this.aircraft = aircraft;
+    }
+
+    public void setflightPrice(Integer fp) {
+        this.flightPrice = fp;
     }
 }
 

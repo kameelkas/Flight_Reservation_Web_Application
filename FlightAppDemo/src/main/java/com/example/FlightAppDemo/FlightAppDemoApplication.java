@@ -55,21 +55,21 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 
 		//Creating Flight objects using the parameterized constructor
 		Flight flight1 = new Flight("2023-12-01", "08:00", "2023-12-01", "10:30", "New York", "USA", "JFK",
-				"London", "UK", "Heathrow");
+				"London", "UK", "Heathrow", 1000);
 
 		Flight flight2 = new Flight("2023-12-02", "12:00", "2023-12-02", "18:30", "Paris", "France", "CDG",
-				"Tokyo", "Japan", "Narita");
+				"Tokyo", "Japan", "Narita", 1100);
 
 		Flight flight3 = new Flight("2023-12-03", "10:30", "2023-12-03", "13:45", "Sydney", "Australia", "SYD",
-				"Dubai", "UAE", "DXB");
+				"Dubai", "UAE", "DXB", 1200);
 
 		Flight flight4 = new Flight("2023-12-04", "09:15", "2023-12-04", "15:00", "Los Angeles", "USA", "LAX",
-				"Beijing", "China", "PEK");
+				"Beijing", "China", "PEK", 1300);
 
 		Flight flight5 = new Flight("2023-12-05", "16:45", "2023-12-05", "19:20", "Moscow", "Russia", "SVO",
-				"Singapore", "Singapore", "Changi");
+				"Singapore", "Singapore", "Changi", 1450);
 
-		Flight flight6 = new Flight("2023-12-06", "07:30", "2023-12-06", "13:45", "New York", "USA", "JFK", "Dubai", "UAE", "DXB");
+		Flight flight6 = new Flight("2023-12-06", "07:30", "2023-12-06", "13:45", "New York", "USA", "JFK", "Dubai", "UAE", "DXB", 1500);
 
 
 		Crew crew1 = new Crew(1, "Alice", "Pilot", "123");
@@ -84,55 +84,119 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		Membership membership4 = new Membership("101 Pine St", "45678", "City4", "Country4");
 		Membership membership5 = new Membership("222 Maple St", "56789", "City5", "Country5");
 
-		Seat seat1 = new Seat("1A", 1, 1, true);  // Economy seat in row 1, seat number A1
-		Seat seat2 = new Seat("1B", 1, 1, false);  // Business seat in row 2, seat number B3
-		Seat seat3 = new Seat("1C", 1, 1, false);  // First class seat in row 3, seat number C5
-		Seat seat4 = new Seat("2A", 2, 2, false);  // Economy seat in row 4, seat number D2
-		Seat seat5 = new Seat("2B", 2, 2, false);  // Business seat in row 5, seat number E4
-		Seat seat6 = new Seat("2C", 2, 2, false);
-		Seat seat7 = new Seat("3A", 3, 3, false);
-		Seat seat8 = new Seat("3B", 3, 3, false);
-		Seat seat9 = new Seat("3C", 3, 3, false);
-		Seat seat10 = new Seat("4A", 4, 3, false);
-		Seat seat11 = new Seat("4B", 4, 3, false);
-		Seat seat12 = new Seat("4C", 4, 3, false);
-		Seat seat13 = new Seat("5A", 5, 3, false);
-		Seat seat14 = new Seat("5B", 5, 3, false);
-		Seat seat15 = new Seat("5C", 5, 3, false);
+		Seat seat1 = new Seat("1A", 1, 1, true, 300);
+		Seat seat2 = new Seat("1B", 1, 1, false, 300);
+		Seat seat3 = new Seat("1C", 1, 1, false, 300);
+		Seat seat4 = new Seat("1D", 1, 1, false, 300);
+		Seat seat5 = new Seat("1E", 1, 1, false, 300);
+
+		Seat seat6 = new Seat("2A", 2, 2, false, 200);
+		Seat seat7 = new Seat("2B", 2, 2, false, 200);
+		Seat seat8 = new Seat("2C", 2, 2, false, 200);
+		Seat seat9 = new Seat("2D", 2, 2, false, 200);
+		Seat seat10 = new Seat("2E", 2, 2, false, 200);
+
+		Seat seat11 = new Seat("3A", 3, 3, false, 50);
+		Seat seat12 = new Seat("3B", 3, 3, false, 50);
+		Seat seat13 = new Seat("3C", 3, 3, false, 50);
+		Seat seat14 = new Seat("3D", 3, 3, false, 50);
+		Seat seat15 = new Seat("3E", 3, 3, false, 50);
 
 		// Seats 16 to 30
-		Seat seat16 = new Seat("1A", 1, 3, false);
-		Seat seat17 = new Seat("1B", 1, 3, false);
-		Seat seat18 = new Seat("1C", 1, 3, false);
-		Seat seat19 = new Seat("2A", 2, 3, false);
-		Seat seat20 = new Seat("2B", 2, 3, false);
-		Seat seat21 = new Seat("2C", 2, 3, false);
-		Seat seat22 = new Seat("3A", 3, 3, false);
-		Seat seat23 = new Seat("3B", 3, 3, false);
-		Seat seat24 = new Seat("3C", 3, 3, false);
-		Seat seat25 = new Seat("4A", 4, 3, false);
-		Seat seat26 = new Seat("4B", 4, 3, false);
-		Seat seat27 = new Seat("4C", 4, 3, false);
-		Seat seat28 = new Seat("5A", 5, 3, false);
-		Seat seat29 = new Seat("5B", 5, 3, false);
-		Seat seat30 = new Seat("5C", 5, 3, false);
+		Seat seat16 = new Seat("1A", 1, 1, false, 300);
+		Seat seat17 = new Seat("1B", 1, 1, false, 300);
+		Seat seat18 = new Seat("1C", 1, 1, false, 300);
+		Seat seat19 = new Seat("1D", 1, 1, false, 300);
+		Seat seat20 = new Seat("1E", 1, 1, false, 300);
+
+		Seat seat21 = new Seat("2A", 2, 2, false, 200);
+		Seat seat22 = new Seat("2B", 2, 2, false, 200);
+		Seat seat23 = new Seat("2C", 2, 2, false, 200);
+		Seat seat24 = new Seat("2D", 2, 2, false, 200);
+		Seat seat25 = new Seat("2E", 2, 2, false, 200);
+
+		Seat seat26 = new Seat("3A", 3, 3, false, 50);
+		Seat seat27 = new Seat("3B", 3, 3, false, 50);
+		Seat seat28 = new Seat("3C", 3, 3, false, 50);
+		Seat seat29 = new Seat("3D", 3, 3, false, 50);
+		Seat seat30 = new Seat("3E", 3, 3, false, 50);
 
 		// Seats 31 to 45
-		Seat seat31 = new Seat("1A", 1, 3, false);
-		Seat seat32 = new Seat("1B", 1, 3, false);
-		Seat seat33 = new Seat("1C", 1, 3, false);
-		Seat seat34 = new Seat("2A", 2, 3, false);
-		Seat seat35 = new Seat("2B", 2, 3, false);
-		Seat seat36 = new Seat("2C", 2, 3, false);
-		Seat seat37 = new Seat("3A", 3, 3, false);
-		Seat seat38 = new Seat("3B", 3, 3, false);
-		Seat seat39 = new Seat("3C", 3, 3, false);
-		Seat seat40 = new Seat("4A", 4, 3, false);
-		Seat seat41 = new Seat("4B", 4, 3, false);
-		Seat seat42 = new Seat("4C", 4, 3, false);
-		Seat seat43 = new Seat("5A", 5, 3, false);
-		Seat seat44 = new Seat("5B", 5, 3, false);
-		Seat seat45 = new Seat("5C", 5, 3, false);
+		Seat seat31 = new Seat("1A", 1, 1, false, 300);
+		Seat seat32 = new Seat("1B", 1, 1, false, 300);
+		Seat seat33 = new Seat("1C", 1, 1, false, 300);
+		Seat seat34 = new Seat("1D", 1, 1, false, 300);
+		Seat seat35 = new Seat("1E", 1, 1, false, 300);
+
+		Seat seat36 = new Seat("2A", 2, 2, false, 200);
+		Seat seat37 = new Seat("2B", 2, 2, false, 200);
+		Seat seat38 = new Seat("2C", 2, 2, false, 200);
+		Seat seat39 = new Seat("2D", 2, 2, false, 200);
+		Seat seat40 = new Seat("2E", 2, 2, false, 200);
+
+		Seat seat41 = new Seat("3A", 3, 3, false, 50);
+		Seat seat42 = new Seat("3B", 3, 3, false, 50);
+		Seat seat43 = new Seat("3C", 3, 3, false, 50);
+		Seat seat44 = new Seat("3D", 3, 3, false, 50);
+		Seat seat45 = new Seat("3E", 3, 3, false, 50);
+
+		//seats 46 to 60
+		Seat seat46 = new Seat("1A", 1, 1, false, 300);
+		Seat seat47 = new Seat("1B", 1, 1, false, 300);
+		Seat seat48 = new Seat("1C", 1, 1, false, 300);
+		Seat seat49 = new Seat("1D", 1, 1, false, 300);
+		Seat seat50 = new Seat("1E", 1, 1, false, 300);
+
+		Seat seat51 = new Seat("2A", 2, 2, false, 200);
+		Seat seat52 = new Seat("2B", 2, 2, false, 200);
+		Seat seat53 = new Seat("2C", 2, 2, false, 200);
+		Seat seat54 = new Seat("2D", 2, 2, false, 200);
+		Seat seat55 = new Seat("2E", 2, 2, false, 200);
+
+		Seat seat56 = new Seat("3A", 3, 3, false, 50);
+		Seat seat57 = new Seat("3B", 3, 3, false, 50);
+		Seat seat58 = new Seat("3C", 3, 3, false, 50);
+		Seat seat59 = new Seat("3D", 3, 3, false, 50);
+		Seat seat60 = new Seat("3E", 3, 3, false, 50);
+
+		//seats 61 to 75 to flight 5
+		Seat seat61 = new Seat("1A", 1, 1, false, 300);
+		Seat seat62 = new Seat("1B", 1, 1, false, 300);
+		Seat seat63 = new Seat("1C", 1, 1, false, 300);
+		Seat seat64 = new Seat("1D", 1, 1, false, 300);
+		Seat seat65 = new Seat("1E", 1, 1, false, 300);
+
+		Seat seat66 = new Seat("2A", 2, 2, false, 200);
+		Seat seat67 = new Seat("2B", 2, 2, false, 200);
+		Seat seat68 = new Seat("2C", 2, 2, false, 200);
+		Seat seat69 = new Seat("2D", 2, 2, false, 200);
+		Seat seat70 = new Seat("2E", 2, 2, false, 200);
+
+		Seat seat71 = new Seat("3A", 3, 3, false, 50);
+		Seat seat72 = new Seat("3B", 3, 3, false, 50);
+		Seat seat73 = new Seat("3C", 3, 3, false, 50);
+		Seat seat74 = new Seat("3D", 3, 3, false, 50);
+		Seat seat75 = new Seat("3E", 3, 3, false, 50);
+
+
+		//seats 76 to 90
+		Seat seat76 = new Seat("1A", 1, 1, false, 300);
+		Seat seat77 = new Seat("1B", 1, 1, false, 300);
+		Seat seat78 = new Seat("1C", 1, 1, false, 300);
+		Seat seat79 = new Seat("1D", 1, 1, false, 300);
+		Seat seat80 = new Seat("1E", 1, 1, false, 300);
+
+		Seat seat81 = new Seat("2A", 2, 2, false, 200);
+		Seat seat82 = new Seat("2B", 2, 2, false, 200);
+		Seat seat83 = new Seat("2C", 2, 2, false, 200);
+		Seat seat84 = new Seat("2D", 2, 2, false, 200);
+		Seat seat85 = new Seat("2E", 2, 2, false, 200);
+
+		Seat seat86 = new Seat("3A", 3, 3, false, 50);
+		Seat seat87 = new Seat("3B", 3, 3, false, 50);
+		Seat seat88 = new Seat("3C", 3, 3, false, 50);
+		Seat seat89 = new Seat("3D", 3, 3, false, 50);
+		Seat seat90 = new Seat("3E", 3, 3, false, 50);
 
 
 
@@ -233,6 +297,57 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		seat44.setFlight(flight3);
 		seat45.setFlight(flight3);
 
+		//Set all seats to flight 4
+		seat46.setFlight(flight4);
+		seat47.setFlight(flight4);
+		seat48.setFlight(flight4);
+		seat49.setFlight(flight4);
+		seat50.setFlight(flight4);
+		seat51.setFlight(flight4);
+		seat52.setFlight(flight4);
+		seat53.setFlight(flight4);
+		seat54.setFlight(flight4);
+		seat55.setFlight(flight4);
+		seat56.setFlight(flight4);
+		seat57.setFlight(flight4);
+		seat58.setFlight(flight4);
+		seat59.setFlight(flight4);
+		seat60.setFlight(flight4);
+
+		//Set all seats to flight 5
+		seat61.setFlight(flight5);
+		seat62.setFlight(flight5);
+		seat63.setFlight(flight5);
+		seat64.setFlight(flight5);
+		seat65.setFlight(flight5);
+		seat66.setFlight(flight5);
+		seat67.setFlight(flight5);
+		seat68.setFlight(flight5);
+		seat69.setFlight(flight5);
+		seat70.setFlight(flight5);
+		seat71.setFlight(flight5);
+		seat72.setFlight(flight5);
+		seat73.setFlight(flight5);
+		seat74.setFlight(flight5);
+		seat75.setFlight(flight5);
+
+		//Set all seats to flight 6
+		seat76.setFlight(flight6);
+		seat77.setFlight(flight6);
+		seat78.setFlight(flight6);
+		seat79.setFlight(flight6);
+		seat80.setFlight(flight6);
+		seat81.setFlight(flight6);
+		seat82.setFlight(flight6);
+		seat83.setFlight(flight6);
+		seat84.setFlight(flight6);
+		seat85.setFlight(flight6);
+		seat86.setFlight(flight6);
+		seat87.setFlight(flight6);
+		seat88.setFlight(flight6);
+		seat89.setFlight(flight6);
+		seat90.setFlight(flight6);
+
 
 
 		seatInterface.save(seat1);
@@ -280,7 +395,51 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		seatInterface.save(seat43);
 		seatInterface.save(seat44);
 		seatInterface.save(seat45);
-
+		seatInterface.save(seat46);
+		seatInterface.save(seat47);
+		seatInterface.save(seat48);
+		seatInterface.save(seat49);
+		seatInterface.save(seat50);
+		seatInterface.save(seat51);
+		seatInterface.save(seat52);
+		seatInterface.save(seat53);
+		seatInterface.save(seat54);
+		seatInterface.save(seat55);
+		seatInterface.save(seat56);
+		seatInterface.save(seat57);
+		seatInterface.save(seat58);
+		seatInterface.save(seat59);
+		seatInterface.save(seat60);
+		seatInterface.save(seat61);
+		seatInterface.save(seat62);
+		seatInterface.save(seat63);
+		seatInterface.save(seat64);
+		seatInterface.save(seat65);
+		seatInterface.save(seat66);
+		seatInterface.save(seat67);
+		seatInterface.save(seat68);
+		seatInterface.save(seat69);
+		seatInterface.save(seat70);
+		seatInterface.save(seat71);
+		seatInterface.save(seat72);
+		seatInterface.save(seat73);
+		seatInterface.save(seat74);
+		seatInterface.save(seat75);
+		seatInterface.save(seat76);
+		seatInterface.save(seat77);
+		seatInterface.save(seat78);
+		seatInterface.save(seat79);
+		seatInterface.save(seat80);
+		seatInterface.save(seat81);
+		seatInterface.save(seat82);
+		seatInterface.save(seat83);
+		seatInterface.save(seat84);
+		seatInterface.save(seat85);
+		seatInterface.save(seat86);
+		seatInterface.save(seat87);
+		seatInterface.save(seat88);
+		seatInterface.save(seat89);
+		seatInterface.save(seat90);
 
 		crewInterface.save(crew1);
 		crewInterface.save(crew2);

@@ -51,8 +51,23 @@ public class APIServiceController {
         return customerService.getAllPasswords();
     }
 
+
+    //SIGN UP LOGIC
     @PostMapping("/Customer/Create/{address}/{postal}/{city}/{country}")   //POST IN HTTP TO ADD STUFF //CREATING MEMBER AS SOON AS CUSTOMER SIGNS UP
     public String createCustomerDetails(@RequestBody Customer customerNew, @PathVariable("address") String address, @PathVariable("postal") String postal, @PathVariable("city") String city, @PathVariable("country") String country){     /////UNCOMMENT THIS BEFORE SUBMISSION.
+        String welcomeMessage = String.format("Hi %s,\n\n" +
+            "We at the ENSF 480 FlightApp would like to welcome you to our Flight App " +
+            "and hope you have a good experience booking your travel experiences.\n\n" +
+            "Best Regards,\nENSF480 Flight App Team", customerNew.getName());
+        emailService.sendEmail(customerNew.getEmailAddr(), "Welcome to your ENSF480 Flight Account!", welcomeMessage);
+        customerService.createCustomer(customerNew);
+
+        return "Customer Made";
+    }
+
+    //GUEST CUSTOMER CREATION, no membership for guest
+    @PostMapping("/Customer/Guest/{address}/{postal}/{city}/{country}")
+    public String createGuestDetails(@RequestBody Customer customerNew, @PathVariable("address") String address, @PathVariable("postal") String postal, @PathVariable("city") String city, @PathVariable("country") String country){     /////UNCOMMENT THIS BEFORE SUBMISSION.
         String welcomeMessage = String.format("Hi %s,\n\n" +
             "We at the ENSF 480 FlightApp would like to welcome you to our Flight App " +
             "and hope you have a good experience booking your travel experiences.\n\n" +
@@ -108,6 +123,11 @@ public class APIServiceController {
         return customers;
     }
 
+    @GetMapping("/Flight/GetFlightPriceUsingFlightID/{flightID}")
+    public Integer getFlightPriceDetailsUsingID(@PathVariable("flightID") Integer flightID) {
+        return flightService.getPriceByFID(flightID);
+    }
+
     /*API Endpoints for Ticket*/ //mostly to get price based on seat_id
     @GetMapping("/Ticket/GetPrice/{SEAT_ID}")
     public Integer getPriceBySeatID(@PathVariable("SEAT_ID") Integer seatID) {
@@ -128,6 +148,11 @@ public class APIServiceController {
     @GetMapping("/Seat/GetAllTakenOrNot/ByFlightID/{flightID}")
     public List<Boolean> getSeatTakenOrNot(@PathVariable("flightID") Integer flightID) {
         return seatService.getSeatStatus(flightID);
+    }
+
+    @GetMapping("/Seat/GetPriceBySeatID/{seatID}")
+    public Integer getSeatPriceAmountBySeatID(@PathVariable("seatID")Integer seatID) {
+        return seatService.getSeatPriceByID(seatID);
     }
 
     /*API Endpoints for Ticket*/
@@ -162,12 +187,6 @@ public class APIServiceController {
         return ResponseEntity.ok("Ticket created successfully");
     }
 
-    //@Post mapping for payment and then call emailservice and fill in body with receipt and whatnot, flight_id, etc
-    // @GetMapping("/Ticket/GetRecentTID")
-    // public Integer getRecentTicketID() {
-    //     return ticketService.getLatestTID(); //JUST USE THIS DONT NEED TO MAKE ANOTHER API CALL
-    // }
-
     /*API Endpoints for Payments*/
     @PostMapping("/Payment/Create/{cardNum}/{expDate}/{cvv}/{paidAmount}")
     public String createPayment(@PathVariable("cardNum") String cardNum, @PathVariable("expDate") String expDate, @PathVariable("cvv") Integer cvv, @PathVariable("paidAmount") Integer paidAmount) {
@@ -193,17 +212,24 @@ public class APIServiceController {
 
         //Getting flight using flight_id
         Flight flight = flightService.getFlightById(flightID);
+        
+        //Last four digits of the credit card
+        int startIndex = Math.max(cardNum.length() - 4, 0);
+        String lastFourDigits = cardNum.substring(startIndex);
 
-        // /*Payment confirmation and receipt with ticket*/
-        // String welcomeMessage = String.format("Hi %s,\n\n" +
-        //     "---------------------------TICKET----------------------------------\n\n"  +
-        //     "This email is being sent to confirm your booking on flight %d to %s. "    +
-        //     "Your flight is on &s at %s from"                                          +
-        //     "Your ticket ID is: ", Name)                                               +
-        //     "---------------------------RECEIPT----------------------------------\n\n" +
-        //     "Your payment using a Visa Credit Card ending with %d has been approved."); 
+        /*Payment confirmation and receipt with ticket*/
+        String Message = String.format("Hi %s,\n\n" +
+            "\n\n---------------------------TICKET----------------------------------\n\n" +
+            "This email is being sent to confirm your booking on flight %d to %s.\n"      +
+            "Your flight departs from %s, %s, %s at %s on %s\n"                           +
+            "Your flight arrives at %s, %s, %s at %s on %s\n"                             +
+            "Your ticket ID is: %d.\n"                                                    +
+            "\n\n---------------------------RECEIPT----------------------------------\n\n" +
+            "Your payment using a Visa Credit Card ending with %s for %d$ has been approved.\n", customer.getName(), flight.getflight_id(), flight.getDestinationCity(), flight.getDepartureAirport(), flight.getDepartureCity(), flight.getDepartureCountry(),
+                                    flight.getDepartureTime(), flight.getDepartureDate(), flight.getDestinationAirport(), flight.getDestinationCity(), flight.getDestinationCountry(), flight.getArrivalTime(), flight.getArrivalDate(),
+                                    ticket.getTicket_id(), lastFourDigits, paidAmount); 
 
-        // emailService.sendEmail(customerNew.getEmailAddr(), "Payment Confirmation and Flight Details", welcomeMessage);
+        emailService.sendEmail(customer.getEmailAddr(), "Payment Confirmation and Flight Details", Message);
         return "Payment succesfully sent and receipt sent with ticket details";
     }
 

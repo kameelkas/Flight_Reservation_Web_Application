@@ -31,4 +31,9 @@ public class FlightServiceImpl implements FlightService {
     public Flight getFlightById(Integer flightID) {
         return flightRepository.findByflight_id(flightID);
     }
+
+    @Override
+    public Integer getPriceByFID(Integer flight_ID) {
+        return flightRepository.getPriceUsingID(flight_ID);
+    }
 }

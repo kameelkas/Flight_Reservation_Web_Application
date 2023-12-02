@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.*;
+import org.springframework.data.repository.query.Param;
 
 public interface SeatRepository extends JpaRepository<Seat, Integer> {
     List<Seat> findByseatType(int type);
@@ -20,4 +21,7 @@ public interface SeatRepository extends JpaRepository<Seat, Integer> {
     List <Boolean> getSeatStauses(Integer flight_iD);
 
     Seat findByseatID(Integer seatID);
+
+    @Query("SELECT s.seat_price FROM Seat s WHERE s.seatID = :seat_ID")
+    Integer getPriceBySID(@Param("seat_ID") Integer seat_ID);
 }

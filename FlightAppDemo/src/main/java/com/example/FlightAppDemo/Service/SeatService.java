@@ -7,4 +7,5 @@ public interface SeatService {
     public List<Seat> getAllSeats();
     public List<Boolean> getSeatStatus(Integer flightID);
     public Seat getSeatById(Integer seat_ID);
+    public Integer getSeatPriceByID(Integer seatID);
 }

@@ -19,4 +19,7 @@ public interface FlightRepository extends JpaRepository<Flight, Integer> {
 
     @Query("SELECT f FROM Flight f WHERE f.flight_id = :flight_id")
     Flight findByflight_id(Integer flight_id);
+
+    @Query("SELECT f.flightPrice FROM Flight f WHERE f.flight_id = :FID")
+    Integer getPriceUsingID(Integer FID);
 }

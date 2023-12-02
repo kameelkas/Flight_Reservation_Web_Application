@@ -17,19 +17,30 @@ public class SeatServiceImpl implements SeatService {
         this.seatRepository = seatRepo;
     }
 
+    @Override
     public void setSeatTaken(Integer seatID) {
         seatRepository.setSeatTaken(seatID);
     }
 
+    @Override
     public List<Seat> getAllSeats() {
         return seatRepository.findAll();
     }
 
+    @Override
     public List<Boolean> getSeatStatus(Integer flight_ID) {
         return seatRepository.getSeatStauses(flight_ID);
     }
 
+    @Override
     public Seat getSeatById(Integer seat_ID) {
         return seatRepository.findByseatID(seat_ID);
     }
+
+    @Override
+    public Integer getSeatPriceByID(Integer seatID) {
+        return seatRepository.getPriceBySID(seatID);
+    }
+
+
 }

@@ -41,10 +41,23 @@ function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID }) {
           const gottenFlightPrice = await recieveFlightPrice.json();
           setFlightPrice(gottenFlightPrice);
 
-          calculateSubtotal();
+          //calculateSubtotal();
     };
     getPriceDetails();
   }, []);
+
+  useEffect(() => {
+    const calculateDiscount = (subtotal * 1.05) - ((subtotal * 1.05) * 0.2);
+    console.log(calculateDiscount);
+    setTotalAmnt(calculateDiscount);
+    console.log(totalAmnt)
+    formattedNumber = parseFloat(totalAmnt.toFixed(2)).toString();
+    console.log(formattedNumber);
+  }, [subtotal]);
+
+  useEffect(() => {
+    calculateSubtotal();
+  }, [seatPrice, flightPrice, hasInsurance]);
 
   const calculateSubtotal = () => {
     if(hasInsurance){
@@ -52,11 +65,6 @@ function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID }) {
     } else {
       setSubtotal(seatPrice + flightPrice);    
     }
-    const calculateDiscount = (subtotal*1.05) - ((subtotal*1.05)*0.2);
-    console.log(calculateDiscount);
-    setTotalAmnt(calculateDiscount);
-    formattedNumber = parseFloat(totalAmnt.toFixed(2)).toString();
-    console.log(formattedNumber);
   };
 
 
@@ -98,18 +106,18 @@ function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID }) {
       <h2>Payment Details</h2>
       <div id="priceDetails">
         <h3>Payment Amount Breakdown</h3>
-        <div>Seat Price: ${parseFloat(seatPrice.toFixed(2)).toString()}</div>
-        <div>Flight Price: ${parseFloat(flightPrice.toFixed(2)).toString()}</div>
+        <div>Seat Price: ${seatPrice}</div>
+        <div>Flight Price: ${flightPrice}</div>
         {hasInsurance ? (
-          <div>Insurance Price: $50.00</div>
+          <div>Insurance Price: $50</div>
         ) : (
-          <div>Insurance Price - Skipped: $0.00</div>
+          <div>Insurance Price - Skipped: $0</div>
         )}
         <div>Subtotal: {subtotal}</div>
-        <div>Tax: ${parseFloat((subtotal * 0.05).toFixed(2)).toString()}</div>
+        <div>Tax: ${subtotal * 0.05}</div>
         <div>Since you're a registed member, we are offering you a 20% discount!</div>
         <div>
-          <b>Total Amount: {formattedNumber}</b>
+          <b>Total Amount: {totalAmnt}</b>
         </div>
       </div>
       <form onSubmit={handleSubmit}>

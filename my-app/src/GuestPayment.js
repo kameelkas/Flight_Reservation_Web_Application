@@ -190,10 +190,6 @@ function GuestPayment({ onPaymentSubmit, hasInsurance, seatID, flightID }) {
           onChange={(e) => setPassengerName(e.target.value)}
         />
 
-        {!isEmailValid && (
-          <p className="error-message">Please enter a valid email address.</p>
-        )}
-
         <label htmlFor="passengerEmail">Passenger Email</label>
         <input
           type="email"
@@ -201,6 +197,9 @@ function GuestPayment({ onPaymentSubmit, hasInsurance, seatID, flightID }) {
           value={passengerEmail}
           onChange={handleEmailChange}
         />
+        {!isEmailValid && (
+          <p className="error-message">Please enter a valid email address.</p>
+        )}
 
         <label htmlFor="passengerPhone">Passenger Phone</label>
         <input

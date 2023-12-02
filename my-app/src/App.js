@@ -280,6 +280,7 @@ function App() {
     console.log("Payment Details:", paymentDetails);
     // Handle the payment submission logic here
     setShowPayment(false);
+    setSelectedOption(null);
   };
 
   const handleInsuranceContinue = () => {

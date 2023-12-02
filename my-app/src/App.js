@@ -3,6 +3,7 @@ import "./App.css";
 import SeatSelection from "./SeatSelection";
 import Insurance from "./Insurance";
 import Payment from "./Payment";
+import GuestPayment from "./GuestPayment";
 
 function App() {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -224,7 +225,9 @@ function App() {
     } else if (validateAcc === false) {
       setUsername("");
       setPassword("");
-      setLoginAttemptError("The given userrname or password is incorrect. Please try again.");
+      setLoginAttemptError(
+        "The given userrname or password is incorrect. Please try again."
+      );
       return;
     }
   };
@@ -270,7 +273,7 @@ function App() {
       setShowInsurance(true);
     }
 
-    const seatID = (((sendFlightID - 1)*15) + (row*5) + (seat + 1));
+    const seatID = (sendFlightID - 1) * 15 + row * 5 + (seat + 1);
     setSendSeatID(seatID);
   };
   const handlePaymentSubmit = (paymentDetails) => {
@@ -468,7 +471,9 @@ function App() {
                     }}
                   />
 
-                  {loginAttemptError && <p style={{ color: "red" }}>{loginAttemptError}</p>}
+                  {loginAttemptError && (
+                    <p style={{ color: "red" }}>{loginAttemptError}</p>
+                  )}
                   {/* <div className="input-group mb-3">
                     <label
                       className="input-group-text"
@@ -607,11 +612,18 @@ function App() {
                 {availableFlights.map((flight, index) => (
                   <div key={index}>
                     <h3>Flight: {flight.flight_id}</h3>
-                    <p>From: {flight.departureCity} {flight.departureCountry} {flight.departureAirport}</p>
-                    <p>To: {flight.destinationCity} {flight.destinationCountry} {flight.destinationAirport}</p>
                     <p>
-                      Departure: {flight.departureDate} at {flight.departureTime} -
-                      Arrival: {flight.arrivalDate} at {flight.arrivalTime}
+                      From: {flight.departureCity} {flight.departureCountry}{" "}
+                      {flight.departureAirport}
+                    </p>
+                    <p>
+                      To: {flight.destinationCity} {flight.destinationCountry}{" "}
+                      {flight.destinationAirport}
+                    </p>
+                    <p>
+                      Departure: {flight.departureDate} at{" "}
+                      {flight.departureTime} - Arrival: {flight.arrivalDate} at{" "}
+                      {flight.arrivalTime}
                     </p>
                     <button
                       onClick={() => {
@@ -643,7 +655,24 @@ function App() {
             setInsurance={setInsurance}
           />
         )}
-        {showPayment && <Payment onPaymentSubmit={handlePaymentSubmit} hasInsurance={insurance} seatID={sendSeatID} flightID={sendFlightID} email={username}/>}
+        {isRegisteredUser
+          ? showPayment && (
+              <Payment
+                onPaymentSubmit={handlePaymentSubmit}
+                hasInsurance={insurance}
+                seatID={sendSeatID}
+                flightID={sendFlightID}
+                email={username}
+              />
+            )
+          : showPayment && (
+              <GuestPayment
+                onPaymentSubmit={handlePaymentSubmit}
+                hasInsurance={insurance}
+                seatID={sendSeatID}
+                flightID={sendFlightID}
+              />
+            )}
       </div>
     </div>
   );

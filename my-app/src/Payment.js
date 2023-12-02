@@ -11,6 +11,7 @@ function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID, email }) {
   const [flightPrice, setFlightPrice] = useState(0);
   const [subtotal, setSubtotal] = useState(0);
   const [totalAmnt, setTotalAmnt] = useState(0);
+  const [ticketID, setTicketID] = useState(0);
   var formattedNumber = 0;
 
   useEffect(() => {
@@ -40,9 +41,8 @@ function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID, email }) {
 
       const gottenFlightPrice = await recieveFlightPrice.json();
       setFlightPrice(gottenFlightPrice);
-
-      //calculateSubtotal();
     };
+
     getPriceDetails();
     console.log(email);
   }, []);
@@ -68,8 +68,8 @@ function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID, email }) {
     }
   };
 
-  const sendCustomerFlightDetails = () => {
-    fetch(
+  const sendCustomerFlightDetails = async () => {
+    const getTicketID = await fetch(
       `http://localhost:8080/FlightApp/Ticket/Create/${email}/${flightID}/${seatID}/${totalAmnt}/false/${hasInsurance}`,
       {
         method: "POST",
@@ -78,11 +78,15 @@ function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID, email }) {
         },
       }
     );
+
+    const gottenTicketID = await getTicketID.json();
+    setTicketID(gottenTicketID);
+    console.log("TicketID: ", ticketID);
   };
 
   const sendPaymentDetails = () => {
     fetch(
-      `http://localhost:8080/FlightApp/Payment/Create/${cardNumber}/${expiry}/${cvv}/${totalAmnt}`,
+      `http://localhost:8080/FlightApp/Payment/Create/${cardNumber}/${expiry}/${cvv}/${totalAmnt}/${ticketID}`,
       {
         method: "POST",
         headers: {
@@ -93,24 +97,6 @@ function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID, email }) {
   };
 
   const handleSubmit = () => {
-    // e.preventDefault();
-    // if (
-    //   cardNumber.length !== 16 ||
-    //   expiry.length !== 4 ||
-    //   cvv.length !== 3 ||
-    //   !/^\d+$/.test(cardNumber) ||
-    //   !/^\d+$/.test(expiry) ||
-    //   !/^\d+$/.test(cvv)
-    // ) {
-    //   setCardNumber("");
-    //   setExpiry("");
-    //   setCvv("");
-    //   window.alert(
-    //     "One or more entered fields was incorrect. Please try again."
-    //   );
-    //   return;
-    // }
-
     //SEND successive POST's to backend
     sendCustomerFlightDetails();
     sendPaymentDetails();
@@ -119,7 +105,20 @@ function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID, email }) {
 
   const handlePaymentSuccessClose = () => {
     setPaymentSuccessful(false);
+    resetAllFields();
     onPaymentSubmit({ cardNumber, expiry, cvv });
+  };
+
+  const resetAllFields = () => {
+    setCardNumber("");
+    setExpiry("");
+    setCvv("");
+    setPaymentSuccessful(false);
+    setSeatPrice(0);
+    setFlightPrice(0);
+    setSubtotal(0);
+    setTotalAmnt(0);
+    setTicketID(0);
   };
 
   return (

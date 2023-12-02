@@ -44,6 +44,7 @@ function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID, email }) {
       //calculateSubtotal();
     };
     getPriceDetails();
+    console.log(email);
   }, []);
 
   useEffect(() => {

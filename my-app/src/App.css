@@ -23,6 +23,10 @@
   border-bottom: 3px solid greenyellow;
 }
 
+span {
+  border: 2px solid black;
+}
+
 .title {
   margin: 10;
 }

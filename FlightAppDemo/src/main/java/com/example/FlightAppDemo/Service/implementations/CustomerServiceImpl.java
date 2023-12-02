@@ -66,4 +66,9 @@ public class CustomerServiceImpl implements CustomerService {
     public List<Customer> getCustomersFromCustomerIDs(List<Integer> CIDs) {
         return customerRepository.getCustomersFromIDs(CIDs);
     }
+
+    @Override
+    public Boolean validateCredentials(String email_address, String customer_pw) {
+        return customerRepository.Validate(email_address, customer_pw);
+    }
 }

@@ -53,11 +53,11 @@ public class APIServiceController {
 
     @PostMapping("/Customer/Create/{address}/{postal}/{city}/{country}")   //POST IN HTTP TO ADD STUFF //CREATING MEMBER AS SOON AS CUSTOMER SIGNS UP
     public String createCustomerDetails(@RequestBody Customer customerNew, @PathVariable("address") String address, @PathVariable("postal") String postal, @PathVariable("city") String city, @PathVariable("country") String country){     /////UNCOMMENT THIS BEFORE SUBMISSION.
-        // String welcomeMessage = String.format("Hi %s,\n\n" +
-        //     "We at the ENSF 480 FlightApp would like to welcome you to our Flight App " +
-        //     "and hope you have a good experience booking your travel experiences.\n\n" +
-        //     "Best Regards,\nENSF480 Flight App Team", customerNew.getName());
-        // emailService.sendEmail(customerNew.getEmailAddr(), "Welcome to your ENSF480 Flight Account!", welcomeMessage);
+        String welcomeMessage = String.format("Hi %s,\n\n" +
+            "We at the ENSF 480 FlightApp would like to welcome you to our Flight App " +
+            "and hope you have a good experience booking your travel experiences.\n\n" +
+            "Best Regards,\nENSF480 Flight App Team", customerNew.getName());
+        emailService.sendEmail(customerNew.getEmailAddr(), "Welcome to your ENSF480 Flight Account!", welcomeMessage);
         customerService.createCustomer(customerNew);
 
         Membership membership = new Membership(address, postal, city, country);
@@ -76,6 +76,11 @@ public class APIServiceController {
     public String deleteCustomerDetails(Integer customerID){
         customerService.deleteCustomer(customerID);
         return "Customer Deleted";
+    }
+
+    @GetMapping("/Customer/Validate/{email}/{customerPW}")
+    public Boolean validateCustomerCredentials(@PathVariable("email") String email, @PathVariable("customerPW") String customerPW) {
+        return customerService.validateCredentials(email, customerPW);  //returns customerID based on user credentials.
     }
 
     /*API Endpoints for Flight*/
@@ -168,7 +173,7 @@ public class APIServiceController {
     public String createPayment(@PathVariable("cardNum") String cardNum, @PathVariable("expDate") String expDate, @PathVariable("cvv") Integer cvv, @PathVariable("paidAmount") Integer paidAmount) {
 
         //Creating the ticket object that payment because of the foreign key
-        Ticket ticket = ticketService.getTicketByID(ticketService.getLatestTID());
+        Ticket ticket = ticketService.getTicketByID(ticketService.getLatestTID());  //get lastest ticket from the database.
 
         Payment payment = new Payment(cardNum, expDate, cvv, paidAmount);
 
@@ -177,13 +182,21 @@ public class APIServiceController {
         //saving the new payment
         paymentService.savePayment(payment);  //uses saving logic from the main function in the service layer.
 
+        //Getting customer_id using ticket_id
+        //ticketService.getCustomerIDfromTicketID(ticketService.getLatestTID());
 
-        /*Payment confirmation and receipt with ticket*/
+        //Getting customer using customer_id
+
+        // /*Payment confirmation and receipt with ticket*/
         // String welcomeMessage = String.format("Hi %s,\n\n" +
-        //     "We at the ENSF 480 FlightApp would like to welcome you to our Flight App " +
-        //     "and hope you have a good experience booking your travel experiences.\n\n" +
-        //     "Best Regards,\nENSF480 Flight App Team", customerNew.getName());
-        // emailService.sendEmail(customerNew.getEmailAddr(), "Welcome to your ENSF480 Flight Account!", welcomeMessage);
+        //     "---------------------------TICKET----------------------------------\n\n"  +
+        //     "This email is being sent to confirm your booking on flight %d to %s. "    +
+        //     "Your flight is on &s at %s from"                                          +
+        //     "Your ticket ID is: ", Name)                                               +
+        //     "---------------------------RECEIPT----------------------------------\n\n" +
+        //     "Your payment using a Visa Credit Card ending with %d has been approved."); 
+
+        // emailService.sendEmail(customerNew.getEmailAddr(), "Payment Confirmation and Flight Details", welcomeMessage);
         return "Payment succesfully sent and receipt sent with ticket details";
     }
 

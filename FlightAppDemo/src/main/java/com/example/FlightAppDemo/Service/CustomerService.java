@@ -13,4 +13,6 @@ public interface CustomerService {
     //sendMail() //call this in service functions for post payment and post customer for welcome email and payment receipt.
 
     public List<Customer> getCustomersFromCustomerIDs(List<Integer> CIDs);
+
+    public Boolean validateCredentials(String email_address, String customer_pw);
 }

@@ -8,5 +8,6 @@ public interface TicketService {
     public void saveTicket(Ticket ticketPassedIn);
     public Integer getLatestTID();
     public Ticket getTicketByID(Integer TIDPassedIn);
-    public List<Integer> getCustomersIDsfromFlightID(Integer fligth_ID);
+    public List<Integer> getCustomersIDsfromFlightID(Integer fligtht_ID);
+    //public Integer getCustomerIDfromTicketID(Integer ticketID);
 }

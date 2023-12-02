@@ -96,8 +96,8 @@ function GuestPayment({ onPaymentSubmit, hasInsurance, seatID, flightID }) {
       }
     );
 
-    const result = await response.json();
-    console.log("Customer Creation Return:", result);
+    // const result = await response.json();
+    // console.log("Customer Creation Return:", result);
   };
 
   const sendCustomerFlightDetails = async () => {

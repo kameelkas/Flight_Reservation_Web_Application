@@ -12,7 +12,6 @@ function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID, email }) {
   const [subtotal, setSubtotal] = useState(0);
   const [totalAmnt, setTotalAmnt] = useState(0);
   const [ticketID, setTicketID] = useState(0);
-  var formattedNumber = 0;
 
   useEffect(() => {
     const getPriceDetails = async () => {
@@ -52,8 +51,6 @@ function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID, email }) {
     console.log(calculateDiscount);
     setTotalAmnt(calculateDiscount);
     console.log(totalAmnt);
-    formattedNumber = parseFloat(totalAmnt.toFixed(2)).toString();
-    console.log(formattedNumber);
   }, [subtotal]);
 
   useEffect(() => {
@@ -137,7 +134,7 @@ function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID, email }) {
         ) : (
           <div>Insurance Price - Skipped: $0</div>
         )}
-        <div>Subtotal: {subtotal}</div>
+        <div>Subtotal: ${subtotal}</div>
         <div>Tax: ${subtotal * 0.05}</div>
         <div>
           Since you're a registed member, we are offering you a 20% discount!

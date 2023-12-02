@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import "./Payment.css";
 
-function GuestPayment({ onPaymentSubmit, hasInsurance, seatID, flightID, email }) {
+function GuestPayment({ onPaymentSubmit, hasInsurance, seatID, flightID }) {
   const [cardNumber, setCardNumber] = useState("");
   const [expiry, setExpiry] = useState("");
   const [cvv, setCvv] = useState("");
@@ -11,7 +11,22 @@ function GuestPayment({ onPaymentSubmit, hasInsurance, seatID, flightID, email }
   const [flightPrice, setFlightPrice] = useState(0);
   const [subtotal, setSubtotal] = useState(0);
   const [totalAmnt, setTotalAmnt] = useState(0);
-  var formattedNumber = 0;
+  const [ticketID, setTicketID] = useState(0);
+  const [passengerName, setPassengerName] = useState("");
+  const [passengerEmail, setPassengerEmail] = useState("");
+  const [passengerPhone, setPassengerPhone] = useState("");
+  const [isEmailValid, setIsEmailValid] = useState(true);
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleEmailChange = (e) => {
+    const enteredEmail = e.target.value;
+    setPassengerEmail(enteredEmail);
+    setIsEmailValid(validateEmail(enteredEmail));
+  };
 
   useEffect(() => {
     const getPriceDetails = async () => {
@@ -40,9 +55,8 @@ function GuestPayment({ onPaymentSubmit, hasInsurance, seatID, flightID, email }
 
       const gottenFlightPrice = await recieveFlightPrice.json();
       setFlightPrice(gottenFlightPrice);
-
-      //calculateSubtotal();
     };
+
     getPriceDetails();
     console.log(email);
   }, []);
@@ -52,8 +66,6 @@ function GuestPayment({ onPaymentSubmit, hasInsurance, seatID, flightID, email }
     console.log(calculateAmount);
     setTotalAmnt(calculateAmount);
     console.log(totalAmnt);
-    formattedNumber = parseFloat(totalAmnt.toFixed(2)).toString();
-    console.log(formattedNumber);
   }, [subtotal]);
 
   useEffect(() => {
@@ -68,9 +80,32 @@ function GuestPayment({ onPaymentSubmit, hasInsurance, seatID, flightID, email }
     }
   };
 
-  const sendCustomerFlightDetails = () => {
-    fetch(
-      `http://localhost:8080/FlightApp/Ticket/Create/${email}/${flightID}/${seatID}/${totalAmnt}/false/${hasInsurance}`,
+  const sendPassengerInfo = async () => {
+    const response = await fetch(
+      "http://localhost:8080/FlightApp/Customer/Guest/Create",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: passengerName,
+          emailAddr: passengerEmail,
+          phoneNum: passengerPhone,
+          customerPassword: null,
+        }),
+      }
+    );
+
+    const result = await response.json();
+    console.log("Customer Creation Return:", result);
+  };
+
+  const sendCustomerFlightDetails = async () => {
+    await sendPassengerInfo();
+
+    const getTicketID = await fetch(
+      `http://localhost:8080/FlightApp/Ticket/Create/${passengerEmail}/${flightID}/${seatID}/${totalAmnt}/false/${hasInsurance}`,
       {
         method: "POST",
         headers: {
@@ -78,11 +113,20 @@ function GuestPayment({ onPaymentSubmit, hasInsurance, seatID, flightID, email }
         },
       }
     );
+
+    const gottenTicketID = await getTicketID.json();
+    setTicketID(gottenTicketID);
+    console.log("FromBACK: ", gottenTicketID);
+    console.log("TicketID: ", ticketID);
   };
+
+  useEffect(() => {
+    sendPaymentDetails();
+  }, [ticketID]);
 
   const sendPaymentDetails = () => {
     fetch(
-      `http://localhost:8080/FlightApp/Payment/Create/${cardNumber}/${expiry}/${cvv}/${totalAmnt}`,
+      `http://localhost:8080/FlightApp/Payment/Create/${cardNumber}/${expiry}/${cvv}/${totalAmnt}/${ticketID}`,
       {
         method: "POST",
         headers: {
@@ -95,13 +139,29 @@ function GuestPayment({ onPaymentSubmit, hasInsurance, seatID, flightID, email }
   const handleSubmit = () => {
     //SEND successive POST's to backend
     sendCustomerFlightDetails();
-    sendPaymentDetails();
     setPaymentSuccessful(true);
   };
 
   const handlePaymentSuccessClose = () => {
     setPaymentSuccessful(false);
+    resetAllFields();
     onPaymentSubmit({ cardNumber, expiry, cvv });
+  };
+
+  const resetAllFields = () => {
+    setCardNumber("");
+    setExpiry("");
+    setCvv("");
+    setPaymentSuccessful(false);
+    setSeatPrice(0);
+    setFlightPrice(0);
+    setSubtotal(0);
+    setTotalAmnt(0);
+    setTicketID(0);
+    setPassengerName("");
+    setPassengerEmail("");
+    setPassengerPhone("");
+    setIsEmailValid(true);
   };
 
   return (
@@ -116,16 +176,41 @@ function GuestPayment({ onPaymentSubmit, hasInsurance, seatID, flightID, email }
         ) : (
           <div>Insurance Price - Skipped: $0</div>
         )}
-        <div>Subtotal: {subtotal}</div>
+        <div>Subtotal: ${subtotal}</div>
         <div>Tax: ${subtotal * 0.05}</div>
-        <div>
-          Since you're a registed member, we are offering you a 20% discount!
-        </div>
         <div>
           <b>Total Amount: ${totalAmnt}</b>
         </div>
       </div>
       <form onSubmit={handleSubmit}>
+        <label htmlFor="passengerName">Passenger Name</label>
+        <input
+          type="text"
+          id="passengerName"
+          value={passengerName}
+          onChange={(e) => setPassengerName(e.target.value)}
+        />
+
+        {!isEmailValid && (
+          <p className="error-message">Please enter a valid email address.</p>
+        )}
+
+        <label htmlFor="passengerEmail">Passenger Email</label>
+        <input
+          type="email"
+          id="passengerEmail"
+          value={passengerEmail}
+          onChange={handleEmailChange}
+        />
+
+        <label htmlFor="passengerPhone">Passenger Phone</label>
+        <input
+          type="tel"
+          id="passengerPhone"
+          value={passengerPhone}
+          onChange={(e) => setPassengerPhone(e.target.value)}
+        />
+
         <label htmlFor="cardNumber">Card Number</label>
         <input
           type="text"

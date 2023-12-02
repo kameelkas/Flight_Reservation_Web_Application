@@ -1,53 +1,53 @@
 .payment-form form {
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    flex-direction: column;
-    text-align: center; /* Center the text inside the form */
-  }
-  
-  .expiry-fields {
-    display: flex;
-    flex-direction: row; /* Align fields side by side */
-    justify-content: center; /* Center horizontally */
-    align-items: center;
-    gap: 10px; /* Add some space between the month and year fields */
-  }
-  
-  .expiry-fields input {
-    width: 50px; /* Adjust the width as needed */
-    padding: 5px;
-    border: 1px solid #ccc; /* Border styling */
-    border-radius: 4px; /* Rounded corners */
-    text-align: center;
-  }
-  
-  #expiryMonth {
-    border-right: none; /* Remove the right border if it's not visually appealing */
-  }
-  
-  /* Apply similar styling to other input fields for consistency */
-  input[type="text"] {
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    text-align: center;
-  }
-  
-  .flex-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: left;
-    text-align: center;
-  }
-  
-  .left-div {
-    width: 50%;
-    height: 50vh;
-    padding: 10px;
-    border: 1px solid #ccc;
-    /* box-sizing: border-box; /
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  flex-direction: column;
+  text-align: center; /* Center the text inside the form */
+}
+
+.expiry-fields {
+  display: flex;
+  flex-direction: row; /* Align fields side by side */
+  justify-content: center; /* Center horizontally */
+  align-items: center;
+  gap: 10px; /* Add some space between the month and year fields */
+}
+
+.expiry-fields input {
+  width: 50px; /* Adjust the width as needed */
+  padding: 5px;
+  border: 1px solid #ccc; /* Border styling */
+  border-radius: 4px; /* Rounded corners */
+  text-align: center;
+}
+
+#expiryMonth {
+  border-right: none; /* Remove the right border if it's not visually appealing */
+}
+
+/* Apply similar styling to other input fields for consistency */
+input[type="text"] {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: left;
+  text-align: center;
+}
+
+.left-div {
+  width: 50%;
+  height: 50vh;
+  padding: 10px;
+  border: 1px solid #ccc;
+  /* box-sizing: border-box; /
       }
       
       .right-div {
@@ -56,10 +56,14 @@
         padding: 10px;
         border: 1px solid #ccc;
         / box-sizing: border-box; */
-  }
+}
 
-  #priceDetails {
-    display: flex;
-    flex-direction: column;
-    border: 2px solid black;
-  }
+#priceDetails {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid black;
+}
+
+.error-message {
+  color: red;
+}

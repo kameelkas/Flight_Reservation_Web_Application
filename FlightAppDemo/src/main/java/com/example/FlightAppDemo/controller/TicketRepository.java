@@ -24,4 +24,10 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
     @Query("SELECT t.passenger.customer_id FROM Ticket t WHERE t.flight.flight_id = :flight_id")
     List<Integer> getCIDsfromFID(Integer flight_id);
+
+    @Query("SELECT t.passenger.customer_id FROM Ticket t WHERE t.ticket_id = :TID")
+    public Integer getCIDfromTID(@Param("TID") Integer TID);
+
+    @Query("SELECT t.flight.flight_id FROM Ticket t WHERE t.ticket_id = :TID")
+    public Integer getFIDfromTID(@Param("TID") Integer TID);
 }

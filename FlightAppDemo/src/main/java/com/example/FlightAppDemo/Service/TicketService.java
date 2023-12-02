@@ -9,5 +9,6 @@ public interface TicketService {
     public Integer getLatestTID();
     public Ticket getTicketByID(Integer TIDPassedIn);
     public List<Integer> getCustomersIDsfromFlightID(Integer fligtht_ID);
-    //public Integer getCustomerIDfromTicketID(Integer ticketID);
+    public Integer getCustomerIDfromTicketID(Integer ticketID);
+    public Integer getFlightIDfromTicketID(Integer ticketID);
 }

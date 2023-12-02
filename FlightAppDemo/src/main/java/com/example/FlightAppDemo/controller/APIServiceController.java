@@ -183,9 +183,16 @@ public class APIServiceController {
         paymentService.savePayment(payment);  //uses saving logic from the main function in the service layer.
 
         //Getting customer_id using ticket_id
-        //ticketService.getCustomerIDfromTicketID(ticketService.getLatestTID());
+        Integer customerID = ticketService.getCustomerIDfromTicketID(ticketService.getLatestTID());
 
         //Getting customer using customer_id
+        Customer customer = customerService.getCustomer(customerID);
+
+        //Getting flight_id using ticket_id
+        Integer flightID = ticketService.getFlightIDfromTicketID(ticketService.getLatestTID());
+
+        //Getting flight using flight_id
+        Flight flight = flightService.getFlightById(flightID);
 
         // /*Payment confirmation and receipt with ticket*/
         // String welcomeMessage = String.format("Hi %s,\n\n" +

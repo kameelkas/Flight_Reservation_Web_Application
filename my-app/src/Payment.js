@@ -8,12 +8,54 @@ function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID }) {
   const [expiryYear, setExpiryYear] = useState("");
   const [cvv, setCvv] = useState("");
   const [isPaymentSuccessful, setPaymentSuccessful] = useState(false);
+  const [seatPrice, setSeatPrice] = useState(0);
+  const [flightPrice, setFlightPrice] = useState(0);
+  const [subtotal, setSubtotal] = useState(0);
+  const [totalAmnt, setTotalAmnt] = useState(0);
+  const formattedNumber = parseFloat(totalAmnt.toFixed(2)).toString();
+
 
   useEffect(() => {
-    console.log("Insurance:", hasInsurance);
-    console.log("seatID:", seatID);
-    console.log("flightID:", flightID);
+    const getPriceDetails = async () => {
+      const recieveSeatPrice = await fetch(
+        `http://localhost:8080/FlightApp/Seat/GetPriceBySeatID/${seatID}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+
+        const gottenSeatPrice = await recieveSeatPrice.json();
+        setSeatPrice(gottenSeatPrice);
+
+        const recieveFlightPrice = await fetch(
+          `http://localhost:8080/FlightApp/Flight/GetFlightPriceUsingFlightID/${flightID}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+  
+          const gottenFlightPrice = await recieveFlightPrice.json();
+          setFlightPrice(gottenFlightPrice);
+
+          calculateSubtotal();
+    };
+    getPriceDetails();
   }, []);
+
+  const calculateSubtotal = () => {
+    if(hasInsurance){
+      setSubtotal(seatPrice + flightPrice + 50);
+    } else {
+      setSubtotal(seatPrice + flightPrice);    
+    }
+    const calculateDiscount = (subtotal*1.05) - ((subtotal*1.05)*0.2)
+    setTotalAmnt(calculateDiscount)
+  };
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,10 +73,14 @@ function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID }) {
       setExpiryMonth("");
       setExpiryYear("");
       setCvv("");
-      window.alert("One or more entered fields was incorrect. Please try again.")
+      window.alert(
+        "One or more entered fields was incorrect. Please try again."
+      );
       return;
     }
-    
+
+    //SEND successive POST's to backend
+
     setPaymentSuccessful(true);
   };
 
@@ -42,12 +88,27 @@ function Payment({ onPaymentSubmit, hasInsurance, seatID, flightID }) {
     setPaymentSuccessful(false);
     const expiryDate = expiryMonth + "/" + expiryYear; // Combine month and year
     onPaymentSubmit({ cardNumber, expiryDate, cvv });
-
-  }
+  };
 
   return (
     <div className="payment-form">
       <h2>Payment Details</h2>
+      <div id="priceDetails">
+        <h3>Payment Amount Breakdown</h3>
+        <div>Seat Price: {seatPrice}</div>
+        <div>Flight Price: {flightPrice}</div>
+        {hasInsurance ? (
+          <div>Insurance Price: $50.00</div>
+        ) : (
+          <div>Insurance Price - Skipped: $0.00</div>
+        )}
+        <div>Subtotal: {subtotal}</div>
+        <div>Tax: {subtotal * 0.05}</div>
+        <div>Since you're a registed member, we are offering you a 20% discount!</div>
+        <div>
+          <b>Total Amount: {formattedNumber}</b>
+        </div>
+      </div>
       <form onSubmit={handleSubmit}>
         <label htmlFor="cardNumber">Card Number</label>
         <input

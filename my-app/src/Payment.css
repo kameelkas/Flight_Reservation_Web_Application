@@ -57,3 +57,9 @@
         border: 1px solid #ccc;
         / box-sizing: border-box; */
   }
+
+  #priceDetails {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+  }

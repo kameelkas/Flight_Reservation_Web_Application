@@ -139,21 +139,6 @@ function App() {
     }
   };
 
-  /*const getSeatPrice = async () => {
-    const recieve = await fetch(
-      `http://localhost:8080/FlightApp/Ticket/GetPrice/2`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    const seatPrice = await recieve.json();
-    console.log(seatPrice);
-  };*/
-
   const getAllFlightsForLocation = async () => {
     console.log(selectedDest);
     const recieve = await fetch(
@@ -621,14 +606,12 @@ function App() {
               <div>
                 {availableFlights.map((flight, index) => (
                   <div key={index}>
+                    <h3>Flight: {flight.flight_id}</h3>
+                    <p>From: {flight.departureCity} {flight.departureCountry} {flight.departureAirport}</p>
+                    <p>To: {flight.destinationCity} {flight.destinationCountry} {flight.destinationAirport}</p>
                     <p>
-                      Flight: {flight.flight_id}
-                      From: {flight.departureCity} {flight.departureCountry} {flight.departureAirport}
-                      To: {flight.destinationCity} {flight.destinationCountry} {flight.destinationAirport}
-                    </p>
-                    <p>
-                      Departure: {flight.departureDate} {flight.departureTime} -
-                      Arrival: {flight.arrivalDate} {flight.arrivalTime}
+                      Departure: {flight.departureDate} at {flight.departureTime} -
+                      Arrival: {flight.arrivalDate} at {flight.arrivalTime}
                     </p>
                     <button
                       onClick={() => {

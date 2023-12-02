@@ -16,7 +16,7 @@ function Payment({ onPaymentSubmit }) {
     setPaymentSuccessful(true);
   };
 
-  const handlePaymentSuccess = () => {
+  const handlePaymentSuccessClose = () => {
     setPaymentSuccessful(false);
   }
 

@@ -197,7 +197,7 @@ function App() {
 
   const handleModalClose = () => {
     setShowModal(false);
-    setUsername("");
+    //setUsername("");
     setPassword("");
     //setRole(""); // Reset the role when the modal is closed
   };

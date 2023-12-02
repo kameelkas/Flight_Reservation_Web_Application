@@ -53,8 +53,8 @@ public class APIServiceController {
 
 
     //SIGN UP LOGIC
-    @PostMapping("/Customer/Create/{address}/{postal}/{city}/{country}")   //POST IN HTTP TO ADD STUFF //CREATING MEMBER AS SOON AS CUSTOMER SIGNS UP
-    public String createCustomerDetails(@RequestBody Customer customerNew, @PathVariable("address") String address, @PathVariable("postal") String postal, @PathVariable("city") String city, @PathVariable("country") String country){     /////UNCOMMENT THIS BEFORE SUBMISSION.
+    @PostMapping("/Customer/Guest/Create")   //POST IN HTTP TO ADD STUFF //CREATING MEMBER AS SOON AS CUSTOMER SIGNS UP
+    public String createGuestDetails(@RequestBody Customer customerNew){     /////UNCOMMENT THIS BEFORE SUBMISSION.
         String welcomeMessage = String.format("Hi %s,\n\n" +
             "We at the ENSF 480 FlightApp would like to welcome you to our Flight App " +
             "and hope you have a good experience booking your travel experiences.\n\n" +
@@ -62,12 +62,12 @@ public class APIServiceController {
         emailService.sendEmail(customerNew.getEmailAddr(), "Welcome to your ENSF480 Flight Account!", welcomeMessage);
         customerService.createCustomer(customerNew);
 
-        return "Customer Made";
+        return "Guest Made";
     }
 
     //GUEST CUSTOMER CREATION, no membership for guest
-    @PostMapping("/Customer/Guest/{address}/{postal}/{city}/{country}")
-    public String createGuestDetails(@RequestBody Customer customerNew, @PathVariable("address") String address, @PathVariable("postal") String postal, @PathVariable("city") String city, @PathVariable("country") String country){     /////UNCOMMENT THIS BEFORE SUBMISSION.
+    @PostMapping("/Customer/Create/{address}/{postal}/{city}/{country}")
+    public String createCustomerDetails(@RequestBody Customer customerNew, @PathVariable("address") String address, @PathVariable("postal") String postal, @PathVariable("city") String city, @PathVariable("country") String country){     /////UNCOMMENT THIS BEFORE SUBMISSION.
         String welcomeMessage = String.format("Hi %s,\n\n" +
             "We at the ENSF 480 FlightApp would like to welcome you to our Flight App " +
             "and hope you have a good experience booking your travel experiences.\n\n" +
@@ -157,7 +157,7 @@ public class APIServiceController {
 
     /*API Endpoints for Ticket*/
     @PostMapping("/Ticket/Create/{emailAddr}/{flight_id}/{seat_id}/{price}/{ticketCancelled}/{cancellationInsurance}")
-    public ResponseEntity<?> createTicket(@PathVariable("emailAddr") String emailAddr, 
+    public ResponseEntity<Integer> createTicket(@PathVariable("emailAddr") String emailAddr, 
                                         @PathVariable("flight_id") Integer flight_id, 
                                         @PathVariable("seat_id") Integer seat_id,
                                         @PathVariable("price") float price,
@@ -171,7 +171,7 @@ public class APIServiceController {
 
         if (customer == null || flight == null || seat == null) {
             // Handle the case where one of the entities doesn't exist
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid data provided");
+            return ResponseEntity.ok(5000);
         }
 
         // Create a new Ticket instance
@@ -183,16 +183,19 @@ public class APIServiceController {
         ticket.setSeat(seat);
 
         // Save the Ticket entity
+
         ticketService.saveTicket(ticket);  //uses saving logic from the main function in the service layer
-        return ResponseEntity.ok("Ticket created successfully");
+        return ResponseEntity.ok(ticketService.getLatestTID());
     }
 
     /*API Endpoints for Payments*/
-    @PostMapping("/Payment/Create/{cardNum}/{expDate}/{cvv}/{paidAmount}")
-    public String createPayment(@PathVariable("cardNum") String cardNum, @PathVariable("expDate") String expDate, @PathVariable("cvv") Integer cvv, @PathVariable("paidAmount") Integer paidAmount) {
+    @PostMapping("/Payment/Create/{cardNum}/{expDate}/{cvv}/{paidAmount}/{ticket_id}")
+    public String createPayment(@PathVariable("cardNum") String cardNum, @PathVariable("expDate") String expDate, @PathVariable("cvv") Integer cvv, @PathVariable("paidAmount") Integer paidAmount, @PathVariable("ticket_id") Integer ticket_id) {
 
         //Creating the ticket object that payment because of the foreign key
-        Ticket ticket = ticketService.getTicketByID(ticketService.getLatestTID());  //get lastest ticket from the database.
+        Ticket ticket = ticketService.getTicketByID(ticket_id);  //get lastest ticket from the database.
+
+        System.out.println("++++++++++++++++++++++" + ticket_id);
 
         Payment payment = new Payment(cardNum, expDate, cvv, paidAmount);
 
@@ -202,13 +205,13 @@ public class APIServiceController {
         paymentService.savePayment(payment);  //uses saving logic from the main function in the service layer.
 
         //Getting customer_id using ticket_id
-        Integer customerID = ticketService.getCustomerIDfromTicketID(ticketService.getLatestTID());
+        Integer customerID = ticketService.getCustomerIDfromTicketID(ticket_id);
 
         //Getting customer using customer_id
         Customer customer = customerService.getCustomer(customerID);
 
         //Getting flight_id using ticket_id
-        Integer flightID = ticketService.getFlightIDfromTicketID(ticketService.getLatestTID());
+        Integer flightID = ticketService.getFlightIDfromTicketID(ticket_id);
 
         //Getting flight using flight_id
         Flight flight = flightService.getFlightById(flightID);

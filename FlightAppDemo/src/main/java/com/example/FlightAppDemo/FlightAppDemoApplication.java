@@ -200,17 +200,17 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 
 
 
-		Ticket ticket1 = new Ticket(150.0f, false, false);
-		Ticket ticket2 = new Ticket(200.0f, false, false);
-		Ticket ticket3 = new Ticket(180.0f, false, false);
-		Ticket ticket4 = new Ticket(220.0f, false, false);
-		Ticket ticket5 = new Ticket(190.0f, false, false);
+		// Ticket ticket1 = new Ticket(150.0f, false, false);
+		// Ticket ticket2 = new Ticket(200.0f, false, false);
+		// Ticket ticket3 = new Ticket(180.0f, false, false);
+		// Ticket ticket4 = new Ticket(220.0f, false, false);
+		// Ticket ticket5 = new Ticket(190.0f, false, false);
 		
-		Payment payment1 = new Payment("1234567890123456", "12/25", 123, 200);
-		Payment payment2 = new Payment("9876543210987654", "10/24", 456, 150);
-		Payment payment3 = new Payment("1111222233334444", "08/23", 789, 180);
-		Payment payment4 = new Payment("5555666677778888", "06/22", 321, 220);
-		Payment payment5 = new Payment("9999888877776666", "04/21", 654, 190);
+		// Payment payment1 = new Payment("1234567890123456", "12/25", 123, 200);
+		// Payment payment2 = new Payment("9876543210987654", "10/24", 456, 150);
+		// Payment payment3 = new Payment("1111222233334444", "08/23", 789, 180);
+		// Payment payment4 = new Payment("5555666677778888", "06/22", 321, 220);
+		// Payment payment5 = new Payment("9999888877776666", "04/21", 654, 190);
 
 		//SETTING AND SAVING
 		membership1.setCustomer(customer1);
@@ -230,7 +230,7 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		flight2.setAircraft(aircraft2);
 		flight3.setAircraft(aircraft3);
 		flight4.setAircraft(aircraft4);
-		flight5.setAircraft(aircraft5);  //lol
+		flight5.setAircraft(aircraft5);
 
 		crew1.setFlight(flight1);
 		crew2.setFlight(flight2);
@@ -459,19 +459,19 @@ public class FlightAppDemoApplication implements CommandLineRunner{
 		memberInterface.save(membership4);
 		memberInterface.save(membership5);
 
-		ticket1.setPassenger(customer1);
-		ticket1.setFlight(flight1);
-		ticket1.setSeat(seat1);
+		// ticket1.setPassenger(customer1);
+		// ticket1.setFlight(flight1);
+		// ticket1.setSeat(seat1);
 
-		ticket2.setPassenger(customer2);
-		ticket2.setFlight(flight2);
-		ticket2.setSeat(seat2);
+		// ticket2.setPassenger(customer2);
+		// ticket2.setFlight(flight2);
+		// ticket2.setSeat(seat2);
 
-		ticketInterface.save(ticket1);
-		ticketInterface.save(ticket2);
+		// ticketInterface.save(ticket1);
+		// ticketInterface.save(ticket2);
 
-		payment1.setTicket(ticket1);
-		paymentInterface.save(payment1);
+		// payment1.setTicket(ticket1);
+		// paymentInterface.save(payment1);
 
 	}
 }

@@ -7,7 +7,7 @@ function Payment({ onPaymentSubmit }) {
   const [expiryMonth, setExpiryMonth] = useState("");
   const [expiryYear, setExpiryYear] = useState("");
   const [cvv, setCvv] = useState("");
-  const [isPaymentSuccessful, setPaymentSuccessful] = useState[false];
+  const [isPaymentSuccessful, setPaymentSuccessful] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,7 +16,7 @@ function Payment({ onPaymentSubmit }) {
     setPaymentSuccessful(true);
   };
 
-  const handlePaymentSuccess = () => {
+  const handlePaymentSuccessClose = () => {
     setPaymentSuccessful(false);
   }
 

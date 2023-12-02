@@ -22,7 +22,7 @@ public class Ticket {
     private Boolean ticket_cancelled;
     private Boolean ticket_cancellation_insurance;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
     private Customer passenger;
 

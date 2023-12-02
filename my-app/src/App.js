@@ -38,6 +38,8 @@ function App() {
   const [crewPassword, setCrewPassword] = useState("");
   const [showPassnegerList, setShowPassengerList] = useState(false);
   const [passengerList, setPassengerList] = useState([]);
+  const [isRegisteredUser, setIsRegisteredUser] = useState(false);
+  const [loginAttemptError, setLoginAttemptError] = useState("");
   const uniqueDestOptions = [...new Set(destOptions)];
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const [showCrewLogin, setShowCrewLogin] = useState(false);
@@ -214,12 +216,31 @@ function App() {
     //setRole(""); // Reset the role when the modal is closed
   };
 
-  const handleLogin = () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     console.log("Username:", username);
     console.log("Password:", password);
-    //console.log("Role:", role); // Log the selected role
-    setLoggedInUser(username);
-    handleModalClose();
+    const recieve = await fetch(
+      `http://localhost:8080/FlightApp/Customer/Validate/${username}/${password}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const validateAcc = await recieve.json();
+    if (validateAcc === true) {
+      setIsRegisteredUser(true);
+      setLoggedInUser(username);
+      handleModalClose();
+    } else if (validateAcc === false) {
+      setUsername("");
+      setPassword("");
+      setLoginAttemptError("The given userrname or password is incorrect. Please try again.");
+      return;
+    }
   };
 
   const handleTicketPurchase = () => {
@@ -440,7 +461,7 @@ function App() {
                   &times;
                 </span>
                 <h2>Member Login</h2>
-                <form>
+                <form onSubmit={handleLogin}>
                   <label htmlFor="username">Username</label>
                   <input
                     type="text"
@@ -453,8 +474,13 @@ function App() {
                     type="password"
                     id="password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      setLoginAttemptError("");
+                    }}
                   />
+
+                  {loginAttemptError && <p style={{ color: "red" }}>{loginAttemptError}</p>}
                   {/* <div className="input-group mb-3">
                     <label
                       className="input-group-text"
@@ -475,9 +501,7 @@ function App() {
                     </select>
                   </div> */}
 
-                  <button type="button" onClick={handleLogin}>
-                    Login
-                  </button>
+                  <button type="submit">Log In</button>
                 </form>
               </div>
             </div>

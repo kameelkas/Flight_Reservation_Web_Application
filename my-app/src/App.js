@@ -45,6 +45,11 @@ function App() {
   const uniqueDestOptions = [...new Set(destOptions)];
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const [showCrewLogin, setShowCrewLogin] = useState(false);
+  const [cancelNotification, setCancelNotification] = useState({
+    message: "",
+    isSuccess: false,
+    isVisible: false,
+  });
 
   const handleButtonClick = (option) => {
     const lowerCaseOption = option.toLowerCase();
@@ -248,6 +253,47 @@ function App() {
     setShowSeatSelection(true);
   };
 
+  const handleCancelTicket = async () => {
+    const response = await fetch(
+      `http://localhost:8080/FlightApp/Ticket/Cancel/${ticketId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const apiResponse = await response.json();
+
+    if (apiResponse === 1) {
+      setCancelNotification({
+        message: `Ticket cancellation successful! ${
+          insurance
+            ? "You purchased ticket cancellation insurance, thus you will get a full refund!"
+            : "You did not purchase ticket cancellation insurance, thus you will get a half refund."
+        }`,
+        isSuccess: true,
+        isVisible: true,
+      });
+
+      setTimeout(() => {
+        setCancelNotification({
+          message: "",
+          isSuccess: false,
+          isVisible: false,
+        });
+        setSelectedOption(null); // Navigate back to the home page
+      }, 4000);
+    } else {
+      setCancelNotification({
+        message: "Ticket cancellation unsuccessful. Please try again.",
+        isSuccess: false,
+        isVisible: true,
+      });
+    }
+  };
+
   const handleLogout = () => {
     // Clear necessary states and reset them to default values
     setLoggedInUser(null);
@@ -265,6 +311,11 @@ function App() {
     setShowInsurance(false);
     setShowSearchFlight(false);
     setShowCrewLogin(false); // Ensure crew login form is hidden
+    setCancelNotification({
+      message: "",
+      isSuccess: false,
+      isVisible: false,
+    });
   };
 
   const handleSeatSelect = (section, row, seat, continueToInsurance) => {
@@ -276,6 +327,7 @@ function App() {
     const seatID = (sendFlightID - 1) * 15 + row * 5 + (seat + 1);
     setSendSeatID(seatID);
   };
+
   const handlePaymentSubmit = (paymentDetails) => {
     console.log("Payment Details:", paymentDetails);
     // Handle the payment submission logic here
@@ -543,6 +595,16 @@ function App() {
           </div>
         )}
 
+        {cancelNotification.isVisible && (
+          <div
+            className={`notification ${
+              cancelNotification.isSuccess ? "success" : "error"
+            }`}
+          >
+            {cancelNotification.message}
+          </div>
+        )}
+
         {selectedOption === "cancel ticket" && (
           <div className="ticket-id-input">
             <label htmlFor="ticketId">Enter your ticket ID</label>
@@ -552,6 +614,7 @@ function App() {
               value={ticketId}
               onChange={(e) => setTicketId(e.target.value)}
             />
+            <button onClick={handleCancelTicket}>Cancel Ticket</button>
             <button onClick={() => setSelectedOption(null)}>Go back</button>
           </div>
         )}

@@ -57,4 +57,8 @@ public class Ticket {
     public Integer getTicket_id() {
         return this.ticket_id;
     }
+
+    public Boolean getCancellationInsurance() {
+        return this.ticket_cancellation_insurance;
+    }
 }

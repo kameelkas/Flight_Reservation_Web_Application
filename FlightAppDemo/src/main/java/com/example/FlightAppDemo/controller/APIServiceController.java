@@ -52,25 +52,19 @@ public class APIServiceController {
     }
 
 
-    //SIGN UP LOGIC
+    //GUEST LOGIC
     @PostMapping("/Customer/Guest/Create")   //POST IN HTTP TO ADD STUFF //CREATING MEMBER AS SOON AS CUSTOMER SIGNS UP
-    public String createGuestDetails(@RequestBody Customer customerNew){     /////UNCOMMENT THIS BEFORE SUBMISSION.
-        String welcomeMessage = String.format("Hi %s,\n\n" +
-            "We at the ENSF 480 FlightApp would like to welcome you to our Flight App " +
-            "and hope you have a good experience booking your travel experiences.\n\n" +
-            "Best Regards,\nENSF480 Flight App Team", customerNew.getName());
-        emailService.sendEmail(customerNew.getEmailAddr(), "Welcome to your ENSF480 Flight Account!", welcomeMessage);
+    public String createGuestDetails(@RequestBody Customer customerNew){
         customerService.createCustomer(customerNew);
-
         return "Guest Made";
     }
 
-    //GUEST CUSTOMER CREATION, no membership for guest
+    //SIGN UP LOGIC, EMAIL CONFIRMING SIGN UP, OBSERVER PATTERN
     @PostMapping("/Customer/Create/{address}/{postal}/{city}/{country}")
     public String createCustomerDetails(@RequestBody Customer customerNew, @PathVariable("address") String address, @PathVariable("postal") String postal, @PathVariable("city") String city, @PathVariable("country") String country){     /////UNCOMMENT THIS BEFORE SUBMISSION.
         String welcomeMessage = String.format("Hi %s,\n\n" +
             "We at the ENSF 480 FlightApp would like to welcome you to our Flight App " +
-            "and hope you have a good experience booking your travel experiences.\n\n" +
+            "and hope you have a good time booking your travel experiences.\n\n" +
             "Best Regards,\nENSF480 Flight App Team", customerNew.getName());
         emailService.sendEmail(customerNew.getEmailAddr(), "Welcome to your ENSF480 Flight Account!", welcomeMessage);
         customerService.createCustomer(customerNew);
@@ -192,6 +186,29 @@ public class APIServiceController {
     //Cancel ticket logic
     @GetMapping("/Ticket/Cancel/{ticket_id}")
     public Integer cancelTicketfromID(@PathVariable("ticket_id") Integer ticket_id) {
+        String insurance = "no";
+
+        Ticket Ticket = ticketService.getTicketByID(ticket_id); 
+
+        if(Ticket.getCancellationInsurance() == true) {
+            insurance = "a full refund";
+        }
+
+        Integer customerID = ticketService.getCustomerIDfromTicketID(ticket_id);
+
+        Customer customer = customerService.getCustomer(customerID); 
+        
+        //Getting flight_id using ticket_id
+        Integer flightID = ticketService.getFlightIDfromTicketID(ticket_id);
+
+        //Getting flight using flight_id
+        Flight flight = flightService.getFlightById(flightID);
+
+        String welcomeMessage = String.format("Hi %s,\n\n" +
+            "Your Flight: %d to $s, %s has been cancelled." +
+            "You will recieve %s within 7-14 business days on your original mode of payment.\n\n" +
+            "Best Regards,\nENSF480 Flight App Team", customer.getName(), flight.getflight_id(), flight.getDestinationAirport(), flight.getDestinationCity(), insurance);
+        emailService.sendEmail(customer.getEmailAddr(), "TICKET CANCELLED", welcomeMessage);
         return ticketService.cancelTicketUsingID(ticket_id);
     }
 
@@ -200,9 +217,7 @@ public class APIServiceController {
     public String createPayment(@PathVariable("cardNum") String cardNum, @PathVariable("expDate") String expDate, @PathVariable("cvv") Integer cvv, @PathVariable("paidAmount") float paidAmount, @PathVariable("ticket_id") Integer ticket_id) {
 
         //Creating the ticket object that payment because of the foreign key
-        Ticket ticket = ticketService.getTicketByID(ticket_id);  //get lastest ticket from the database.
-
-        System.out.println("++++++++++++++++++++++" + ticket_id);
+        Ticket ticket = ticketService.getTicketByID(ticket_id); 
 
         Payment payment = new Payment(cardNum, expDate, cvv, paidAmount);
 

@@ -311,6 +311,7 @@ function App() {
     setShowInsurance(false);
     setShowSearchFlight(false);
     setShowCrewLogin(false); // Ensure crew login form is hidden
+    setIsRegisteredUser(false);
     setCancelNotification({
       message: "",
       isSuccess: false,

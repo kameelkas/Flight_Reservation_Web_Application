@@ -135,9 +135,11 @@ function GuestPayment({ onPaymentSubmit, hasInsurance, seatID, flightID }) {
     );
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await sendCustomerFlightDetails();
     //SEND successive POST's to backend
-    sendCustomerFlightDetails();
+    // sendCustomerFlightDetails();
     setPaymentSuccessful(true);
   };
 

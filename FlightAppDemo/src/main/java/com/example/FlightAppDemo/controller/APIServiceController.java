@@ -188,6 +188,13 @@ public class APIServiceController {
         return ResponseEntity.ok(ticketService.getLatestTID());
     }
 
+
+    //Cancel ticket logic
+    @GetMapping("/Ticket/Cancel/{ticket_id}")
+    public Integer cancelTicketfromID(@PathVariable("ticket_id") Integer ticket_id) {
+        return ticketService.cancelTicketUsingID(ticket_id);
+    }
+
     /*API Endpoints for Payments*/
     @PostMapping("/Payment/Create/{cardNum}/{expDate}/{cvv}/{paidAmount}/{ticket_id}")
     public String createPayment(@PathVariable("cardNum") String cardNum, @PathVariable("expDate") String expDate, @PathVariable("cvv") Integer cvv, @PathVariable("paidAmount") float paidAmount, @PathVariable("ticket_id") Integer ticket_id) {

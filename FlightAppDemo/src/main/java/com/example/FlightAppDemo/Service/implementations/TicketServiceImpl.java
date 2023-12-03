@@ -8,6 +8,8 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import jakarta.transaction.Transactional;
+
 import java.util.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -63,4 +65,10 @@ public class TicketServiceImpl implements TicketService {
         return ticketRepository.getFIDfromTID(ticketID);
     }
 
+
+    @Override
+    @Transactional
+    public Integer cancelTicketUsingID(Integer ticketID) {
+        return ticketRepository.cancelTicketUsingTID(ticketID);
+    }
 }

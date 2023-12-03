@@ -6,7 +6,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 public interface TicketRepository extends JpaRepository<Ticket, Integer> {
@@ -30,4 +32,8 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
     @Query("SELECT t.flight.flight_id FROM Ticket t WHERE t.ticket_id = :TID")
     public Integer getFIDfromTID(@Param("TID") Integer TID);
+
+    @Modifying
+    @Query("UPDATE Ticket t SET t.ticket_cancelled = true WHERE t.ticket_id = :ticketID")
+    public Integer cancelTicketUsingTID(Integer ticketID);
 }

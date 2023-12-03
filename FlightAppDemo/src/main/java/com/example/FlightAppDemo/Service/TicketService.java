@@ -11,4 +11,5 @@ public interface TicketService {
     public List<Integer> getCustomersIDsfromFlightID(Integer fligtht_ID);
     public Integer getCustomerIDfromTicketID(Integer ticketID);
     public Integer getFlightIDfromTicketID(Integer ticketID);
+    public Integer cancelTicketUsingID(Integer ticketID);
 }
